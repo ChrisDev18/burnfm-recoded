@@ -3,7 +3,7 @@ import { Source_Sans_3 } from 'next/font/google'
 import './globals.css'
 
 import "@/app/layout.css";
-import NavBar from "@/app/NavBar";
+import NavBar from "@/app/ui/NavBar";
 import React from "react";
 import Head from "next/head";
 

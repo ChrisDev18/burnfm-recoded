@@ -2,9 +2,10 @@
 
 import {useEffect} from "react";
 import Link from "next/link";
-import logo_dark from "../../public/logo-white.png";
+import logo_dark from "../../../public/logo-white.png";
 import Image from "next/image";
-import logo_light from "../../public/logo-purple.png";
+import logo_light from "../../../public/logo-purple.png";
+import styles from "./NavBar.module.css"
 
 export default function NavBar() {
   useEffect(() => {
@@ -43,8 +44,8 @@ export default function NavBar() {
   }, []);
 
   return (
-    <header className={"Header"}>
-      <nav className={"Navbar"} id={"header"}>
+    <header className={styles.Header}>
+      <nav className={styles.Navbar} id={"header"}>
         <Link href="#">
           <picture>
             <source media="(prefers-color-scheme: dark)" srcSet={logo_dark.src}/>
@@ -60,7 +61,7 @@ export default function NavBar() {
 
         </Link>
 
-        <ul className={"NavLinks"}>
+        <ul>
 
           {/*<li>*/}
           {/*  <Link href="#">Listen</Link>*/}

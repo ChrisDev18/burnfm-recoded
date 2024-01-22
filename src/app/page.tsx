@@ -5,7 +5,7 @@
 
 import styles from './page.module.css'
 
-import Player from './Player';
+import RadioPlayer from './ui/RadioPlayer';
 import './icons.css';
 import Image from "next/image";
 import SpotifyIcon from "../../public/Spotify_icon.svg"
@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <main className={styles.Main}>
 
-      <Player/>
+      <RadioPlayer/>
 
       <div className={styles.Cards}>
         <div className={styles.CardWrapper}>

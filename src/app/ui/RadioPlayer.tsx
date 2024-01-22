@@ -1,30 +1,19 @@
 'use client'
 
-import styles from "@/app/Player.module.css";
+import styles from "./RadioPlayer.module.css";
 import {useEffect, useState} from "react";
 import Image from "next/image";
-import fallback from "../../public/Radio-Microphone.png"
-
-
-type Show = {
-  title: string,
-  excerpt: string,
-  start_time: Date,
-  end_time: Date,
-  img: string | null
-}
-
-type Schedule = {
-  current_show: Show | null,
-  next_shows: Show[]
-}
+import fallback from "../../../public/Radio-Microphone.png";
+import {Schedule} from "@/app/lib/types";
+import {getSchedule} from "@/app/lib/fetchdata";
+import Show from "./Show";
 
 const empty_schedule: Schedule = {
   current_show: null,
   next_shows: []
 }
 
-export default function Player() {
+export default function RadioPlayer() {
   const [playing, setPlaying] = useState(false);
   const [schedule, setSchedule] = useState(empty_schedule)
 
@@ -40,6 +29,27 @@ export default function Player() {
           { src: schedule.current_show?.img == null ? fallback.src : schedule.current_show.img, sizes: '192x192', type: 'image/jpeg' },
         ],
       });
+
+      const audio = document.querySelector('audio');
+      if (audio == null) {
+        console.error("no audio element found");
+        return;
+      }
+
+      if ('setPositionState' in navigator.mediaSession) {
+        let pos: number = 0;
+        let len: number = 0;
+        if (schedule.current_show != null) {
+          pos = Date.now() - schedule.current_show.start_time.getTime();
+          len = schedule.current_show.end_time.getTime() - schedule.current_show.start_time.getTime();
+        }
+
+        navigator.mediaSession.setPositionState({
+          duration: len * 1000,
+          playbackRate: audio.playbackRate,
+          position: pos * 1000
+        });
+      }
 
       // Set up the media session actions
       navigator.mediaSession.setActionHandler('play', function() {
@@ -65,6 +75,14 @@ export default function Player() {
             console.error("Could not toggle", e);
           })
       });
+
+      audio.addEventListener('play', () => {
+        navigator.mediaSession.playbackState = 'playing';
+      });
+
+      audio.addEventListener('pause', () => {
+        navigator.mediaSession.playbackState = 'paused';
+      });
     } else {
       console.warn('Media Session API not supported.');
     }
@@ -74,6 +92,19 @@ export default function Player() {
       // Remove event listeners
       navigator.mediaSession.setActionHandler('play', null);
       navigator.mediaSession.setActionHandler('stop', null);
+
+      const audio = document.querySelector('audio');
+      if (audio == null) {
+        console.error("no audio element found");
+        return;
+      }
+
+      audio.removeEventListener('play', () => {
+        navigator.mediaSession.playbackState = 'playing';
+      });
+      audio.removeEventListener('pause', () => {
+        navigator.mediaSession.playbackState = 'paused';
+      });
     };
   }, [schedule.current_show]);
 
@@ -102,68 +133,6 @@ export default function Player() {
     });
   }, []);
 
-  function decode_url(body: string) {
-    // console.log("Splitting url");
-    let tokens = body.split(":");
-    // console.log("Tokens: " + tokens);
-
-    let url = "https://api.broadcast.radio/api/image/" + tokens[1] + "." + tokens[0].split("/")[1] + "?g=center&w=400&h=400&c=true";
-    // console.log("URL: " + url);
-    return url;
-  }
-
-  async function getSchedule() {
-
-    let schedule: Schedule = {
-      current_show: null,
-      next_shows: []
-    };
-
-    let res = await fetch("https://api.broadcast.radio/api/nowplaying/957");
-    if (! res.ok) {
-      console.error(res.statusText);
-      return schedule;
-    }
-
-    let json = await res.json();
-
-
-    json.body.schedule.forEach((show: any) => {
-
-      let now = Date.now();
-
-      let new_show: Show = {
-        title: "",
-        excerpt: "",
-        img: null,
-        start_time: new Date(parseInt(show.start_tza)),
-        end_time: new Date(parseInt(show.end_tza)),
-      };
-
-      show.content.forEach((content: any) => {
-
-        if (content.contentType.slug === "featuredImage") {
-          new_show.img = decode_url(content.body);
-        }
-
-        if (content.contentType.slug === "show") {
-          new_show.title = content.display_title;
-          new_show.excerpt = content.excerpt;
-        }
-      });
-
-      if (now >= show.start_tza && now <= show.end_tza) {
-        // this is current show - assign current_show field
-        schedule.current_show = new_show;
-
-      } else {
-        // this is a show in the schedule
-        schedule.next_shows.push(new_show);
-      }
-    });
-    // console.log(schedule)
-    return schedule;
-  }
 
   async function handleToggle() {
     let player = document.getElementsByTagName('audio')[0];
@@ -187,6 +156,7 @@ export default function Player() {
         // console.log("success play")
       } catch (e) {
         throw new Error("This browser does not support mp3");
+        // needed to ensure that mediaSession doesn't mark media as playing when it couldn't
       }
     }
   }
@@ -266,7 +236,6 @@ export default function Player() {
         </div>
       }
 
-
       <div className={styles.ComingUp}>
         <h2 className={styles.Header}>Coming up</h2>
 
@@ -284,39 +253,6 @@ export default function Player() {
         </div>
       </div>
 
-    </div>
-  )
-}
-
-
-function Show({show}: { show: Show }) {
-  return (
-    <div className={styles.ShowGroup}>
-      <div className={styles.ShowImageContainer}>
-        <span/>
-        <Image
-          src={show.img === null? fallback : show.img}
-          alt={"Cover photo for the show: " + show.title}
-          height={124}
-          width={124}
-        />
-      </div>
-
-      <div className={styles.Details}>
-        <p className={styles.ShowTimes}>
-          {show.start_time.toLocaleTimeString(['en'], {
-            hour: "2-digit",
-            minute: "2-digit"
-          })} - {show.end_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}
-        </p>
-        <p className={styles.ShowTitle}>{show.title}</p>
-        <p className={styles.ShowExcerpt}>{show.excerpt}
-          {show.excerpt !== "" ?
-            show.excerpt :
-            "This show has no excerpt"
-          }
-        </p>
-      </div>
     </div>
   )
 }
