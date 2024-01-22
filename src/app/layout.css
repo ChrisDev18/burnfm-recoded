@@ -32,6 +32,9 @@ header {
     align-items: center;
     gap: 16px;
     list-style-type: none;
+    @media only screen and (max-width: 600px) {
+      display: none;
+    }
   }
 
   li > * {
@@ -44,6 +47,10 @@ header {
 
     @media (prefers-color-scheme: dark) {
       color: white;
+    }
+
+    &[aria-disabled="true"] {
+      color: grey;
     }
   }
 

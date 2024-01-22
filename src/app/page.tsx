@@ -8,8 +8,8 @@ import styles from './page.module.css'
 import Player from './Player';
 import './icons.css';
 import Image from "next/image";
-import SpotifyIcon from "./assets/Spotify_icon.svg"
-import PodcastsIcon from "./assets/Podcasts_icon.svg"
+import SpotifyIcon from "../../public/Spotify_icon.svg"
+import PodcastsIcon from "../../public/Podcasts_icon.svg"
 
 
 
@@ -21,7 +21,7 @@ export default function Home() {
 
       <div className={styles.Cards}>
         <div className={styles.CardWrapper}>
-          <div className={styles.Card}>
+          <div className={styles.Card} style={{background: "#32103F"}}>
             <h2>Podcasts</h2>
             <p>
               BurnFM doesn&apos;t just do radio - we also have a large and vibrant community of podcasters.
@@ -45,21 +45,22 @@ export default function Home() {
               Listen on Apple Podcasts
             </a>
           </div>
-          <Image
-            className={styles.CardIcon}
-            src={SpotifyIcon}
-            alt={"Spotify icon"}
-            height={64}
-            width={64}
-          />
+          <div className={styles.CardIcon}>
+            <span className={"material-symbols-rounded"} style={{color: "#5D1F74"}}>
+              podcasts
+            </span>
+          </div>
         </div>
 
         <div className={styles.CardWrapper}>
           <div className={styles.Card}>
-            <h2>Burn Weekly</h2>
+            <h2>BurnFM on Spotify</h2>
             <p>
-              Keep up to date with new releases with the Burn Weekly playlist,
-              filled with the best music the week has to offer! New every Wednesday.
+              Music and Radio go hand in hand, so we made a Spotify account!
+            </p>
+            <p>
+              Follow us on @theburnfm to listen to our playlists,
+              keep up to date with new releases, and listen back to our ball playlists!
             </p>
             <a className={styles.Button} href={"https://open.spotify.com/user/theburnfm"}>
               <Image
@@ -68,7 +69,7 @@ export default function Home() {
                 height={28}
                 width={28}
               />
-              Check it out on Spotify
+              Check us out on Spotify
             </a>
           </div>
           <Image
@@ -91,8 +92,8 @@ export default function Home() {
               </p>
             </div>
 
-            <a className={styles.Button} href={"#"}>
-              Go to the Schedule
+            <a className={styles.Button} aria-disabled={true}>
+              {/*Go to the Schedule*/} Coming soon
             </a>
           </div>
           <div className={styles.CardIcon}>
@@ -108,8 +109,8 @@ export default function Home() {
             <p>
               Running a radio station is no small feat. See the team who lead our station, as well as the managers of our fantastic sections.
             </p>
-            <a className={styles.Button} href={"#"}>
-              About us
+            <a className={styles.Button} aria-disabled={true}>
+              {/*About us*/} Coming soon
             </a>
           </div>
 

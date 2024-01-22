@@ -2,9 +2,9 @@
 
 import {useEffect} from "react";
 import Link from "next/link";
-import logo_dark from "@/app/assets/logo-white.png";
+import logo_dark from "../../public/logo-white.png";
 import Image from "next/image";
-import logo_light from "@/app/assets/logo-purple.png";
+import logo_light from "../../public/logo-purple.png";
 
 export default function NavBar() {
   useEffect(() => {
@@ -60,17 +60,19 @@ export default function NavBar() {
 
         </Link>
 
-        {/*<ul className={"NavLinks"}>*/}
-        {/*  <li>*/}
-        {/*    <Link href="#">Listen</Link>*/}
-        {/*  </li>*/}
-        {/*  <li>*/}
-        {/*    <Link href="#">About Us</Link>*/}
-        {/*  </li>*/}
-        {/*  <li>*/}
-        {/*    <Link href="#">Schedule</Link>*/}
-        {/*  </li>*/}
-        {/*</ul>*/}
+        <ul className={"NavLinks"}>
+
+          {/*<li>*/}
+          {/*  <Link href="#">Listen</Link>*/}
+          {/*</li>*/}
+          <li><p>Coming soon:</p></li>
+          <li>
+            <Link href="#" aria-disabled={true}>About Us</Link>
+          </li>
+          <li>
+            <Link href="#" aria-disabled={true}>Schedule</Link>
+          </li>
+        </ul>
       </nav>
     </header>
   )

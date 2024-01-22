@@ -40,7 +40,7 @@
   text-align: left;
 }
 
-.Button::before {
+.Button:not([aria-disabled="true"])::before {
   transition: all 100ms ease;
   content: "";
   box-shadow: 6px 6px 0 0 rgb(0, 0, 0);
@@ -52,20 +52,20 @@
   bottom: 0;
 }
 
-.Button:hover {
+.Button:not([aria-disabled="true"]):hover {
   transform: translate(-2px, -2px);
   mix-blend-mode: revert;
 }
 
-.Button:hover::before {
+.Button:not([aria-disabled="true"]):hover::before {
   box-shadow: 8px 8px rgba(0,0,0);
 }
 
-.Button:active {
+.Button:not([aria-disabled="true"]):active {
   transform: translate(0);
 }
 
-.Button:active::before {
+.Button:not([aria-disabled="true"]):active::before {
   box-shadow: none;
 }
 

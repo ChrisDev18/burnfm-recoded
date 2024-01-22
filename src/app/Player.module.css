@@ -221,3 +221,19 @@
 .ShowGroup > .Details {
   margin-left: -20px;
 }
+
+.OffAirMessage {
+  font-weight: 500;
+}
+
+.EmptyScheduleMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 16px;
+  padding-top: 8px;
+}
+.EmptyScheduleMessage p {
+  color: rgb(255, 255, 255, 0.7);
+  font-weight: 500;
+}
