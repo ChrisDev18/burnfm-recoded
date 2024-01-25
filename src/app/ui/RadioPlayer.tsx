@@ -167,7 +167,7 @@ export default function RadioPlayer() {
 
   return (
     <div className={styles.Player}>
-      {schedule.current_show == null ?
+      {schedule.current_show === null ?
         <div className={styles.Left}>
           {/*/!**!/*/}
           {/*<audio id={"media"}>*/}
@@ -183,8 +183,8 @@ export default function RadioPlayer() {
           <div className={styles.PlayNow}>
             <h2 className={styles.Header}>Off air</h2>
             <p className={styles.OffAirMessage}>
-              We&apos;re currently working on some updates behind the scenes... or it&apos;s a holiday.
-              In the meantime, why not check out our podcasts for easy anytime listening?
+              We sometimes go off air when we&apos;re working on an update behind the scenes or if it&apos;s a holiday.
+              Whilst we&apos;re having a break, why not check out our podcasts for a little easy listening?
             </p>
           </div>
         </div>
@@ -224,11 +224,11 @@ export default function RadioPlayer() {
                 minute: "2-digit"
               })}</p>
               <p className={styles.ShowTitle}>{schedule.current_show.title}</p>
-              <p className={styles.ShowExcerpt}>
-                {schedule.current_show.excerpt !== "" ?
-                  schedule.current_show.excerpt :
-                  "This show has no excerpt"
-                }
+              <p className={styles.ShowExcerpt}>{schedule.current_show.excerpt}
+                {/*{schedule.current_show.excerpt !== "" ?*/}
+                {/*  schedule.current_show.excerpt :*/}
+                {/*  "This show has no excerpt"*/}
+                {/*}*/}
               </p>
 
             </div>

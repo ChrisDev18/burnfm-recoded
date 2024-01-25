@@ -21,8 +21,8 @@ export default function NavBar() {
         if (image.dataset.size === 'big') {
           image.dataset.size = 'small';
           image.style.transition = 'all 300ms';
-          image.style.height = '40px';
-          image.style.width = '40px';
+          image.style.height = '50px';
+          image.style.width = '50px';
         }
         header.style.boxShadow = "0px 4px 8px 0px rgba(0, 0, 0, 0.25)";
       } else {
@@ -53,8 +53,8 @@ export default function NavBar() {
               id={"image"}
               src={logo_light}
               alt="BurnFM Logo"
-              height={80}
-              width={80}
+              height={100}
+              width={100}
               priority
             />
           </picture>
@@ -66,13 +66,13 @@ export default function NavBar() {
           {/*<li>*/}
           {/*  <Link href="#">Listen</Link>*/}
           {/*</li>*/}
-          <li><p>Coming soon:</p></li>
-          <li>
-            <Link href="#" aria-disabled={true}>About Us</Link>
-          </li>
-          <li>
-            <Link href="#" aria-disabled={true}>Schedule</Link>
-          </li>
+          <li><p>About us & Schedule coming soon</p></li>
+          {/*<li>*/}
+          {/*  <Link href="#" aria-disabled={true}>About Us</Link>*/}
+          {/*</li>*/}
+          {/*<li>*/}
+          {/*  <Link href="#" aria-disabled={true}>Schedule</Link>*/}
+          {/*</li>*/}
         </ul>
       </nav>
     </header>

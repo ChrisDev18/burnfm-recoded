@@ -86,9 +86,8 @@ export default function Home() {
             <h2>See what’s on</h2>
             <div className={styles.pWrapper}>
               <p>
-                Missed the magic? We have you covered.
-                Check out our schedule to catch up on all the replays,
-                or check when your favourite shows are on next.
+                Have a particular show in mind? Don&apos;t want to miss your friend on air?
+                Check out our schedule to see when all your favourite shows are on.
               </p>
             </div>
 

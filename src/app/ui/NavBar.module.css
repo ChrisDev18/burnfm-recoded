@@ -56,3 +56,8 @@
 .Header li > *[aria-disabled="true"] {
   color: grey;
 }
+
+.Header p {
+  color: grey;
+  font-style: italic;
+}
