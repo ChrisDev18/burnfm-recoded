@@ -87,7 +87,7 @@
   position: relative;
 
   @media only screen and (min-width: 1000px) {
-    width: 43vw;
+    width: 42vw;
   }
 }
 
