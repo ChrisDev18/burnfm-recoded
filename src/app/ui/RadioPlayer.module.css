@@ -16,12 +16,6 @@
   box-shadow: 0 4px 20px 0 rgba(93, 31, 116, 0.50);
 }
 
-
-.Player p {
-  margin: 0;
-  color: white;
-}
-
 .Left {
   display: flex;
   padding: 0 128px 0 32px;
@@ -31,6 +25,55 @@
   /*flex-grow: 5;*/
   width: 100%;
   height: 100%;
+  box-shadow: 10px 0px 20px 0px rgba(0, 0, 0, 0.5);
+  z-index: 3;
+}
+
+.PlayNow {
+  display: flex;
+  padding: 16px 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 1;
+}
+
+.Button {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  background-color: transparent;
+  border: none;
+  color: white;
+  padding: 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  z-index: 1;
+
+  transition: all 200ms cubic-bezier(0.24, 0.89, 0.57, 1.58);
+}
+
+@media (hover: hover) {
+  .Button:hover {
+    transform: scale(1.1);
+  }
+}
+
+.Button:active {
+  transform: scale(0.8);
+}
+
+.Header {
+  color: rgba(255, 255, 255, 0.50);
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 0;
+}
+
+.Player p {
+  /*margin: 0;*/
+  color: white;
 }
 
 .ComingUp {
@@ -68,38 +111,6 @@
 }
 
 
-.Button {
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  background-color: transparent;
-  border: none;
-  color: white;
-  padding: 0;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  z-index: 1;
-
-  transition: all 200ms cubic-bezier(0.24, 0.89, 0.57, 1.58);
-}
-
-@media (hover: hover) {
-  .Button:hover {
-    transform: scale(1.1);
-  }
-}
-
-.Button:active {
-  transform: scale(0.8);
-}
-
-.PlayNow {
-  display: flex;
-  padding: 16px 0;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  z-index: 1;
-}
 
 .Details {
   display: flex;
@@ -109,15 +120,6 @@
   align-items: flex-start;
   gap: 8px;
   z-index: 1;
-}
-
-.Header {
-  color: rgba(255, 255, 255, 0.50);
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin: 0;
 }
 
 .ShowTimes {
@@ -190,38 +192,6 @@
   align-self: stretch;
 }
 
-.ShowGroup {
-  display: flex;
-  align-items: center;
-}
-
-.ShowList .ShowExcerpt {
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-}
-
-.ShowImageContainer {
-  position: relative;
-  display: flex;
-  width: auto;
-  z-index: 0;
-  box-shadow: -16px 0 26px 0 rgba(0, 0, 0, 0.25);;
-}
-
-.ShowImageContainer > span {
-  position: absolute;
-  display: block;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  background: linear-gradient(90deg, rgba(50, 16, 63, 0.00) 0%, #32103F 100%);
-  pointer-events: none;
-}
-
-.ShowGroup > .Details {
-  margin-left: -20px;
-}
 
 .OffAirMessage {
   font-weight: 500;

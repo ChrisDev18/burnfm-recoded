@@ -1,4 +1,4 @@
-import styles from "@/app/ui/RadioPlayer.module.css";
+import styles from "@/app/ui/Show.module.css";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show} from "@/app/lib/types";

@@ -1,0 +1,73 @@
+.ShowGroup {
+  display: flex;
+  align-items: center;
+}
+
+.ShowList .ShowExcerpt {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.ShowImageContainer {
+  position: relative;
+  display: flex;
+  width: auto;
+  z-index: 0;
+  box-shadow: -16px 0 26px 0 rgba(0, 0, 0, 0.25);;
+}
+
+.ShowImageContainer > span {
+  position: absolute;
+  display: block;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: linear-gradient(90deg, rgba(50, 16, 63, 0.00) 0%, #32103F 100%);
+  pointer-events: none;
+}
+
+.ShowGroup > .Details {
+  margin-left: -20px;
+}
+
+.Details {
+  display: flex;
+  padding: 16px 0 16px 0;
+  overflow-x: clip;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 1;
+}
+
+.ShowTimes {
+  color: #FFF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.ShowTitle {
+  overflow: hidden;
+  color: #FFF;
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.ShowExcerpt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: calc(2em * 1.4);
+}
