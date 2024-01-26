@@ -182,11 +182,14 @@ export default function RadioPlayer() {
 
   return (
     <div className={styles.Player}>
+
       <audio id={"media"} onError={handleNoAudio}>
         <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mp3"}/>
         The broadcast has stopped, or your browser does not support the audio element.
       </audio>
+
       {schedule.current_show === null ?
+        // WHEN NOT BROADCASTING
         <div className={styles.Left}>
           <div className={styles.PlayNow}>
             <h2 className={styles.Header}>Off air</h2>
@@ -196,7 +199,8 @@ export default function RadioPlayer() {
             </p>
           </div>
         </div>
-        :
+      :
+        // WHEN BROADCASTING
         <div className={styles.Left}>
           <button className={styles.Button} onClick={handleToggle}>
             <span className={"material-symbols-rounded"}>
@@ -229,7 +233,6 @@ export default function RadioPlayer() {
               </p>
               <p className={styles.ShowTitle}>{schedule.current_show.title}</p>
               <p className={styles.ShowExcerpt}>{schedule.current_show.excerpt}</p>
-
             </div>
           </div>
         </div>

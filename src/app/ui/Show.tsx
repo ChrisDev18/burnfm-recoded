@@ -18,11 +18,15 @@ export default function Show({show}: { show: Show }) {
 
       <div className={styles.Details}>
         <p className={styles.ShowTimes}>
-          {show.start_time.toLocaleTimeString(['en'], {
-            weekday: "short",
-            hour: "2-digit",
-            minute: "2-digit"
-          })} - {show.end_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}
+          {show.start_time.toLocaleTimeString(
+            ['en'],
+            {weekday: "short", hour: "2-digit", minute: "2-digit"}
+          )}
+           -
+          {show.end_time.toLocaleTimeString(
+            ['en'],
+            {hour: "2-digit", minute: "2-digit"}
+          )}
         </p>
         <p className={styles.ShowTitle}>{show.title}</p>
         {show.excerpt != "" ? <p className={styles.ShowExcerpt}>{show.excerpt}</p> : <div/>}
