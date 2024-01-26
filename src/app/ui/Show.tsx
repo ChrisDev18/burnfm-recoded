@@ -25,7 +25,8 @@ export default function Show({show}: { show: Show }) {
           })} - {show.end_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}
         </p>
         <p className={styles.ShowTitle}>{show.title}</p>
-        <p className={styles.ShowExcerpt}>{show.excerpt}</p>
+        {show.excerpt != "" ? <p className={styles.ShowExcerpt}>{show.excerpt}</p> : <div/>}
+
       </div>
     </div>
   )
