@@ -195,6 +195,12 @@
 
 .OffAirMessage {
   font-weight: 500;
+  color: rgb(255, 255, 255, 0.7);
+}
+
+.PlayNow:has(.OffAirMessage) {
+  gap: 16px;
+  padding-bottom: 32px;
 }
 
 .EmptyScheduleMessage {

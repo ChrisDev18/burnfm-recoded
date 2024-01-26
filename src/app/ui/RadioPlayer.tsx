@@ -15,104 +15,22 @@ const empty_schedule: Schedule = {
 
 export default function RadioPlayer() {
   const [playing, setPlaying] = useState(false);
-  const [schedule, setSchedule] = useState(empty_schedule)
-
-  // effect for handling mediaSession
-  useEffect(() => {
-    // Check if the Media Session API is supported by the browser
-    if ('mediaSession' in navigator) {
-      // Set up the media session metadata
-      navigator.mediaSession.metadata = new window.MediaMetadata({
-        title: schedule.current_show?.title,
-        artist: "BurnFM",
-        artwork: [
-          { src: schedule.current_show?.img == null ? fallback.src : schedule.current_show.img, sizes: '192x192', type: 'image/jpeg' },
-        ],
-      });
-
-      const audio = document.querySelector('audio');
-      if (audio == null) {
-        console.error("no audio element found");
-        return;
-      }
-
-      if ('setPositionState' in navigator.mediaSession) {
-        let pos: number = 0;
-        let len: number = 0;
-        if (schedule.current_show != null) {
-          pos = Date.now() - schedule.current_show.start_time.getTime();
-          len = schedule.current_show.end_time.getTime() - schedule.current_show.start_time.getTime();
-        }
-
-        navigator.mediaSession.setPositionState({
-          duration: len * 1000,
-          playbackRate: audio.playbackRate,
-          position: pos * 1000
-        });
-      }
-
-      // Set up the media session actions
-      navigator.mediaSession.setActionHandler('play', function() {
-        // console.log("Attempting to play");
-        // console.log("Current playing state: ", playing)
-
-        handleToggle()
-          .then(() => {
-            setPlaying(true)
-            navigator.mediaSession.playbackState = "playing";
-          }).catch(e => {
-            console.error("Could not toggle", e);
-          })
-      });
-
-      navigator.mediaSession.setActionHandler('pause', function() {
-        // console.log("Attempting to pause");
-        // console.log("Current playing state: ", playing)
-        handleToggle()
-          .then(() => {
-            navigator.mediaSession.playbackState = "paused";
-          }).catch(e => {
-            console.error("Could not toggle", e);
-          })
-      });
-
-      audio.addEventListener('play', () => {
-        navigator.mediaSession.playbackState = 'playing';
-      });
-
-      audio.addEventListener('pause', () => {
-        navigator.mediaSession.playbackState = 'paused';
-      });
-    } else {
-      console.warn('Media Session API not supported.');
-    }
-
-    // Clean up the event listeners when the component unmounts
-    return () => {
-      // Remove event listeners
-      navigator.mediaSession.setActionHandler('play', null);
-      navigator.mediaSession.setActionHandler('stop', null);
-
-      const audio = document.querySelector('audio');
-      if (audio == null) {
-        console.error("no audio element found");
-        return;
-      }
-
-      audio.removeEventListener('play', () => {
-        navigator.mediaSession.playbackState = 'playing';
-      });
-      audio.removeEventListener('pause', () => {
-        navigator.mediaSession.playbackState = 'paused';
-      });
-    };
-  }, [schedule.current_show]);
+  const [schedule, setSchedule] = useState(empty_schedule);
 
   // effect for fetching data from API
   useEffect(() => {
     function update() {
       getSchedule()
-        .then(x => setSchedule(x))
+        .then(x => {
+          if (document.querySelector('audio') == null) {
+              setSchedule({
+                current_show: x.current_show,
+                next_shows: x.next_shows
+              });
+          } else {
+            setSchedule(x);
+          }
+        })
         .catch(e => console.error("Error: ", e));
     }
 
@@ -134,6 +52,95 @@ export default function RadioPlayer() {
   }, []);
 
 
+  // effect for handling mediaSession
+  useEffect(() => {
+    // Check if the audio tag is there
+    const audio = document.querySelector('audio');
+    if (audio == null) {
+      handleNoAudio();
+      return;
+    }
+
+    // Check if the Media Session API is supported by the browse
+    if (! ('mediaSession' in navigator)) {
+      console.warn('Media Session API not supported.');
+      return;
+    }
+
+    // Set up the media session metadata
+    navigator.mediaSession.metadata = new window.MediaMetadata({
+      title: schedule.current_show?.title,
+      artist: "BurnFM",
+      artwork: [
+        { src: schedule.current_show?.img == null ? fallback.src : schedule.current_show.img, sizes: '192x192', type: 'image/jpeg' },
+      ],
+    });
+
+    if ('setPositionState' in navigator.mediaSession) {
+      let pos: number = 0;
+      let len: number = 0;
+      if (schedule.current_show != null) {
+        pos = Date.now() - schedule.current_show.start_time.getTime();
+        len = schedule.current_show.end_time.getTime() - schedule.current_show.start_time.getTime();
+      }
+
+      navigator.mediaSession.setPositionState({
+        duration: len * 1000,
+        playbackRate: audio.playbackRate,
+        position: pos * 1000
+      });
+    }
+
+    // Set up the media session actions
+    navigator.mediaSession.setActionHandler('play', () => {
+      handleToggle()
+        .then(() => {
+          setPlaying(true)
+          navigator.mediaSession.playbackState = "playing";
+        }).catch(e => {
+        console.error("Could not toggle", e);
+      })
+    });
+
+    navigator.mediaSession.setActionHandler('pause', () => {
+      handleToggle()
+        .then(() => {
+          navigator.mediaSession.playbackState = "paused";
+        }).catch(e => {
+        console.error("Could not toggle", e);
+      })
+    });
+
+    audio.addEventListener('play', () => {
+      navigator.mediaSession.playbackState = 'playing';
+    });
+
+    audio.addEventListener('pause', () => {
+      navigator.mediaSession.playbackState = 'paused';
+    });
+
+    // Clean up the event listeners when the component unmounts
+    return () => {
+      // Remove event listeners
+      navigator.mediaSession.setActionHandler('play', null);
+      navigator.mediaSession.setActionHandler('stop', null);
+
+      const audio = document.querySelector('audio');
+      if (audio == null) {
+        handleNoAudio();
+        return;
+      }
+
+      audio.removeEventListener('play', () => {
+        navigator.mediaSession.playbackState = 'playing';
+      });
+      audio.removeEventListener('pause', () => {
+        navigator.mediaSession.playbackState = 'paused';
+      });
+    }
+  }, [playing, schedule.current_show]);
+
+
   async function handleToggle() {
     let player = document.getElementsByTagName('audio')[0];
 
@@ -147,18 +154,26 @@ export default function RadioPlayer() {
     if (should_pause) {
       player.pause();
       setPlaying( false);
-      // console.log("success pause")
 
     } else {
       try {
         await player.play();
         setPlaying(true);
-        // console.log("success play")
       } catch (e) {
         throw new Error("This browser does not support mp3");
         // needed to ensure that mediaSession doesn't mark media as playing when it couldn't
       }
     }
+  }
+
+  function handleNoAudio() {
+    console.error("Error accessing audio. " +
+      "Likely due to the server stopping broadcast due to a long period of silence.");
+    // setSchedule(schedule=> ({
+    //   ... schedule,
+    //   current_show: null
+    // }));
+    // console.log("Schedule updated: current show is now:", schedule.current_show);
   }
 
   const shows_list = schedule.next_shows.map((show, i) =>
@@ -167,19 +182,12 @@ export default function RadioPlayer() {
 
   return (
     <div className={styles.Player}>
+      <audio id={"media"} onError={handleNoAudio}>
+        <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mp3"}/>
+        The broadcast has stopped, or your browser does not support the audio element.
+      </audio>
       {schedule.current_show === null ?
         <div className={styles.Left}>
-          {/*/!**!/*/}
-          {/*<audio id={"media"}>*/}
-          {/*  <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mp3"}/>*/}
-          {/*</audio>*/}
-
-          {/*<button className={styles.Button} onClick={handleToggle}>*/}
-          {/*  <span className={"material-symbols-rounded"}>*/}
-          {/*    {playing ? "stop" : "play_arrow"}*/}
-          {/*  </span>*/}
-          {/*</button>*/}
-          {/*/!**!/*/}
           <div className={styles.PlayNow}>
             <h2 className={styles.Header}>Off air</h2>
             <p className={styles.OffAirMessage}>
@@ -190,11 +198,6 @@ export default function RadioPlayer() {
         </div>
         :
         <div className={styles.Left}>
-
-          <audio id={"media"}>
-            <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mp3"}/>
-          </audio>
-
           <button className={styles.Button} onClick={handleToggle}>
             <span className={"material-symbols-rounded"}>
               {playing ? "stop" : "play_arrow"}
@@ -205,7 +208,7 @@ export default function RadioPlayer() {
             <span/>
             <Image
               className={styles.Image}
-              src={schedule.current_show.img === null? fallback : schedule.current_show.img}
+              src={schedule.current_show.img === null ? fallback : schedule.current_show.img}
               alt={"Cover image for the show: " + schedule.current_show.title}
               height={233}
               width={233}
@@ -217,19 +220,15 @@ export default function RadioPlayer() {
 
             <div className={styles.Details}>
               <p className={styles.ShowTimes}>{schedule.current_show.start_time.toLocaleTimeString(['en'], {
-                hour: "2-digit",
-                minute: "2-digit"
-              })} - {schedule.current_show.end_time.toLocaleTimeString(['en'], {
-                hour: "2-digit",
-                minute: "2-digit"
-              })}</p>
-              <p className={styles.ShowTitle}>{schedule.current_show.title}</p>
-              <p className={styles.ShowExcerpt}>{schedule.current_show.excerpt}
-                {/*{schedule.current_show.excerpt !== "" ?*/}
-                {/*  schedule.current_show.excerpt :*/}
-                {/*  "This show has no excerpt"*/}
-                {/*}*/}
+                  hour: "2-digit",
+                  minute: "2-digit"
+                })} - {schedule.current_show.end_time.toLocaleTimeString(['en'], {
+                  hour: "2-digit",
+                  minute: "2-digit"
+                })}
               </p>
+              <p className={styles.ShowTitle}>{schedule.current_show.title}</p>
+              <p className={styles.ShowExcerpt}>{schedule.current_show.excerpt}</p>
 
             </div>
           </div>
@@ -243,13 +242,13 @@ export default function RadioPlayer() {
           {shows_list.length > 0 ?
             <div className={styles.ShowList}>
               {shows_list}
-            </div> :
+            </div>
+          :
             <div className={styles.EmptyScheduleMessage}>
               <p>That&apos;s it for now!</p>
               <p>Our schedule is empty, but check back later for new shows to come!</p>
             </div>
           }
-
         </div>
       </div>
 
