@@ -134,7 +134,6 @@
 .ShowTitle {
   overflow: hidden;
   color: #FFF;
-  white-space: nowrap;
 
   text-overflow: ellipsis;
   font-size: 24px;
@@ -150,7 +149,7 @@
   -webkit-line-clamp: 3;
   line-clamp: 3;
   -webkit-box-orient: vertical;
-  height: calc(2em * 1.4);
+  max-height: calc(3em * 1.4);
 }
 
 .ImageContainer {

@@ -69,5 +69,5 @@
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
-  height: calc(2em * 1.4);
+  max-height: calc(2em * 1.4);
 }
