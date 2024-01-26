@@ -148,9 +148,9 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  line-clamp: 2;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
-  /*height: calc(2em * 1.4);*/
+  height: calc(2em * 1.4);
 }
 
 .ImageContainer {
