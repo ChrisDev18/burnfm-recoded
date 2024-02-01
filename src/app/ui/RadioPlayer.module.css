@@ -38,7 +38,11 @@
   z-index: 1;
 }
 
+
+
 .Button {
+  cursor: pointer;
+
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   background-color: transparent;
   border: none;
@@ -73,7 +77,7 @@
 
 .Player p {
   /*margin: 0;*/
-  color: white;
+  /*color: white;*/
 }
 
 .ComingUp {
@@ -113,6 +117,13 @@
 
 
 .Details {
+  font: unset;
+  text-align: unset;
+  cursor: pointer;
+  background: unset;
+  border: unset;
+  color: unset;
+
   display: flex;
   padding: 16px 0 16px 0;
   overflow-x: clip;
@@ -120,6 +131,19 @@
   align-items: flex-start;
   gap: 8px;
   z-index: 1;
+
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  transition: all 200ms cubic-bezier(0.24, 0.89, 0.57, 1.58);
+}
+
+@media (hover: hover) {
+  .Details:hover {
+    transform: scale(1.04);
+  }
+}
+
+.Details:active {
+  transform: scale(0.96);
 }
 
 .ShowTimes {
@@ -149,7 +173,9 @@
   -webkit-line-clamp: 3;
   line-clamp: 3;
   -webkit-box-orient: vertical;
+  min-height: calc(2em * 1.4);
   max-height: calc(3em * 1.4);
+  color: white;
 }
 
 .ImageContainer {
@@ -189,12 +215,16 @@
   gap: 64px;
   flex: 1 0 0;
   align-self: stretch;
+  overflow-y: clip;  /* to prevent the scale animations from causing y-overflow */
 }
 
 
 .OffAirMessage {
   font-weight: 500;
   color: rgb(255, 255, 255, 0.7);
+  @media only screen and (min-width: 1000px) {
+    min-height: calc(5em * 1.4); /* To ensure the left hand side fills container */
+  }
 }
 
 .PlayNow:has(.OffAirMessage) {
@@ -213,4 +243,25 @@
 .EmptyScheduleMessage p {
   color: rgb(255, 255, 255, 0.7);
   font-weight: 500;
+}
+
+.ShowButton {
+  font: unset;
+  text-align: unset;
+  background: unset;
+  border: unset;
+  color: unset;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.24, 0.89, 0.57, 1.58);
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+@media (hover: hover) {
+  .ShowButton:hover {
+    transform: scale(1.04);
+  }
+}
+
+.ShowButton:active {
+  transform: scale(0.96);
 }

@@ -24,6 +24,7 @@
   display: inline-flex;
   max-width: fit-content;
   flex-grow: 0;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 
   padding: 6px 8px;
   justify-content: center;

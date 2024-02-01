@@ -4,19 +4,34 @@ import styles from "./RadioPlayer.module.css";
 import {useEffect, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
-import {Schedule} from "@/app/lib/types";
+import {Show as ShowType, PopupState, Schedule} from "@/app/lib/types";
 import {getSchedule} from "@/app/lib/fetchdata";
 import Show from "./Show";
+import ShowPopup from "@/app/ui/ShowPopup";
 
 const empty_schedule: Schedule = {
   current_show: null,
   next_shows: []
 }
 
+const init_popup: PopupState = {
+  visible: false,
+  img: fallback.src,
+  title: "default title",
+  excerpt: "default excerpt"
+}
+
 export default function RadioPlayer() {
   // Define states
   const [playing, setPlaying] = useState(false);
   const [schedule, setSchedule] = useState(empty_schedule);
+  const [popup, setPopup] = useState<PopupState>(init_popup)
+  // Generate the list of shows
+  const shows_list = schedule.next_shows.map((show, i) =>
+      <button className={styles.ShowButton} key={i} onClick={() => popup_selected(show)} >
+        <Show show={show} />
+      </button>
+  );
 
   // Effect for fetching data from API
   useEffect(() => {
@@ -133,6 +148,37 @@ export default function RadioPlayer() {
     }
   }, [playing, schedule.current_show]);
 
+  // Displays the ShowPopup with details for the current show
+  function popup_current_show() {
+    if (schedule.current_show === null) {
+      console.error("cannot display current show as it is null");
+    } else {
+      setPopup({
+        visible: true,
+        title: schedule.current_show.title,
+        excerpt: schedule.current_show.excerpt,
+        img: schedule.current_show.img === null ? fallback.src : schedule.current_show.img
+      });
+    }
+  }
+
+  // Displays the ShowPopup with details for the current show
+  function popup_selected(show: ShowType) {
+    setPopup({
+      visible: true,
+      title: show.title,
+      excerpt: show.excerpt,
+      img: show.img === null ? fallback.src : show.img
+    });
+  }
+
+  // Hides the ShowPopup
+  function hide_popup() {
+    setPopup({
+      ...popup,
+      visible: false
+    });
+  }
 
   // Handles toggling between play and pause on player
   async function handlePlayPause() {
@@ -171,12 +217,10 @@ export default function RadioPlayer() {
     // console.log("Schedule updated: current show is now:", schedule.current_show);
   }
 
-  const shows_list = schedule.next_shows.map((show, i) =>
-    <Show key={i} show={show} />
-  );
 
   return (
     <div className={styles.Player}>
+      <ShowPopup popup={popup} hide={hide_popup} />
 
       <audio id={"media"} onError={handleNoAudio}>
         <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mp3"}/>
@@ -220,10 +264,10 @@ export default function RadioPlayer() {
             />
           </div>
 
-          <div className={styles.PlayNow}>
+          <div className={styles.PlayNow} onClick={popup_current_show}>
             <h2 className={styles.Header}>On now</h2>
 
-            <div className={styles.Details}>
+            <button className={styles.Details}>
               <p className={styles.ShowTimes}>{schedule.current_show.start_time.toLocaleTimeString(['en'], {
                   hour: "2-digit",
                   minute: "2-digit"
@@ -234,7 +278,7 @@ export default function RadioPlayer() {
               </p>
               <p className={styles.ShowTitle}>{schedule.current_show.title}</p>
               <p className={styles.ShowExcerpt}>{schedule.current_show.excerpt}</p>
-            </div>
+            </button>
           </div>
         </div>
       }

@@ -10,3 +10,10 @@ export type Schedule = {
   current_show: Show | null,
   next_shows: Show[]
 }
+
+export type PopupState = {
+  visible: boolean,
+  img: string | null,
+  title: string,
+  excerpt: string
+}
