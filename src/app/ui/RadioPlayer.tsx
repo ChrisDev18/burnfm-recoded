@@ -14,22 +14,16 @@ const empty_schedule: Schedule = {
 }
 
 export default function RadioPlayer() {
+  // Define states
   const [playing, setPlaying] = useState(false);
   const [schedule, setSchedule] = useState(empty_schedule);
 
-  // effect for fetching data from API
+  // Effect for fetching data from API
   useEffect(() => {
     function update() {
       getSchedule()
         .then(x => {
-          if (document.querySelector('audio') == null) {
-              setSchedule({
-                current_show: x.current_show,
-                next_shows: x.next_shows
-              });
-          } else {
-            setSchedule(x);
-          }
+          setSchedule(x);
         })
         .catch(e => console.error("Error: ", e));
     }
@@ -51,8 +45,7 @@ export default function RadioPlayer() {
     });
   }, []);
 
-
-  // effect for handling mediaSession
+  // Effect for handling mediaSession
   useEffect(() => {
     // Check if the audio tag is there
     const audio = document.querySelector('audio');
@@ -85,15 +78,15 @@ export default function RadioPlayer() {
       }
 
       navigator.mediaSession.setPositionState({
-        duration: len * 1000,
+        duration: Math.floor(len / 1000),
         playbackRate: audio.playbackRate,
-        position: pos * 1000
+        position: Math.floor(pos / 1000)
       });
     }
 
     // Set up the media session actions
     navigator.mediaSession.setActionHandler('play', () => {
-      handleToggle()
+      handlePlayPause()
         .then(() => {
           setPlaying(true)
           navigator.mediaSession.playbackState = "playing";
@@ -103,7 +96,7 @@ export default function RadioPlayer() {
     });
 
     navigator.mediaSession.setActionHandler('pause', () => {
-      handleToggle()
+      handlePlayPause()
         .then(() => {
           navigator.mediaSession.playbackState = "paused";
         }).catch(e => {
@@ -141,7 +134,8 @@ export default function RadioPlayer() {
   }, [playing, schedule.current_show]);
 
 
-  async function handleToggle() {
+  // Handles toggling between play and pause on player
+  async function handlePlayPause() {
     let player = document.getElementsByTagName('audio')[0];
 
     let should_pause: boolean;
@@ -160,12 +154,13 @@ export default function RadioPlayer() {
         await player.play();
         setPlaying(true);
       } catch (e) {
-        throw new Error("This browser does not support mp3");
+        console.error(e)
         // needed to ensure that mediaSession doesn't mark media as playing when it couldn't
       }
     }
   }
 
+  // Handles any errors with the audio HTML element
   function handleNoAudio() {
     console.error("Error accessing audio. " +
       "Likely due to the server stopping broadcast due to a long period of silence.");
@@ -194,15 +189,20 @@ export default function RadioPlayer() {
           <div className={styles.PlayNow}>
             <h2 className={styles.Header}>Off air</h2>
             <p className={styles.OffAirMessage}>
-              We sometimes go off air when we&apos;re working on an update behind the scenes or if it&apos;s a holiday.
-              Whilst we&apos;re having a break, why not check out our podcasts for a little easy listening?
+              {schedule.next_shows.length != 0 ?
+                "There is nothing currently scheduled for this hour. " +
+                "Whilst we're having a break, why not check out our podcasts for a little easy listening?"
+              :
+                "We sometimes go off air when we're working on an update behind the scenes or if it's a holiday. " +
+                "Whilst we're having a break, why not check out our podcasts for a little easy listening?"
+              }
             </p>
           </div>
         </div>
       :
         // WHEN BROADCASTING
         <div className={styles.Left}>
-          <button className={styles.Button} onClick={handleToggle}>
+          <button className={styles.Button} onClick={handlePlayPause}>
             <span className={"material-symbols-rounded"}>
               {playing ? "stop" : "play_arrow"}
             </span>
