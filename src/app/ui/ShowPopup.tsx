@@ -14,9 +14,11 @@ export default function ShowPopup({popup, hide}: { popup: PopupState, hide: () =
     <Rodal className={"Modal"}
            visible={popup.visible}
            onClose={hide}
-           customStyles={matchMedia("only screen and (max-width: 600px)").matches ?
-             {height: "70%", width: "80%"} :
-             {height: "300px", width: "600px"}}
+           customStyles={
+            (typeof matchMedia !== "undefined" && matchMedia("only screen and (max-width: 600px)").matches) ?
+              {height: "70%", width: "80%"} :
+              {height: "300px", width: "600px"}
+           }
            closeMaskOnClick closeOnEsc >
 
       <div className={"Popup"}>
