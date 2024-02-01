@@ -12,7 +12,7 @@
 # next.js
 /.next/
 /out/
-/out.zip
+/*.zip
 
 # production
 /build

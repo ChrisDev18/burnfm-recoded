@@ -5,7 +5,6 @@ import './globals.css'
 import "@/app/layout.css";
 import NavBar from "@/app/ui/NavBar";
 import React from "react";
-import Head from "next/head";
 
 
 const sourceSans3 = Source_Sans_3({ subsets: ['latin'] })
@@ -14,7 +13,8 @@ export const metadata: Metadata = {
   title: 'BurnFM',
   description: "Tune into BurnFM, University of Birmingham's official radio station.",
   appleWebApp: {title: "BurnFM"},
-  itunes: {appId: "1532721548"},
+  itunes: {appId: "6476577938"},
+
   // These don't seem to work right now, but will keep as it is useful
   // icons: [
   //   {rel: "icon", type: "image/png", url: "/app-icons/favicon-32x32.png?v=2"},
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 
 let theme_colour = "rgb(20, 20, 20)";
 
-// if (typeof window !== "undefined" && window.matchMedia('(prefers-color-scheme: light)')) {
+// if (matchMedia('(prefers-color-scheme: light)').matches) {
 //   theme_colour = "rgb(255, 255, 255)";
 // }
 

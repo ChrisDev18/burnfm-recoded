@@ -216,6 +216,7 @@ export default function RadioPlayer() {
               alt={"Cover image for the show: " + schedule.current_show.title}
               height={233}
               width={233}
+              priority
             />
           </div>
 

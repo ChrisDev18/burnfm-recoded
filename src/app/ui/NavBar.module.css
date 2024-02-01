@@ -17,14 +17,9 @@
   align-items: center;
   align-self: stretch;
 
-  background: rgba(255, 255, 255, 1);
+  background: rgba(var(--tertiary-rgb));
   -webkit-backdrop-filter: blur(30px);
   backdrop-filter: blur(30px);
-
-  @media (prefers-color-scheme: dark) {
-    background: rgba(20, 20, 20, 1);
-  }
-
 }
 
 .Header ul {

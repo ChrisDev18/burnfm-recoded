@@ -13,6 +13,7 @@ export default function Show({show}: { show: Show }) {
           alt={"Cover photo for the show: " + show.title}
           height={124}
           width={124}
+          priority
         />
       </div>
 
