@@ -15,9 +15,10 @@ export default function ShowPopup({popup, hide}: { popup: PopupState, hide: () =
            visible={popup.visible}
            onClose={hide}
            customStyles={
-            (typeof matchMedia !== "undefined" && matchMedia("only screen and (max-width: 600px)").matches) ?
-              {height: "70%", width: "80%"} :
+            // (window.matchMedia("only screen and (min-width: 600px)").matches) ?
               {height: "300px", width: "600px"}
+             // :
+//               {height: "70%", width: "80%"}
            }
            closeMaskOnClick closeOnEsc >
 

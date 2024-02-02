@@ -1,5 +1,5 @@
 
-.Player {
+.Player_Root {
   display: flex;
   align-items: flex-start;
   align-self: stretch;
@@ -16,56 +16,6 @@
   box-shadow: 0 4px 20px 0 rgba(93, 31, 116, 0.50);
 }
 
-.Left {
-  display: flex;
-  padding: 0 128px 0 32px;
-  align-items: center;
-  gap: 32px;
-  position: relative;
-  /*flex-grow: 5;*/
-  width: 100%;
-  height: 100%;
-  box-shadow: 10px 0px 20px 0px rgba(0, 0, 0, 0.5);
-  z-index: 3;
-}
-
-.PlayNow {
-  display: flex;
-  padding: 16px 0;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  z-index: 1;
-}
-
-
-
-.Button {
-  cursor: pointer;
-
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  background-color: transparent;
-  border: none;
-  color: white;
-  padding: 0;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  z-index: 1;
-
-  transition: all 200ms cubic-bezier(0.24, 0.89, 0.57, 1.58);
-}
-
-@media (hover: hover) {
-  .Button:hover {
-    transform: scale(1.1);
-  }
-}
-
-.Button:active {
-  transform: scale(0.8);
-}
-
 .Header {
   color: rgba(255, 255, 255, 0.50);
   font-size: 36px;
@@ -75,48 +25,211 @@
   margin: 0;
 }
 
-.Player p {
-  /*margin: 0;*/
-  /*color: white;*/
+.Player_Left {
+  display: flex;
+  padding: 0 128px 0 32px;
+  align-items: center;
+  gap: 32px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  box-shadow: 10px 0 20px 0 rgba(0, 0, 0, 0.5);
+  z-index: 3;
+
+  .Toggle_Button {
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    z-index: 1;
+
+    transition: all 200ms cubic-bezier(0.24, 0.89, 0.57, 1.58);
+  }
+
+  @media (hover: hover) {
+    .Toggle_Button:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .Toggle_Button:active {
+    transform: scale(0.8);
+  }
+
+  .PlayNow {
+    display: flex;
+    padding: 16px 0 32px;
+    flex-direction: column;
+    align-items: stretch;
+    align-self: stretch;
+    gap: 16px;
+    z-index: 1;
+  }
+
+  .PlayNow_Details {
+    display: flex;
+    padding: 0;
+    overflow-x: clip;
+    flex-direction: column;
+    align-self: stretch;
+    gap: 8px;
+    z-index: 1;
+  }
+
+  .Show_Times {
+    color: #FFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    white-space: nowrap;
+  }
+
+  .Show_Title {
+    overflow: hidden;
+    color: #FFF;
+
+    text-overflow: ellipsis;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  .Show_Excerpt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    min-height: calc(2em * 1.4);
+    max-height: calc(3em * 1.4);
+    color: white;
+  }
+
+  .ImageContainer {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1 / 1;
+    z-index: 0;
+
+    .ImageOverlay {
+      position: absolute;
+      display: block;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      background: linear-gradient(90deg, #5D1F74 0%, rgba(93, 31, 116, 0.00) 100%);
+      pointer-events: none;
+
+      @media only screen and (max-width: 500px) {
+        /*So that text is still readable*/
+        background: linear-gradient(90deg, #5D1F74 25%, rgba(93, 31, 116, 0.00) 150%);
+      }
+
+    }
+
+    .Image {
+      height: 100%;
+      width: 100%;
+    }
+
+  }
+
 }
 
-.ComingUp {
+.Player_Left_Empty {
+  @media only screen and (max-width: 1000px) {
+    min-height: auto;
+  }
+
+  @media only screen and (min-width: 1000px) {
+    width: fit-content;
+  }
+
+  .OffAirMessage {
+    font-weight: 500;
+    color: rgb(255, 255, 255, 0.7);
+    @media only screen and (min-width: 1000px) {
+      min-height: calc(5em * 1.4); /* To ensure the left hand side fills container */
+    }
+  }
+
+}
+
+.Player_Right {
   display: flex;
-  padding: 16px 0 8px 0;
+  width: 100%;
+  min-height: 240px;
+  padding: 16px 0 0;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0;
   align-self: stretch;
   background: #32103F;
   overflow: hidden;
-  /*flex-grow: 1;*/
-  width: 100%;
+
+
+  .ScrollWrapper {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    gap: 32px;
+    flex-grow: 1;
+    overflow-x: scroll;
+    overflow-y: visible;
+    padding: 16px 64px 32px;
+
+    @media only screen and (max-width: 1000px) {
+      padding: 16px 32px 32px;
+    }
+  }
+
+  .Header {
+    margin: 0 64px;
+    @media only screen and (max-width: 1000px) {
+      margin: 0 32px;
+    }
+  }
+
+  .ShowList {
+    display: flex;
+    align-items: stretch;
+    gap: 48px;
+    flex: 1 0 0;
+    overflow-y: visible;  /* to prevent the scale animations from causing y-overflow */
+  }
+
 }
 
-.ComingUp .Header {
-  margin: 0 64px;
-  @media only screen and (max-width: 1000px) {
-    margin: 0 32px;
+.Player_Right_Empty {
+  min-height: auto;
+
+  .EmptyScheduleMessage {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 16px;
+    padding-top: 8px;
+  }
+
+  .EmptyScheduleMessage p {
+    color: rgb(255, 255, 255, 0.7);
+    font-weight: 500;
   }
 }
 
-.ScrollWrapper {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  align-self: stretch;
-  flex-grow: 1;
-  overflow-x: scroll;
-  padding: 0 64px;
-
-  @media only screen and (max-width: 1000px) {
-    padding: 0 32px;
-  }
-}
-
-
-
-.Details {
+.Clickable {
   font: unset;
   text-align: unset;
   cursor: pointer;
@@ -124,144 +237,16 @@
   border: unset;
   color: unset;
 
-  display: flex;
-  padding: 16px 0 16px 0;
-  overflow-x: clip;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  z-index: 1;
-
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   transition: all 200ms cubic-bezier(0.24, 0.89, 0.57, 1.58);
 }
 
 @media (hover: hover) {
-  .Details:hover {
-    transform: scale(1.04);
+  .Clickable:hover {
+    transform: scale(1.02);
   }
 }
 
-.Details:active {
-  transform: scale(0.96);
-}
-
-.ShowTimes {
-  color: #FFF;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  white-space: nowrap;
-}
-
-.ShowTitle {
-  overflow: hidden;
-  color: #FFF;
-
-  text-overflow: ellipsis;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-.ShowExcerpt {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  min-height: calc(2em * 1.4);
-  max-height: calc(3em * 1.4);
-  color: white;
-}
-
-.ImageContainer {
-  position: absolute;
-  right: 0;
-  height: 100%;
-  width: auto;
-  aspect-ratio: 1 / 1;
-  z-index: 0;
-}
-
-.ImageContainer > span {
-  position: absolute;
-  display: block;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  background: linear-gradient(90deg, #5D1F74 0%, rgba(93, 31, 116, 0.00) 100%);
-  pointer-events: none;
-
-  @media only screen and (max-width: 500px) {
-    /*So that text is still readable*/
-    background: linear-gradient(90deg, #5D1F74 25%, rgba(93, 31, 116, 0.00) 150%);
-  }
-}
-
-
-.Image {
-  height: 100%;
-  width: 100%;
-}
-
-.ShowList {
-  display: flex;
-  align-items: center;
-  gap: 64px;
-  flex: 1 0 0;
-  align-self: stretch;
-  overflow-y: clip;  /* to prevent the scale animations from causing y-overflow */
-}
-
-
-.OffAirMessage {
-  font-weight: 500;
-  color: rgb(255, 255, 255, 0.7);
-  @media only screen and (min-width: 1000px) {
-    min-height: calc(5em * 1.4); /* To ensure the left hand side fills container */
-  }
-}
-
-.PlayNow:has(.OffAirMessage) {
-  gap: 16px;
-  padding-bottom: 32px;
-}
-
-.EmptyScheduleMessage {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-bottom: 16px;
-  padding-top: 8px;
-}
-
-.EmptyScheduleMessage p {
-  color: rgb(255, 255, 255, 0.7);
-  font-weight: 500;
-}
-
-.ShowButton {
-  font: unset;
-  text-align: unset;
-  background: unset;
-  border: unset;
-  color: unset;
-  cursor: pointer;
-  transition: all 200ms cubic-bezier(0.24, 0.89, 0.57, 1.58);
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-}
-
-@media (hover: hover) {
-  .ShowButton:hover {
-    transform: scale(1.04);
-  }
-}
-
-.ShowButton:active {
+.Clickable:active {
   transform: scale(0.96);
 }

@@ -28,7 +28,7 @@ export default function RadioPlayer() {
   const [popup, setPopup] = useState<PopupState>(init_popup)
   // Generate the list of shows
   const shows_list = schedule.next_shows.map((show, i) =>
-      <button className={styles.ShowButton} key={i} onClick={() => popup_selected(show)} >
+      <button className={styles.Clickable} key={i} onClick={() => popup_selected(show)} >
         <Show show={show} />
       </button>
   );
@@ -38,7 +38,10 @@ export default function RadioPlayer() {
     function update() {
       getSchedule()
         .then(x => {
-          setSchedule(x);
+          setSchedule({
+            current_show: x.current_show,
+            next_shows: x.next_shows
+          });
         })
         .catch(e => console.error("Error: ", e));
     }
@@ -219,7 +222,7 @@ export default function RadioPlayer() {
 
 
   return (
-    <div className={styles.Player}>
+    <div className={styles.Player_Root}>
       <ShowPopup popup={popup} hide={hide_popup} />
 
       <audio id={"media"} onError={handleNoAudio}>
@@ -229,7 +232,7 @@ export default function RadioPlayer() {
 
       {schedule.current_show === null ?
         // WHEN NOT BROADCASTING
-        <div className={styles.Left}>
+        <div className={`${styles.Player_Left} ${styles.Player_Left_Empty}`}>
           <div className={styles.PlayNow}>
             <h2 className={styles.Header}>Off air</h2>
             <p className={styles.OffAirMessage}>
@@ -245,15 +248,15 @@ export default function RadioPlayer() {
         </div>
       :
         // WHEN BROADCASTING
-        <div className={styles.Left}>
-          <button className={styles.Button} onClick={handlePlayPause}>
+        <div className={styles.Player_Left}>
+          <button className={styles.Toggle_Button} onClick={handlePlayPause}>
             <span className={"material-symbols-rounded"}>
               {playing ? "stop" : "play_arrow"}
             </span>
           </button>
 
           <div className={styles.ImageContainer}>
-            <span/>
+            <span className={styles.ImageOverlay}/>
             <Image
               className={styles.Image}
               src={schedule.current_show.img === null ? fallback : schedule.current_show.img}
@@ -267,8 +270,8 @@ export default function RadioPlayer() {
           <div className={styles.PlayNow} onClick={popup_current_show}>
             <h2 className={styles.Header}>On now</h2>
 
-            <button className={styles.Details}>
-              <p className={styles.ShowTimes}>{schedule.current_show.start_time.toLocaleTimeString(['en'], {
+            <button className={`${styles.PlayNow_Details} ${styles.Clickable}`}>
+              <p className={styles.Show_Times}>{schedule.current_show.start_time.toLocaleTimeString(['en'], {
                   hour: "2-digit",
                   minute: "2-digit"
                 })} - {schedule.current_show.end_time.toLocaleTimeString(['en'], {
@@ -276,15 +279,15 @@ export default function RadioPlayer() {
                   minute: "2-digit"
                 })}
               </p>
-              <p className={styles.ShowTitle}>{schedule.current_show.title}</p>
-              <p className={styles.ShowExcerpt}>{schedule.current_show.excerpt}</p>
+              <p className={styles.Show_Title}>{schedule.current_show.title}</p>
+              <p className={styles.Show_Excerpt}>{schedule.current_show.excerpt}</p>
             </button>
           </div>
         </div>
       }
 
-      <div className={styles.ComingUp}>
-        <h2 className={styles.Header}>Coming up</h2>
+      <div className={schedule.next_shows.length == 0 ? `${styles.Player_Right} ${styles.Player_Right_Empty}` : styles.Player_Right}>
+        <h2 className={`${styles.Header}`}>Coming up</h2>
 
         <div className={styles.ScrollWrapper}>
           {shows_list.length > 0 ?
