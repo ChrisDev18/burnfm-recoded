@@ -1,7 +1,4 @@
-// noinspection SpellCheckingInspection
-
 'use client'
-
 
 import styles from './page.module.css'
 
@@ -10,8 +7,7 @@ import './icons.css';
 import Image from "next/image";
 import SpotifyIcon from "../../public/Spotify_icon.svg"
 import PodcastsIcon from "../../public/Podcasts_icon.svg"
-
-
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -91,9 +87,9 @@ export default function Home() {
               </p>
             </div>
 
-            <a className={styles.Button} aria-disabled={true}>
-              {/*Go to the Schedule*/} Coming soon
-            </a>
+            <Link href={'/schedule'} className={styles.Button}>
+              View Schedule
+            </Link>
           </div>
           <div className={styles.CardIcon}>
             <span className={"material-symbols-rounded"} style={{color: "#32103F"}}>
@@ -108,9 +104,9 @@ export default function Home() {
             <p>
               Running a radio station is no small feat. See the team who lead our station, as well as the managers of our fantastic sections.
             </p>
-            <a className={styles.Button} aria-disabled={true}>
-              {/*About us*/} Coming soon
-            </a>
+            <Link href={'/about'} className={styles.Button}>
+              Find out About Us
+            </Link>
           </div>
 
           <div className={styles.CardIcon}>

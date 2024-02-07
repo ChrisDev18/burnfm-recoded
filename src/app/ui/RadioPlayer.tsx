@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show as ShowType, PopupState, Schedule} from "@/app/lib/types";
-import {getSchedule} from "@/app/lib/fetchdata";
+import {getNowPlaying} from "@/app/lib/fetchdata";
 import Show from "./Show";
 import ShowPopup from "@/app/ui/ShowPopup";
 
@@ -36,7 +36,7 @@ export default function RadioPlayer() {
   // Effect for fetching data from API
   useEffect(() => {
     function update() {
-      getSchedule()
+      getNowPlaying()
         .then(x => {
           setSchedule({
             current_show: x.current_show,
@@ -211,8 +211,7 @@ export default function RadioPlayer() {
 
   // Handles any errors with the audio HTML element
   function handleNoAudio() {
-    console.error("Error accessing audio. " +
-      "Likely due to the server stopping broadcast due to a long period of silence.");
+    console.error("Error accessing audio");
     // setSchedule(schedule=> ({
     //   ... schedule,
     //   current_show: null

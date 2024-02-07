@@ -5,7 +5,6 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 32px;
-  min-height: calc(100vh - 162px);
 
   @media only screen and (max-width: 600px) {
     padding: 32px 0;

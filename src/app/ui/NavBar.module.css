@@ -33,19 +33,17 @@
   }
 }
 
+.Header li {
+  box-sizing: border-box;
+}
+
 .Header li > * {
-  color: #5D1F74;
+  color: rgb(var(--foreground-rgb));
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   text-decoration: none;
-
-  @media (prefers-color-scheme: dark) {
-    color: white;
-  }
-
-
 }
 
 .Header li > *[aria-disabled="true"] {
@@ -55,4 +53,12 @@
 .Header p {
   color: grey;
   font-style: italic;
+}
+
+.Selected > * {
+  color: rgb(var(--purple-rgb));
+}
+
+.Selected {
+  border-bottom: solid 2px rgb(var(--purple-rgb));
 }

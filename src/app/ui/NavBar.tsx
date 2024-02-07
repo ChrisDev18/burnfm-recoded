@@ -6,8 +6,10 @@ import logo_dark from "../../../public/logo-white.png";
 import Image from "next/image";
 import logo_light from "../../../public/logo-purple.png";
 import styles from "./NavBar.module.css"
+import {usePathname} from "next/navigation";
 
 export default function NavBar() {
+  const path = usePathname();
   useEffect(() => {
     const header = document.getElementById('header');
     const image = document.getElementById('image');
@@ -46,7 +48,7 @@ export default function NavBar() {
   return (
     <header className={styles.Header}>
       <nav className={styles.Navbar} id={"header"}>
-        <Link href="#">
+        <Link href="/">
           <picture>
             <source media="(prefers-color-scheme: dark)" srcSet={logo_dark.src}/>
             <Image
@@ -62,17 +64,17 @@ export default function NavBar() {
         </Link>
 
         <ul>
+          <li className={path == '/' ? styles.Selected : ""}>
+            <Link href="/">Listen</Link>
+          </li>
 
-          {/*<li>*/}
-          {/*  <Link href="#">Listen</Link>*/}
-          {/*</li>*/}
-          <li><p>About us & Schedule coming soon</p></li>
-          {/*<li>*/}
-          {/*  <Link href="#" aria-disabled={true}>About Us</Link>*/}
-          {/*</li>*/}
-          {/*<li>*/}
-          {/*  <Link href="#" aria-disabled={true}>Schedule</Link>*/}
-          {/*</li>*/}
+          <li className={path == '/schedule' ? styles.Selected : ""}>
+            <Link href="/schedule">Schedule</Link>
+          </li>
+
+          <li className={path == '/about' ? styles.Selected : ""}>
+            <Link href="/about">About Us</Link>
+          </li>
         </ul>
       </nav>
     </header>

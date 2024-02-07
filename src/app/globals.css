@@ -8,6 +8,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 255, 255, 255;
   --tertiary-rgb: 255, 255, 255;
+  --purple-rgb: 93, 31, 116;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,6 +17,7 @@
     --foreground-rgb: 255, 255, 255;
     --background-rgb: 0, 0, 0;
     --tertiary-rgb: 20, 20, 20;
+    --purple-rgb: 183, 81, 187;
   }
 
   html {
@@ -41,3 +44,6 @@ body {
   pointer-events: none;
 }
 
+a > img, picture {
+  pointer-events: none;
+}

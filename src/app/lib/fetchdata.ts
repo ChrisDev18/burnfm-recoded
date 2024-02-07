@@ -10,14 +10,15 @@ export function decode_url(body: string) {
   return url;
 }
 
-export async function getSchedule() {
+// Returns a Schedule object with a value for current_show and top few songs (undefined amount - decided by API).
+export async function getNowPlaying() {
 
   let schedule: Schedule = {
     current_show: null,
     next_shows: []
   };
 
-  let res = await fetch("https://api.broadcast.radio/api/nowplaying/957");
+  let res = await fetch("https://api.broadcast.radio/api/nowplaying/957?");
   if (! res.ok) {
     console.error(res.statusText);
     return schedule;
@@ -60,5 +61,53 @@ export async function getSchedule() {
     }
   });
   // console.log(schedule)
+  return schedule;
+}
+
+
+// Returns a Schedule object with no value for current_show, whole schedule.
+export async function getWholeSchedule() {
+
+  let schedule: Schedule = {
+    current_show: null,
+    next_shows: []
+  };
+
+  let res = await fetch("https://api.broadcast.radio/api/nowplaying/957?scheduleLength=true");
+  if (! res.ok) {
+    console.error(res.statusText);
+    return schedule;
+  }
+
+  let json = await res.json();
+  json.body.schedule.forEach((show: any) => {
+
+    let new_show: Show = {
+      title: "",
+      excerpt: "",
+      img: null,
+      start_time: new Date(parseInt(show.start_tza)),
+      end_time: new Date(parseInt(show.end_tza)),
+    };
+
+    show.content.forEach((content: any) => {
+      // only set the image if exists
+      if (content.contentType.slug === "featuredImage") {
+        new_show.img = decode_url(content.body);
+      }
+
+      // only set show details if exists
+      if (content.contentType.slug === "show") {
+        new_show.title = content.display_title;
+        new_show.excerpt = content.excerpt;
+      }
+
+    });
+
+    // this is a show in the schedule
+    schedule.next_shows.push(new_show);
+
+  });
+
   return schedule;
 }
