@@ -17,3 +17,15 @@ export type PopupState = {
   title: string,
   excerpt: string
 }
+
+export type Profile = {
+  name: string,
+  description: string,
+  title: string,
+  picture: string,
+  email: string,
+  favourite_song: {
+    title: string,
+    artist: string
+  }
+}

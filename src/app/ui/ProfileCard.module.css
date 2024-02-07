@@ -1,0 +1,15 @@
+.Root {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 50px rgb(0, 0, 0, 0.25);
+}
+
+.Content {
+  display: flex;
+  padding: 8px;
+  flex-direction: column;
+}
+
+.Image {
+  display: flex;
+}

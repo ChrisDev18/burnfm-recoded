@@ -9,7 +9,9 @@ import SpotifyIcon from "../../public/Spotify_icon.svg"
 import PodcastsIcon from "../../public/Podcasts_icon.svg"
 import Link from "next/link";
 
+
 export default function Home() {
+
   return (
     <main className={styles.Main}>
 
@@ -102,7 +104,8 @@ export default function Home() {
           <div className={styles.Card} style={{background: '#B751BB'}}>
             <h2>Our team</h2>
             <p>
-              Running a radio station is no small feat. See the team who lead our station, as well as the managers of our fantastic sections.
+              Running a radio station is no small feat. See the team who lead our station, as well as the managers of
+              our fantastic sections.
             </p>
             <Link href={'/about'} className={styles.Button}>
               Find out About Us

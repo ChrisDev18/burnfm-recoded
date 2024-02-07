@@ -46,7 +46,7 @@ export default function NavBar() {
   }, []);
 
   return (
-    <header className={styles.Header}>
+    <header className={styles.Root}>
       <nav className={styles.Navbar} id={"header"}>
         <Link href="/">
           <picture>
@@ -63,17 +63,17 @@ export default function NavBar() {
 
         </Link>
 
-        <ul>
+        <ul className={styles.LinkList}>
           <li className={path == '/' ? styles.Selected : ""}>
-            <Link href="/">Listen</Link>
+            <Link href="/"><p>Listen</p></Link>
           </li>
 
           <li className={path == '/schedule' ? styles.Selected : ""}>
-            <Link href="/schedule">Schedule</Link>
+            <Link href="/schedule"><p>Schedule</p></Link>
           </li>
 
           <li className={path == '/about' ? styles.Selected : ""}>
-            <Link href="/about">About Us</Link>
+            <Link href="/about"><p>About Us</p></Link>
           </li>
         </ul>
       </nav>

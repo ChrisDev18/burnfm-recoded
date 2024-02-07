@@ -7,8 +7,8 @@
 .ImageContainer {
   position: relative;
   aspect-ratio: 1 / 1;
-  min-height: 128px;
-  min-width: 128px;
+  height: 128px;
+  width: 128px;
   display: flex;
   justify-items: stretch;
   z-index: 0;

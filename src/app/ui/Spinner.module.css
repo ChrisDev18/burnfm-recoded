@@ -10,8 +10,8 @@
 .Spinner {
   width: 25px;
   height: 25px;
-  border: 4px solid rgba(var(--foreground-rgb), 0.2); /* Light grey */
-  border-top: 4px solid  rgba(var(--foreground-rgb), 1); /* Black */
+  border: 4px solid rgba(var(--foreground-rgb), 0.2); /* Wheel */
+  border-top: 4px solid  rgba(var(--foreground-rgb), 1); /* Marker */
   border-radius: 50%;
   animation: spinner 1.5s cubic-bezier(0.54, 0.13, 0.47, 0.89) infinite;
 }
@@ -20,4 +20,9 @@
   display: block;
   font-size: 1.5em;
   font-weight: bold;
+}
+
+.Light {
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top: 4px solid  rgba(255, 255, 255, 1);
 }

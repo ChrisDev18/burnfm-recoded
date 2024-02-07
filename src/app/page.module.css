@@ -2,6 +2,8 @@
 .Main {
   display: flex;
   padding: 32px 64px;
+  flex-grow: 1;
+
   flex-direction: column;
   align-items: flex-start;
   gap: 32px;
@@ -13,6 +15,7 @@
   @media only screen and (min-width: 1700px) {
     padding: 32px 256px;
   }
+
 }
 
 .Button {
@@ -70,14 +73,20 @@
 }
 
 .Cards {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid;
+  justify-items: stretch;
   align-content: flex-start;
   gap: 16px;
   align-self: stretch;
-  flex-wrap: wrap;
+  grid-template-columns: auto auto;
+
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: auto;
+  }
+
+  @media only screen and (min-width: 3000px) {
+    grid-template-columns: auto auto auto auto;
+  }
 }
 
 .CardWrapper {
@@ -85,17 +94,16 @@
   flex-direction: column-reverse;
   align-items: flex-start;
   position: relative;
-
-  @media only screen and (min-width: 1000px) {
-    width: 42vw;
-  }
 }
 
 .Card {
   display: flex;
-  padding: 48px 64px 32px 32px;
   flex-direction: column;
+  flex-grow: 1;
+  padding: 48px 64px 32px 32px;
+
   align-items: flex-start;
+  align-self: stretch;
   gap: 16px;
   background: #1D1D1D;
 }

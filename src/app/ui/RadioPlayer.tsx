@@ -80,49 +80,58 @@ export default function RadioPlayer() {
       return;
     }
 
-    // Set up the media session metadata
-    navigator.mediaSession.metadata = new window.MediaMetadata({
-      title: schedule.current_show?.title,
-      artist: "BurnFM",
-      artwork: [
-        { src: schedule.current_show?.img == null ? fallback.src : schedule.current_show.img, sizes: '192x192', type: 'image/jpeg' },
-      ],
-    });
+    // Set up the media session metadata if there is a current song
+    if (schedule.current_show === null) {
+      navigator.mediaSession.playbackState = 'none';
+      navigator.mediaSession.metadata = null;
+      navigator.mediaSession.setPositionState();
+    } else {
 
-    if ('setPositionState' in navigator.mediaSession) {
-      let pos: number = 0;
-      let len: number = 0;
-      if (schedule.current_show != null) {
-        pos = Date.now() - schedule.current_show.start_time.getTime();
-        len = schedule.current_show.end_time.getTime() - schedule.current_show.start_time.getTime();
+      navigator.mediaSession.metadata = new window.MediaMetadata({
+        title: schedule.current_show?.title,
+        artist: "BurnFM",
+        artwork: [{
+          src: schedule.current_show.img === null ? fallback.src : schedule.current_show.img,
+          sizes: '192x192',
+          type: 'image/jpeg'
+        }]
+      });
+
+      if ('setPositionState' in navigator.mediaSession) {
+
+        let pos = Date.now() - schedule.current_show.start_time.getTime();
+        let len = schedule.current_show.end_time.getTime() - schedule.current_show.start_time.getTime();
+
+        navigator.mediaSession.setPositionState({
+          duration: Math.floor(len / 1000),
+          playbackRate: audio.playbackRate,
+          position: Math.floor(pos / 1000)
+        });
+
       }
 
-      navigator.mediaSession.setPositionState({
-        duration: Math.floor(len / 1000),
-        playbackRate: audio.playbackRate,
-        position: Math.floor(pos / 1000)
+      // Set up the media session actions
+
+      navigator.mediaSession.setActionHandler('play', () => {
+        handlePlayPause()
+          .then(() => {
+            setPlaying(true)
+            navigator.mediaSession.playbackState = "playing";
+          }).catch(e => {
+          console.error("Could not toggle", e);
+        })
       });
+
+      navigator.mediaSession.setActionHandler('stop', () => {
+        handlePlayPause()
+          .then(() => {
+            navigator.mediaSession.playbackState = "paused";
+          }).catch(e => {
+          console.error("Could not toggle", e);
+        })
+      });
+
     }
-
-    // Set up the media session actions
-    navigator.mediaSession.setActionHandler('play', () => {
-      handlePlayPause()
-        .then(() => {
-          setPlaying(true)
-          navigator.mediaSession.playbackState = "playing";
-        }).catch(e => {
-        console.error("Could not toggle", e);
-      })
-    });
-
-    navigator.mediaSession.setActionHandler('pause', () => {
-      handlePlayPause()
-        .then(() => {
-          navigator.mediaSession.playbackState = "paused";
-        }).catch(e => {
-        console.error("Could not toggle", e);
-      })
-    });
 
     audio.addEventListener('play', () => {
       navigator.mediaSession.playbackState = 'playing';
@@ -224,8 +233,10 @@ export default function RadioPlayer() {
   return (
     <div className={styles.Player_Root}>
       <ShowPopup popup={popup} hide={hide_popup}/>
+
+      {/*// WHEN LOADING*/}
       <div className= {`${styles.LoadingOverlay} ${loading ? "" : styles.Hidden}`}>
-        <div className={loading_styles.Spinner}/>
+        <div className={`${loading_styles.Spinner} ${loading_styles.Light}`}/>
         <p className={loading_styles.Header}>Loading radio player </p>
         <p className={loading_styles.Message}>If this takes longer than a couple seconds, reload the page.</p>
       </div>
