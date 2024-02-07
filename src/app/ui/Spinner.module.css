@@ -1,0 +1,23 @@
+@keyframes spinner {
+  0% {
+    transform: rotate(-360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.Spinner {
+  width: 25px;
+  height: 25px;
+  border: 4px solid rgba(var(--foreground-rgb), 0.2); /* Light grey */
+  border-top: 4px solid  rgba(var(--foreground-rgb), 1); /* Black */
+  border-radius: 50%;
+  animation: spinner 1.5s cubic-bezier(0.54, 0.13, 0.47, 0.89) infinite;
+}
+
+.Header {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+}

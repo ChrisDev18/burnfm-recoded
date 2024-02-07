@@ -8,6 +8,7 @@ import {Show as ShowType, PopupState, Schedule} from "@/app/lib/types";
 import {getNowPlaying} from "@/app/lib/fetchdata";
 import Show from "./Show";
 import ShowPopup from "@/app/ui/ShowPopup";
+import loading_styles from "./Spinner.module.css";
 
 const empty_schedule: Schedule = {
   current_show: null,
@@ -23,9 +24,11 @@ const init_popup: PopupState = {
 
 export default function RadioPlayer() {
   // Define states
+  const [loading, setLoading] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [schedule, setSchedule] = useState(empty_schedule);
-  const [popup, setPopup] = useState<PopupState>(init_popup)
+  const [popup, setPopup] = useState(init_popup);
+
   // Generate the list of shows
   const shows_list = schedule.next_shows.map((show, i) =>
       <button className={styles.Clickable} key={i} onClick={() => popup_selected(show)} >
@@ -36,26 +39,25 @@ export default function RadioPlayer() {
   // Effect for fetching data from API
   useEffect(() => {
     function update() {
+      setLoading(true);
       getNowPlaying()
         .then(x => {
-          setSchedule({
-            current_show: x.current_show,
-            next_shows: x.next_shows
-          });
+          setSchedule(x)
         })
-        .catch(e => console.error("Error: ", e));
+        .catch(e => console.error("Error: ", e))
+        .finally(() => setLoading(false))  // TODO: uncomment this
     }
 
     // Calculate the time until the next hour starts
     const now = new Date();
-    const millisecondsUntilNextHour = (60 - now.getMinutes()) * 60 * 1000;
+    const ms_until_next_half_hour = (30 - (now.getMinutes() % 30)) * 60 * 1000;
 
     update();
 
     // Run the update function at the start of each hour
     const intervalId = setInterval(() => {
       update();
-    }, millisecondsUntilNextHour);
+    }, ms_until_next_half_hour);
 
     // Clean up the interval when the component unmounts
     return (() => {
@@ -219,10 +221,14 @@ export default function RadioPlayer() {
     // console.log("Schedule updated: current show is now:", schedule.current_show);
   }
 
-
   return (
     <div className={styles.Player_Root}>
-      <ShowPopup popup={popup} hide={hide_popup} />
+      <ShowPopup popup={popup} hide={hide_popup}/>
+      <div className= {`${styles.LoadingOverlay} ${loading ? "" : styles.Hidden}`}>
+        <div className={loading_styles.Spinner}/>
+        <p className={loading_styles.Header}>Loading radio player </p>
+        <p className={loading_styles.Message}>If this takes longer than a couple seconds, reload the page.</p>
+      </div>
 
       <audio id={"media"} onError={handleNoAudio}>
         <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mp3"}/>
@@ -232,27 +238,46 @@ export default function RadioPlayer() {
       {schedule.current_show === null ?
         // WHEN NOT BROADCASTING
         <div className={`${styles.Player_Left} ${styles.Player_Left_Empty}`}>
+          <h2 className={styles.Header}>Off air</h2>
           <div className={styles.PlayNow}>
-            <h2 className={styles.Header}>Off air</h2>
             <p className={styles.OffAirMessage}>
               {schedule.next_shows.length != 0 ?
                 "There is nothing currently scheduled for this hour. " +
                 "Whilst we're having a break, why not check out our podcasts for a little easy listening?"
-              :
+                :
                 "We sometimes go off air when we're working on an update behind the scenes or if it's a holiday. " +
                 "Whilst we're having a break, why not check out our podcasts for a little easy listening?"
               }
             </p>
           </div>
         </div>
-      :
+        :
         // WHEN BROADCASTING
         <div className={styles.Player_Left}>
-          <button className={styles.Toggle_Button} onClick={handlePlayPause}>
-            <span className={"material-symbols-rounded"}>
-              {playing ? "stop" : "play_arrow"}
-            </span>
-          </button>
+          <h2 className={styles.Header}>On now</h2>
+
+          <div className={styles.PlayNow}>
+            <button className={styles.Toggle_Button} onClick={handlePlayPause}>
+              <span className={"material-symbols-rounded"}>
+                {playing ? "stop" : "play_arrow"}
+              </span>
+            </button>
+
+            <button className={`${styles.PlayNow_Details} ${styles.Clickable}`} onClick={popup_current_show}>
+              <p className={styles.Show_Times}>{schedule.current_show.start_time.toLocaleTimeString(['en'], {
+                hour: "2-digit",
+                minute: "2-digit"
+              })} - {schedule.current_show.end_time.toLocaleTimeString(['en'], {
+                hour: "2-digit",
+                minute: "2-digit"
+              })}
+              </p>
+              <p className={styles.Show_Title}>{schedule.current_show.title}</p>
+              {schedule.current_show.excerpt !== "" ?
+                <p className={styles.Show_Excerpt}>{schedule.current_show.excerpt}</p> : <></>}
+            </button>
+          </div>
+
 
           <div className={styles.ImageContainer}>
             <span className={styles.ImageOverlay}/>
@@ -266,26 +291,11 @@ export default function RadioPlayer() {
             />
           </div>
 
-          <div className={styles.PlayNow} onClick={popup_current_show}>
-            <h2 className={styles.Header}>On now</h2>
-
-            <button className={`${styles.PlayNow_Details} ${styles.Clickable}`}>
-              <p className={styles.Show_Times}>{schedule.current_show.start_time.toLocaleTimeString(['en'], {
-                  hour: "2-digit",
-                  minute: "2-digit"
-                })} - {schedule.current_show.end_time.toLocaleTimeString(['en'], {
-                  hour: "2-digit",
-                  minute: "2-digit"
-                })}
-              </p>
-              <p className={styles.Show_Title}>{schedule.current_show.title}</p>
-              <p className={styles.Show_Excerpt}>{schedule.current_show.excerpt}</p>
-            </button>
-          </div>
         </div>
       }
 
-      <div className={schedule.next_shows.length == 0 ? `${styles.Player_Right} ${styles.Player_Right_Empty}` : styles.Player_Right}>
+      <div
+        className={schedule.next_shows.length == 0 ? `${styles.Player_Right} ${styles.Player_Right_Empty}` : styles.Player_Right}>
         <h2 className={`${styles.Header}`}>Coming up</h2>
 
         <div className={styles.ScrollWrapper}>
@@ -293,7 +303,7 @@ export default function RadioPlayer() {
             <div className={styles.ShowList}>
               {shows_list}
             </div>
-          :
+            :
             <div className={styles.EmptyScheduleMessage}>
               <p>That&apos;s it for now!</p>
               <p>Our schedule is empty, but check back later for new shows to come!</p>
