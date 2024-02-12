@@ -1,8 +1,52 @@
-.Main {
+/*.Main {*/
+/*  display: flex;*/
+/*  padding: 32px 64px;*/
+/*  flex-grow: 1;*/
+
+/*  flex-direction: column;*/
+/*  align-items: flex-start;*/
+/*  gap: 32px;*/
+
+/*  @media only screen and (max-width: 600px) {*/
+/*    padding: 32px 0;*/
+/*  }*/
+
+/*  @media only screen and (min-width: 1700px) {*/
+/*    padding: 32px 256px;*/
+/*  }*/
+/*}*/
+.ScheduleList {
+  position: relative;
   display: flex;
-  flex-grow: 1;
-  padding: 32px 64px;
   flex-direction: column;
-  align-items: flex-start;
   gap: 32px;
+}
+
+.ScheduleList h2 {
+  background-color: rgb(93, 31, 116);
+  color: white;
+  padding: 4px 12px;
+}
+
+.ShowItem {
+  display: flex;
+  gap: 16px;
+  /*border: solid 1px rgba(var(--foreground-rgb), 0.2);*/
+  /*box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);*/
+}
+
+.ShowDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ShowExcerpt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: calc(2em * 1.4);
 }

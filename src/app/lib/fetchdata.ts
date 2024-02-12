@@ -1,4 +1,5 @@
-import {Schedule, Show} from "@/app/lib/types";
+import {Profile, ShowSchedule, Show} from "@/app/lib/types";
+import data from './profiles.json';
 
 export function decode_url(body: string) {
   // console.log("Splitting url");
@@ -13,7 +14,7 @@ export function decode_url(body: string) {
 // Returns a Schedule object with a value for current_show and top few songs (undefined amount - decided by API).
 export async function getNowPlaying() {
 
-  let schedule: Schedule = {
+  let schedule: ShowSchedule = {
     current_show: null,
     next_shows: []
   };
@@ -68,10 +69,7 @@ export async function getNowPlaying() {
 // Returns a Schedule object with no value for current_show, whole schedule.
 export async function getWholeSchedule() {
 
-  let schedule: Schedule = {
-    current_show: null,
-    next_shows: []
-  };
+  let schedule: Show[][] = [[],[],[],[],[],[],[]];
 
   let res = await fetch("https://api.broadcast.radio/api/nowplaying/957?scheduleLength=true");
   if (! res.ok) {
@@ -105,9 +103,43 @@ export async function getWholeSchedule() {
     });
 
     // this is a show in the schedule
-    schedule.next_shows.push(new_show);
+    let day = new_show.start_time.getDay();
+
+    // if a show with the same title and excerpt has already been added for the same day then stop
+    // NOTE: This code only works assuming the API returns shows sorted by time
+    if (schedule[day].some(item =>
+      item.title === new_show.title
+      && item.excerpt === new_show.excerpt
+      && item.start_time.getHours() == new_show.start_time.getHours())) {
+      return schedule;
+    }
+
+    schedule[day].push(new_show);
 
   });
 
+  console.log("Schedule:", schedule)
   return schedule;
+}
+
+
+export async function getProfiles(): Promise<Profile[]> {
+
+  let profiles: Profile[] = [];
+
+  // let res = await fetch("https://burnfm.com/user_profile.json");
+  // if (! res.ok) {
+  //   console.error(res.statusText);
+  //   return profiles;
+  // }
+  //
+  // let json = await res.json();
+
+  try {
+    profiles = data; // change to json.body when using fetch;
+  } catch (e) {
+    console.error("JSON does not match Profile interface");
+  }
+
+  return profiles;
 }

@@ -13,9 +13,7 @@ import Link from "next/link";
 export default function Home() {
 
   return (
-    <main className={styles.Main}>
-
-      <RadioPlayer/>
+    <>
 
       <div className={styles.Cards}>
         <div className={styles.CardWrapper}>
@@ -108,7 +106,7 @@ export default function Home() {
               our fantastic sections.
             </p>
             <Link href={'/about'} className={styles.Button}>
-              Find out About Us
+              More about us
             </Link>
           </div>
 
@@ -120,7 +118,6 @@ export default function Home() {
 
         </div>
       </div>
-
-    </main>
+    </>
   )
 }

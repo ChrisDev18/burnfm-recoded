@@ -4,13 +4,14 @@ import styles from "./RadioPlayer.module.css";
 import {useEffect, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
-import {Show as ShowType, PopupState, Schedule} from "@/app/lib/types";
+import {Show as ShowType, PopupState, ShowSchedule} from "@/app/lib/types";
 import {getNowPlaying} from "@/app/lib/fetchdata";
 import Show from "./Show";
 import ShowPopup from "@/app/ui/ShowPopup";
 import loading_styles from "./Spinner.module.css";
+import {usePathname} from "next/navigation";
 
-const empty_schedule: Schedule = {
+const empty_schedule: ShowSchedule = {
   current_show: null,
   next_shows: []
 }
@@ -28,6 +29,7 @@ export default function RadioPlayer() {
   const [playing, setPlaying] = useState(false);
   const [schedule, setSchedule] = useState(empty_schedule);
   const [popup, setPopup] = useState(init_popup);
+  const current_path = usePathname();
 
   // Generate the list of shows
   const shows_list = schedule.next_shows.map((show, i) =>
@@ -231,11 +233,11 @@ export default function RadioPlayer() {
   }
 
   return (
-    <div className={styles.Player_Root}>
+    <div className={`${styles.Player_Root} ${current_path !== '/'? styles.Hidden: ""}`}>
       <ShowPopup popup={popup} hide={hide_popup}/>
 
       {/*// WHEN LOADING*/}
-      <div className= {`${styles.LoadingOverlay} ${loading ? "" : styles.Hidden}`}>
+      <div className= {`${styles.LoadingOverlay} ${loading ? "" : styles.Transparent}`}>
         <div className={`${loading_styles.Spinner} ${loading_styles.Light}`}/>
         <p className={loading_styles.Header}>Loading radio player </p>
         <p className={loading_styles.Message}>If this takes longer than a couple seconds, reload the page.</p>

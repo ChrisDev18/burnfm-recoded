@@ -1,15 +1,68 @@
 .Root {
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 0px 50px rgb(0, 0, 0, 0.25);
+  /*box-shadow: 0px 0px 24px rgb(0, 0, 0, 0.25);*/
+  box-shadow: 8px 8px 0px rgb(var(--purple-rgb), 0.25);
+  width: 300px;
+  border: solid 1px rgba(var(--purple-rgb), 0.3);
+  overflow: hidden;
+
+  @media only screen and (max-width: 800px) and (min-width: 600px) {
+    flex-direction: row;
+    width: 100%;
+  }
 }
 
 .Content {
+  background-color: rgb(var(--background-rgb));
+
   display: flex;
-  padding: 8px;
+  padding: 16px;
+  gap: 8px;
   flex-direction: column;
+
+  .Title {
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .Name {
+    font-weight: 600;
+    font-size: 1.2em;
+  }
+
+  .Email {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .Email > span {
+    font-size: 24px;
+  }
+
+  .Email > p {
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .Description {
+    margin: 8px 0;
+  }
+
+  .SongHeader {
+    font-weight: 600;
+  }
+
 }
 
 .Image {
-  display: flex;
+  width: 100%;
+  object-fit: cover;
+  height: auto;
+
+  @media only screen and (max-width: 800px) and (min-width: 600px) {
+    width: 200px;
+  }
 }

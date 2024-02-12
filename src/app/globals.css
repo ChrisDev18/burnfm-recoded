@@ -9,6 +9,7 @@
   --background-rgb: 255, 255, 255;
   --tertiary-rgb: 255, 255, 255;
   --purple-rgb: 93, 31, 116;
+  --inverse-purple-rgb: 213, 104, 237;
 
 }
 
@@ -18,6 +19,7 @@
     --background-rgb: 0, 0, 0;
     --tertiary-rgb: 20, 20, 20;
     --purple-rgb: 213, 104, 237;
+    --inverse-purple-rgb: 93, 31, 116;
   }
 
   html {

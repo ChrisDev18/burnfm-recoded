@@ -6,7 +6,7 @@ export type Show = {
   img: string | null
 }
 
-export type Schedule = {
+export type ShowSchedule = {
   current_show: Show | null,
   next_shows: Show[]
 }
@@ -24,8 +24,10 @@ export type Profile = {
   title: string,
   picture: string,
   email: string,
-  favourite_song: {
+  fav_song: {
     title: string,
-    artist: string
+    artist: string,
+    apple_music: string,
+    spotify: string
   }
 }

@@ -1,22 +1,4 @@
 
-.Main {
-  display: flex;
-  padding: 32px 64px;
-  flex-grow: 1;
-
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 32px;
-
-  @media only screen and (max-width: 600px) {
-    padding: 32px 0;
-  }
-
-  @media only screen and (min-width: 1700px) {
-    padding: 32px 256px;
-  }
-
-}
 
 .Button {
   transition: all 100ms ease;
@@ -77,6 +59,7 @@
   justify-items: stretch;
   align-content: flex-start;
   gap: 16px;
+  column-gap: 32px;
   align-self: stretch;
   grid-template-columns: auto auto;
 
@@ -116,6 +99,10 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
   margin-bottom: -32px;
   border-radius: 100px;
+  height: 64px;
+  width: 64px;
+  align-items: center;
+  justify-content: center;
   z-index: 1;
   position: relative;
   left: 32px;
@@ -131,29 +118,3 @@
 .CardIcon > span {
   font-size: 46px;
 }
-
-/*!* Tablet and Smaller Desktop *!*/
-/*@media (min-width: 701px) and (max-width: 1120px) {*/
-/*  .grid {*/
-/*    grid-template-columns: repeat(2, 50%);*/
-/*  }*/
-/*}*/
-
-/*@media (prefers-color-scheme: dark) {*/
-/*  .vercelLogo {*/
-/*    filter: invert(1);*/
-/*  }*/
-
-/*  .logo {*/
-/*    filter: invert(1) drop-shadow(0 0 0.3rem #ffffff70);*/
-/*  }*/
-/*}*/
-
-/*@keyframes rotate {*/
-/*  from {*/
-/*    transform: rotate(360deg);*/
-/*  }*/
-/*  to {*/
-/*    transform: rotate(0deg);*/
-/*  }*/
-/*}*/

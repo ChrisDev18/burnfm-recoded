@@ -41,10 +41,16 @@
   transition: opacity 200ms ease;
 }
 
-.Hidden {
+/* Hide via opacity - will take up space, works with fade transition */
+.Transparent {
   opacity: 0;
   pointer-events: none;
   user-focus: none;
+}
+
+/* Hide completely - won't take up space */
+.Hidden {
+  display: none;
 }
 
 .Header {

@@ -5,6 +5,7 @@ import './globals.css'
 import "@/app/layout.css";
 import NavBar from "@/app/ui/NavBar";
 import React from "react";
+import RadioPlayer from "@/app/ui/RadioPlayer";
 
 
 const sourceSans3 = Source_Sans_3({ subsets: ['latin'] })
@@ -64,8 +65,10 @@ export default function RootLayout({
 
       <body className={sourceSans3.className}>
       <NavBar/>
-
-      {children}
+      <main>
+        <RadioPlayer/>
+        {children}
+      </main>
 
       <footer>
         <p>Copyright © 2024 Burn FM. All rights reserved.</p>

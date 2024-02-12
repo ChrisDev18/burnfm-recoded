@@ -73,7 +73,7 @@ export default function NavBar() {
           </li>
 
           <li className={path == '/about' ? styles.Selected : ""}>
-            <Link href="/about"><p>About Us</p></Link>
+            <Link href="/about"><p>About us</p></Link>
           </li>
         </ul>
       </nav>
