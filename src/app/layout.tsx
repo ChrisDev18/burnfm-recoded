@@ -1,5 +1,5 @@
 import type {Metadata, Viewport} from 'next'
-import { Source_Sans_3 } from 'next/font/google'
+import {Roboto, Source_Sans_3} from 'next/font/google'
 import './globals.css'
 
 import "@/app/layout.css";
@@ -8,7 +8,7 @@ import React from "react";
 import RadioPlayer from "@/app/ui/RadioPlayer";
 
 
-const sourceSans3 = Source_Sans_3({ subsets: ['latin'] })
+const sourceSans3 = Source_Sans_3({subsets: ['latin'], weight: "variable"});
 
 export const metadata: Metadata = {
   title: 'BurnFM',
@@ -61,9 +61,9 @@ export default function RootLayout({
 }) {
 
   return (
-      <html lang="en">
+      <html lang="en" className={sourceSans3.className}>
 
-      <body className={sourceSans3.className}>
+      <body>
       <NavBar/>
       <main>
         <RadioPlayer/>

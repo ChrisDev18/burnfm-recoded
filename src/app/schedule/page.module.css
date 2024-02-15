@@ -1,25 +1,41 @@
-/*.Main {*/
-/*  display: flex;*/
-/*  padding: 32px 64px;*/
-/*  flex-grow: 1;*/
 
-/*  flex-direction: column;*/
-/*  align-items: flex-start;*/
-/*  gap: 32px;*/
+.Root {
+  position: relative;
+  display: flex;
+  overflow-x: hidden;
 
-/*  @media only screen and (max-width: 600px) {*/
-/*    padding: 32px 0;*/
-/*  }*/
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 32px;
 
-/*  @media only screen and (min-width: 1700px) {*/
-/*    padding: 32px 256px;*/
-/*  }*/
-/*}*/
+  /*@media only screen and (max-width: 600px) {*/
+  /*  padding: 0*/
+  /*}*/
+
+  /*@media only screen and (min-width: 1700px) {*/
+  /*  padding: 0 256px;*/
+  /*}*/
+}
+
+.Padded {
+  padding: 0 64px;
+
+  @media only screen and (max-width: 600px) {
+    padding: 0 32px;
+  }
+
+  @media only screen and (min-width: 1700px) {
+    padding: 0 256px;
+  }
+}
+
 .ScheduleList {
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 32px;
+  background: rgb(var(--background-rgb));
 }
 
 .ScheduleList h2 {
@@ -31,14 +47,13 @@
 .ShowItem {
   display: flex;
   gap: 16px;
-  /*border: solid 1px rgba(var(--foreground-rgb), 0.2);*/
-  /*box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);*/
 }
 
 .ShowDetails {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  max-width: 1000px;
 }
 
 .ShowExcerpt {
@@ -50,3 +65,59 @@
   -webkit-box-orient: vertical;
   max-height: calc(2em * 1.4);
 }
+
+/* Filter section */
+
+.FilterList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  overflow-x: scroll;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.FilterItem {
+  display: flex;
+  border-radius: 100px;
+  cursor: pointer;
+  background-color: rgba(var(--background-rgb), 0.5);
+  /*border: solid rgb(var(--purple-rgb)) 2px;*/
+  transition: background-color 50ms ease-out;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.FilterItem label {
+  display: block;
+  justify-items: center;
+  text-transform: capitalize;
+  color: rgb(var(--foreground-rgb));
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition: color, font-size, padding 200ms ease;
+  padding: 4px 16px;
+}
+
+.RadioButton {
+  display: none;
+}
+
+.FilterItem:has(.RadioButton:checked) {
+  background-color: rgb(var(--purple-rgb));
+  color: #fff;
+}
+
+.FilterItem:has(.RadioButton:checked) label {
+  color: white;
+  padding: 4px 32px;
+}
+
+.FilterItem:active {
+  background-color: rgba(var(--purple-rgb), 1);
+  transition: background-color 200ms ease-out;
+}
+
+

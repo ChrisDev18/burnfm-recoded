@@ -31,3 +31,15 @@ export type Profile = {
     spotify: string
   }
 }
+
+export const days = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+] as const;
+
+export type Day = 0 | 1 | 2 | 3 | 4 | 5 | 6;

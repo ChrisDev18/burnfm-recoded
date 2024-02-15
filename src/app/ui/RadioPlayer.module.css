@@ -5,11 +5,20 @@
   align-items: center;
   justify-content: center;
   align-self: stretch;
-
   flex-direction: row;
+
+  margin: 0 64px;
 
   @media only screen and (max-width: 1000px) {
     flex-direction: column;
+  }
+
+  @media only screen and (max-width: 600px) {
+    margin: 0;
+  }
+
+  @media only screen and (min-width: 1700px) {
+    margin: 0 256px;
   }
 
   overflow: clip;

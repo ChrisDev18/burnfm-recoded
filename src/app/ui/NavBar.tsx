@@ -64,16 +64,34 @@ export default function NavBar() {
         </Link>
 
         <ul className={styles.LinkList}>
-          <li className={path == '/' ? styles.Selected : ""}>
-            <Link href="/"><p>Listen</p></Link>
+          <li>
+            <Link className={path == '/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
+                  href="/">
+              <span className={'material-symbols-rounded'}>
+                headphones
+              </span>
+              <p>Listen</p>
+            </Link>
           </li>
 
-          <li className={path == '/schedule' ? styles.Selected : ""}>
-            <Link href="/schedule"><p>Schedule</p></Link>
+          <li>
+            <Link className={path == '/schedule' ? `${styles.Link} ${styles.Selected}` : styles.Link}
+                  href="/schedule">
+              <span className={'material-symbols-rounded'}>
+                overview
+              </span>
+              <p>Schedule</p>
+            </Link>
           </li>
 
-          <li className={path == '/about' ? styles.Selected : ""}>
-            <Link href="/about"><p>About us</p></Link>
+          <li>
+            <Link className={path == '/about' ? `${styles.Link} ${styles.Selected}` : styles.Link}
+                  href="/about">
+              <span className={'material-symbols-rounded'}>
+                group
+              </span>
+              <p>About us</p>
+            </Link>
           </li>
         </ul>
       </nav>

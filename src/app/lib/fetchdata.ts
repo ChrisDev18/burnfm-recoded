@@ -118,7 +118,7 @@ export async function getWholeSchedule() {
 
   });
 
-  console.log("Schedule:", schedule)
+  // console.log("Schedule:", schedule)
   return schedule;
 }
 

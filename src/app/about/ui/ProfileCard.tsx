@@ -1,8 +1,6 @@
 import Image from "next/image";
 import {Profile} from "@/app/lib/types";
 import styles from "./ProfileCard.module.css"
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 export default function ProfileCard({profile}: {profile: Profile}) {
   // get spotify track id

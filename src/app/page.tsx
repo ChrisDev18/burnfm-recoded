@@ -13,8 +13,7 @@ import Link from "next/link";
 export default function Home() {
 
   return (
-    <>
-
+    <div className={styles.Root}>
       <div className={styles.Cards}>
         <div className={styles.CardWrapper}>
           <div className={styles.Card} style={{background: "#32103F"}}>
@@ -118,6 +117,6 @@ export default function Home() {
 
         </div>
       </div>
-    </>
+    </div>
   )
 }

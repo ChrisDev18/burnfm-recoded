@@ -2,7 +2,7 @@
 
 import styles from './page.module.css'
 import React, {useEffect, useState} from "react";
-import ProfileCard from "@/app/ui/ProfileCard";
+import ProfileCard from "@/app/about/ui/ProfileCard";
 import {Profile} from "@/app/lib/types";
 import {getProfiles} from "@/app/lib/fetchdata";
 
@@ -20,9 +20,9 @@ export default function AboutUs() {
   );
 
   return (
-    <>
+    <div className={styles.Root}>
       <div className={styles.Rectangle}/>
-      <div className={styles.PageHeader}>
+      <div className={styles.Header_Section}>
         <h1 className={styles.Header}>About us</h1>
         <p className={styles.Subtitle}>
           BurnFM runs thanks to its dedicated committee members,
@@ -30,9 +30,14 @@ export default function AboutUs() {
         </p>
       </div>
 
-      <div className={styles.ProfileGrid}>
-        {profile_list}
+      <div className={styles.Team_Section}>
+        <h2 className={styles.Header}>The Team</h2>
+
+        <div className={styles.ProfileGrid}>
+          {profile_list}
+        </div>
       </div>
-    </>
+
+    </div>
   );
 }
