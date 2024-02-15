@@ -79,6 +79,18 @@
   padding-bottom: 16px;
 }
 
+.FilterList::after {
+  display: inline-block;
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, white 100%);
+}
+
 .FilterItem {
   display: flex;
   border-radius: 100px;
