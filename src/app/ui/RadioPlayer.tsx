@@ -1,13 +1,13 @@
 'use client'
 
 import styles from "./RadioPlayer.module.css";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show as ShowType, PopupState, ShowSchedule} from "@/app/lib/types";
 import {getNowPlaying} from "@/app/lib/fetchdata";
 import Show from "./Show";
-import ShowPopup from "@/app/ui/ShowPopup";
+import ShowPopup, {Dialog, DialogContent, DialogTrigger} from "@/app/ui/ShowPopup";
 import loading_styles from "./Spinner.module.css";
 import {usePathname} from "next/navigation";
 
@@ -164,19 +164,19 @@ export default function RadioPlayer() {
     }
   }, [playing, schedule.current_show]);
 
-  // Displays the ShowPopup with details for the current show
-  function popup_current_show() {
-    if (schedule.current_show === null) {
-      console.error("cannot display current show as it is null");
-    } else {
-      setPopup({
-        visible: true,
-        title: schedule.current_show.title,
-        excerpt: schedule.current_show.excerpt,
-        img: schedule.current_show.img === null ? fallback.src : schedule.current_show.img
-      });
-    }
-  }
+  // // Displays the ShowPopup with details for the current show
+  // function popup_current_show() {
+  //   if (schedule.current_show === null) {
+  //     console.error("cannot display current show as it is null");
+  //   } else {
+  //     setPopup({
+  //       visible: true,
+  //       title: schedule.current_show.title,
+  //       excerpt: schedule.current_show.excerpt,
+  //       img: schedule.current_show.img === null ? fallback.src : schedule.current_show.img
+  //     });
+  //   }
+  // }
 
   // Displays the ShowPopup with details for the current show
   function popup_selected(show: ShowType) {
@@ -234,10 +234,27 @@ export default function RadioPlayer() {
 
   return (
     <div className={`${styles.Player_Root} ${current_path !== '/'? styles.Hidden: ""}`}>
-      <ShowPopup popup={popup} hide={hide_popup}/>
+      {/*Popup for when a user clicks on a show*/}
+      <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
+        <DialogContent>
+          <div className={"Popup"}>
+            <Image className={"Image"}
+                   src={popup.img === null ? fallback.src : popup.img}
+                   alt={"Cover image for the show: " + popup.title}
+                   height={120}
+                   width={120}
+            />
+
+            <div className={"PopupDetails"}>
+              <h2>{popup.title}</h2>
+              <p>{popup.excerpt === "" ? "This show has no excerpt" : popup.excerpt}</p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/*// WHEN LOADING*/}
-      <div className= {`${styles.LoadingOverlay} ${loading ? "" : styles.Transparent}`}>
+      <div className={`${styles.LoadingOverlay} ${loading ? "" : styles.Transparent}`}>
         <div className={`${loading_styles.Spinner} ${loading_styles.Light}`}/>
         <p className={loading_styles.Header}>Loading radio player </p>
         <p className={loading_styles.Message}>If this takes longer than a couple seconds, reload the page.</p>
@@ -276,7 +293,7 @@ export default function RadioPlayer() {
               </span>
             </button>
 
-            <button className={`${styles.PlayNow_Details} ${styles.Clickable}`} onClick={popup_current_show}>
+            <button className={`${styles.PlayNow_Details} ${styles.Clickable}`} onClick={() => schedule.current_show !== null? popup_selected(schedule.current_show): null}>
               <p className={styles.Show_Times}>{schedule.current_show.start_time.toLocaleTimeString(['en'], {
                 hour: "2-digit",
                 minute: "2-digit"
@@ -300,7 +317,6 @@ export default function RadioPlayer() {
               alt={"Cover image for the show: " + schedule.current_show.title}
               height={233}
               width={233}
-              placeholder={"blur"}
               priority
             />
           </div>
