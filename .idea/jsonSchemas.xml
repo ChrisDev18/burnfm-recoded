@@ -7,7 +7,7 @@
           <value>
             <SchemaInfo>
               <option name="name" value="JSON Schema version 7" />
-              <option name="relativePathToSchema" value="http://json-schema.org/draft-07/schema" />
+              <option name="relativePathToSchema" value="https://json-schema.org/draft/2019-09/schema" />
               <option name="schemaVersion" value="JSON Schema version 7" />
               <option name="applicationDefined" value="true" />
               <option name="patterns">
@@ -16,7 +16,26 @@
                     <option name="path" value="src/app/.json" />
                   </Item>
                   <Item>
+                    <option name="path" value="src/app/lib/schema.json" />
+                  </Item>
+                  <Item>
                     <option name="path" value="src/app/new.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+        <entry key="schema">
+          <value>
+            <SchemaInfo>
+              <option name="generatedName" value="New Schema" />
+              <option name="name" value="schema" />
+              <option name="relativePathToSchema" value="src/app/lib/profile_schema.json" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="src/app/lib/profiles.json" />
                   </Item>
                 </list>
               </option>

@@ -20,16 +20,12 @@ export type PopupState = {
 
 export type Profile = {
   name: string,
+  role: string,
+  course: string,
   description: string,
-  title: string,
   picture: string,
-  email: string,
-  fav_song: {
-    title: string,
-    artist: string,
-    apple_music: string,
-    spotify: string
-  }
+  favourite_song: string,
+  fun_fact: string,
 }
 
 export const days = [

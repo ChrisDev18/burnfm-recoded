@@ -11,8 +11,13 @@ import {Show} from "@/app/lib/types";
 
 const empty_schedule: Show[][] = []
 
-
 let Schedule: Show[][] = [];
+
+// async function generateStaticParams() {
+//   return [
+//     { route: '/schedule' }, // Parameters for the about page
+//   ];
+// }
 
 
 export default function SchedulePage() {

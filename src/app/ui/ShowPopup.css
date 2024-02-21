@@ -76,7 +76,7 @@ input {
 }
 
 .DialogContent[data-state='closed'] {
-  animation: contentHide 200ms ease-in;
+  animation: contentHide 100ms ease-in;
 }
 
 .DialogOverlay[data-state='closed'] {

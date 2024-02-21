@@ -6,6 +6,12 @@ import ProfileCard from "@/app/about/ui/ProfileCard";
 import {Profile} from "@/app/lib/types";
 import {getProfiles} from "@/app/lib/fetchdata";
 
+// async function generateStaticParams() {
+//   return [
+//     { route: '/about' }, // Parameters for the about page
+//   ];
+// }
+
 export default function AboutUs() {
   const [profiles, setProfiles] = useState<Profile[]>([])
 

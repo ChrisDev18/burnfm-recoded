@@ -3,6 +3,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: 'export',
+    // fallback: 'blocking',
+    trailingSlash: true,
 
     images: {
         unoptimized: true,
