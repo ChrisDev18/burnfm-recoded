@@ -1,17 +1,29 @@
 'use client'
 
 import styles from './page.module.css'
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getWholeSchedule} from "@/app/lib/fetchdata";
-import {Day, days} from "@/app/lib/types";
+import {Day, days, PopupState, Show as ShowType} from "@/app/lib/types";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show} from "@/app/lib/types";
+import {Dialog, DialogContent} from "@/app/ui/Popup";
+import showpopup from "@/app/ShowPopup.module.css";
+import buttons from "@/app/buttons.module.css";
+import {Close} from "@radix-ui/react-dialog";
 
 
 const empty_schedule: Show[][] = []
 
 let Schedule: Show[][] = [];
+
+const init_popup: PopupState = {
+  visible: false,
+  img: fallback.src,
+  title: "default title",
+  excerpt: "default excerpt"
+}
+
 
 // async function generateStaticParams() {
 //   return [
@@ -26,6 +38,7 @@ export default function SchedulePage() {
   const [schedule, setSchedule] = useState<Show[][]>([[],[],[],[],[],[],[]]);
   // @ts-ignore
   const [day, setDay] = useState<Day>(new Date().getDay())  // used to filter by day
+  const [popup, setPopup] = useState(init_popup);
 
   // Fetch whole Schedule from API
   useEffect(() => {
@@ -44,7 +57,7 @@ export default function SchedulePage() {
       const time_string = show.start_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})
 
       return (
-        <div className={styles.ShowItem} key={i}>
+        <button className={`${styles.ShowItem} ${buttons.Clickable}`} key={i} onClick={() => selectShow(show)}>
 
           <Image src={show.img !== null ? show.img : fallback.src}
                  alt={"Cover photo for the show: " + show.title}
@@ -58,7 +71,7 @@ export default function SchedulePage() {
             <p className={styles.ShowExcerpt}>{show.excerpt}</p>
           </div>
 
-        </div>
+        </button>
       )
     });
 
@@ -66,6 +79,16 @@ export default function SchedulePage() {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const selected = Number.parseInt(e.target.value);
     setDay(selected as Day);
+  }
+
+  // Displays the Popup with details for the current show
+  function selectShow(show: ShowType) {
+    setPopup({
+      visible: true,
+      title: show.title,
+      excerpt: show.excerpt,
+      img: show.img
+    });
   }
 
   return (
@@ -87,6 +110,29 @@ export default function SchedulePage() {
           )
         }
       </div>
+
+      <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
+        <DialogContent>
+          <div className={showpopup.Popup}>
+            {popup.img !== null ?
+              <Image className={showpopup.Image}
+                     src={popup.img === null ? fallback.src : popup.img}  // clean this up once decided on fallback show artwork
+                     alt={"Cover image for the show: " + popup.title}
+                     height={120}
+                     width={120}
+              />
+              : <></>
+            }
+
+            <h2>{popup.title}</h2>
+            <p>{popup.excerpt === "" ? "This show has no excerpt" : popup.excerpt}</p>
+
+            <Close className={`${showpopup.Close} ${styles.Clickable}`}>
+              <span className={'material-symbols-rounded'}>close</span>
+            </Close>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <div className={`${styles.ScheduleList} ${styles.Padded}`}>
         {ShowList}

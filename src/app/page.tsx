@@ -1,6 +1,7 @@
 'use client'
 
 import styles from './page.module.css'
+import buttons from '@/app/buttons.module.css'
 
 import RadioPlayer from './ui/RadioPlayer';
 import './icons.css';
@@ -21,7 +22,7 @@ export default function Home() {
             <p>
               BurnFM doesn&apos;t just do radio - we also have a large and vibrant community of podcasters.
             </p>
-            <a className={styles.Button} href={"https://open.spotify.com/show/0ALexnN0yS3OX4xdiPetic"}>
+            <a className={buttons.Button} href={"https://open.spotify.com/show/0ALexnN0yS3OX4xdiPetic"}>
               <Image
                 src={SpotifyIcon}
                 alt={"Spotify icon"}
@@ -30,7 +31,7 @@ export default function Home() {
               />
               Listen on Spotify
             </a>
-            <a className={styles.Button} href={"https://podcasts.apple.com/us/podcast/burn-fm/id1521913304"}>
+            <a className={buttons.Button} href={"https://podcasts.apple.com/us/podcast/burn-fm/id1521913304"}>
               <Image
                 src={PodcastsIcon}
                 alt={"Apple Podcasts icon"}
@@ -57,7 +58,7 @@ export default function Home() {
               Follow us on @theburnfm to listen to our playlists,
               keep up to date with new releases, and listen back to our ball playlists!
             </p>
-            <a className={styles.Button} href={"https://open.spotify.com/user/theburnfm"}>
+            <a className={buttons.Button} href={"https://open.spotify.com/user/theburnfm"}>
               <Image
                 src={SpotifyIcon}
                 alt={"Spotify icon"}
@@ -86,7 +87,7 @@ export default function Home() {
               </p>
             </div>
 
-            <Link href={'/schedule'} className={styles.Button}>
+            <Link href={'/schedule'} className={buttons.Button}>
               View Schedule
             </Link>
           </div>
@@ -104,7 +105,7 @@ export default function Home() {
               Running a radio station is no small feat. See the team who lead our station, as well as the managers of
               our fantastic sections.
             </p>
-            <Link href={'/about'} className={styles.Button}>
+            <Link href={'/about'} className={buttons.Button}>
               More about us
             </Link>
           </div>

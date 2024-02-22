@@ -283,24 +283,3 @@
   }
 }
 
-.Clickable {
-  font: unset;
-  text-align: unset;
-  cursor: pointer;
-  background: unset;
-  border: unset;
-  color: unset;
-
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
-  transition: all 200ms cubic-bezier(0.24, 0.89, 0.57, 1.58);
-}
-
-@media (hover: hover) {
-  .Clickable:hover {
-    transform: scale(1.02);
-  }
-}
-
-.Clickable:active {
-  transform: scale(0.96);
-}

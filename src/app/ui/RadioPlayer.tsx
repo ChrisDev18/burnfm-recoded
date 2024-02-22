@@ -1,16 +1,19 @@
 'use client'
 
 import styles from "./RadioPlayer.module.css";
+import showpopup from "@/app/ShowPopup.module.css"
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show as ShowType, PopupState, ShowSchedule} from "@/app/lib/types";
 import {getNowPlaying} from "@/app/lib/fetchdata";
 import Show from "./Show";
-import ShowPopup, {Dialog, DialogContent, DialogTrigger} from "@/app/ui/ShowPopup";
+import {Dialog, DialogContent} from "@/app/ui/Popup";
 import loading_styles from "./Spinner.module.css";
 import {usePathname} from "next/navigation";
-import ProgressiveImage from "@/app/ui/ProgessiveImage";
+import {Close} from "@radix-ui/react-dialog";
+import buttons from "@/app/buttons.module.css"
+import Link from "next/link";
 
 const empty_schedule: ShowSchedule = {
   current_show: null,
@@ -34,7 +37,7 @@ export default function RadioPlayer() {
 
   // Generate the list of shows
   const shows_list = schedule.next_shows.map((show, i) =>
-      <button className={styles.Clickable} key={i} onClick={() => selectShow(show)} >
+      <button className={buttons.Clickable} key={i} onClick={() => selectShow(show)} >
         <Show show={show} />
       </button>
   );
@@ -165,13 +168,13 @@ export default function RadioPlayer() {
     }
   }, [playing, schedule.current_show]);
 
-  // Displays the ShowPopup with details for the current show
+  // Displays the Popup with details for the current show
   function selectShow(show: ShowType) {
     setPopup({
       visible: true,
       title: show.title,
       excerpt: show.excerpt,
-      img: show.img === null ? fallback.src : show.img
+      img: show.img
     });
   }
 
@@ -205,11 +208,6 @@ export default function RadioPlayer() {
   // Handles any errors with the audio HTML element
   function handleNoAudio() {
     console.error("Error accessing audio");
-    // setSchedule(schedule=> ({
-    //   ... schedule,
-    //   current_show: null
-    // }));
-    // console.log("Schedule updated: current show is now:", schedule.current_show);
   }
 
   return (
@@ -217,18 +215,27 @@ export default function RadioPlayer() {
       {/*Popup for when a user clicks on a show*/}
       <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
         <DialogContent>
-          <div className={"Popup"}>
-            <Image className={"Image"}
-                   src={popup.img === null ? fallback.src : popup.img}
-                   alt={"Cover image for the show: " + popup.title}
-                   height={120}
-                   width={120}
-            />
+          <div className={showpopup.Popup}>
+            {popup.img !== null ?
+              <Image className={showpopup.Image}
+                     src={popup.img === null ? fallback.src : popup.img}  // clean this up once decided on fallback show artwork
+                     alt={"Cover image for the show: " + popup.title}
+                     height={120}
+                     width={120}
+              />
+            : <></>
+            }
 
-            <div className={"PopupDetails"}>
-              <h2>{popup.title}</h2>
-              <p>{popup.excerpt === "" ? "This show has no excerpt" : popup.excerpt}</p>
-            </div>
+            <h2>{popup.title}</h2>
+            <p>{popup.excerpt === "" ? "This show has no excerpt" : popup.excerpt}</p>
+
+            <Link className={buttons.Button} href={"/schedule"}>
+              See in schedule
+            </Link>
+
+            <Close className={`${showpopup.Close} ${buttons.Clickable}`}>
+              <span className={'material-symbols-rounded'}>close</span>
+            </Close>
           </div>
         </DialogContent>
       </Dialog>
@@ -273,7 +280,7 @@ export default function RadioPlayer() {
               </span>
             </button>
 
-            <button className={`${styles.PlayNow_Details} ${styles.Clickable}`} onClick={() => schedule.current_show !== null? selectShow(schedule.current_show): null}>
+            <button className={`${styles.PlayNow_Details} ${buttons.Clickable}`} onClick={() => schedule.current_show !== null? selectShow(schedule.current_show): null}>
               <p className={styles.Show_Times}>{schedule.current_show.start_time.toLocaleTimeString(['en'], {
                 hour: "2-digit",
                 minute: "2-digit"

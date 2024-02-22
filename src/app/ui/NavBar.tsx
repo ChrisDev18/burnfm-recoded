@@ -75,8 +75,8 @@ export default function NavBar() {
           </li>
 
           <li>
-            <Link className={path == '/schedule' ? `${styles.Link} ${styles.Selected}` : styles.Link}
-                  href="/schedule">
+            <Link className={path == '/schedule/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
+                  href="/schedule/">
               <span className={'material-symbols-rounded'}>
                 overview
               </span>
@@ -85,8 +85,8 @@ export default function NavBar() {
           </li>
 
           <li>
-            <Link className={path == '/about' ? `${styles.Link} ${styles.Selected}` : styles.Link}
-                  href="/about">
+            <Link className={path == '/about/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
+                  href="/about/">
               <span className={'material-symbols-rounded'}>
                 group
               </span>
