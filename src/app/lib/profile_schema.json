@@ -18,13 +18,13 @@
       "description"
     ],
     "properties": {
-      "name": {
-        "type": "string",
-        "title": "The person's name"
-      },
       "role": {
         "type": "string",
         "title": "The person's role on committee"
+      },
+      "name": {
+        "type": "string",
+        "title": "The person's name"
       },
       "course": {
         "type": "string",

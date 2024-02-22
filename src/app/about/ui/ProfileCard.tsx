@@ -15,12 +15,19 @@ export default function ProfileCard({profile}: {profile: Profile}) {
 
   return (
     <div className={styles.Root}>
-      <Image className={styles.Image}
-             src={"https://burnfm.com" + profile.picture}  //.replace(/\.[^/.]+$/, "")
-             alt={`Profile picture of ${profile.name}`}
-             height={200}
-             width={300}
-      />
+      {profile.picture !== "" ?
+        <Image className={styles.Image}
+               src={"https://burnfm.com" + profile.picture}  //.replace(/\.[^/.]+$/, "")
+               alt={`Profile picture of ${profile.name}`}
+               height={200}
+               width={300}
+               priority
+        />
+        :
+        <div className={styles.ImgPlaceholder}>
+          <span className={'material-symbols-rounded'}>person</span>
+        </div>
+      }
 
       <div className={styles.Content}>
         <p className={styles.Title}>{profile.role}</p>
@@ -30,25 +37,33 @@ export default function ProfileCard({profile}: {profile: Profile}) {
         {/*  <p>{profile.email}</p>*/}
         {/*</div>*/}
 
+        <p>{profile.course !== ""? `Studies: ${profile.course}`: ""}</p>
         <p className={styles.Description}>{profile.description}</p>
+
+        {profile.fun_fact !== "" ?
+          <div className={styles.AdditionalContent}>
+            <div>
+              <span className={'material-symbols-rounded'}>bolt</span>
+              <p className={styles.Header}>Fun fact</p>
+            </div>
+            <p>{profile.fun_fact}</p>
+          </div>
+          : <></>
+        }
+
         {profile.favourite_song !== "" ?
-          <>
-            <p className={styles.SongHeader}>Favourite song</p>
-            <iframe style={{borderRadius: "12px", border: "none"}}
+          <div className={styles.AdditionalContent}>
+            <div>
+              <span className={'material-symbols-rounded'}>favorite</span>
+              <p className={styles.Header}>Favourite song</p>
+            </div>
+            <iframe style={{borderRadius: "16px", border: "none"}}
                     src={`https://open.spotify.com/embed/track/${spotify_id}?utm_source=generator`} width="100%"
                     height="80"
                     allowFullScreen={false}
                     loading="lazy"
             />
-          </>
-          : <></>
-        }
-
-        {profile.fun_fact !== "" ?
-          <>
-            <p className={styles.SongHeader}>Fun fact</p>
-            <p>{profile.fun_fact}</p>
-          </>
+          </div>
           : <></>
         }
       </div>

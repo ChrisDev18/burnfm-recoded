@@ -31,8 +31,8 @@ export default function AboutUs() {
       <div className={styles.Header_Section}>
         <h1 className={styles.Header}>About us</h1>
         <p className={styles.Subtitle}>
-          BurnFM runs thanks to its dedicated committee members,
-          each voted bi-yearly at AGMs (Annual Group Meetings).
+          BurnFM runs thanks to its dedicated committee members.
+          Find out a little more about their roles below (as well as a few favourite songs and fun facts).
         </p>
       </div>
 

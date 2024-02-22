@@ -1,8 +1,9 @@
 
 .Root {
   position: relative;
+  align-self: stretch;
   display: flex;
-  padding: 32px 64px;
+  padding: 32px 64px 64px;
   flex-grow: 1;
   overflow-x: hidden;
 
@@ -11,11 +12,11 @@
   gap: 32px;
 
   @media only screen and (max-width: 600px) {
-    padding: 32px 0;
+    padding: 32px 0 64px;
   }
 
   @media only screen and (min-width: 1700px) {
-    padding: 32px 256px;
+    padding: 32px 256px 64px;
   }
 }
 
@@ -59,7 +60,7 @@
 .Rectangle {
   position: absolute;
   left: -250px;
-  top: 0px;
+  top: 0;
   height: 300px;
   width: 800px;
   transform: rotate(-15deg);
@@ -73,21 +74,13 @@
 }
 
 .ProfileGrid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   justify-content: left;
   gap: 64px;
-  padding-bottom: 64px;
   align-self: stretch;
 
-  @media only screen and (max-width: 800px) and (min-width: 600px) {
-    flex-wrap: nowrap;
-    flex-direction: column;
+  @media only screen and (max-width: 800px) {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   }
-
-  @media only screen and (max-width: 600px) {
-    justify-content: center;
-  }
-
-
 }
