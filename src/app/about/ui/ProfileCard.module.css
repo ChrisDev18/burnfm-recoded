@@ -41,7 +41,7 @@
     overflow-wrap: anywhere;
   }
 
-  .AdditionalContent {
+  .FunFact, .FavouriteSong {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -52,12 +52,33 @@
     }
   }
 
-  .AdditionalContent > div {
+  .FunFact > div, .FavouriteSong > div {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 4px;
     margin-top: 12px;
+  }
+
+  .FunFact > p {
+    background: rgb(var(--alt-purple-rgb), 0.15);
+    padding: 8px 12px;
+    border-radius: 16px;
+    color: rgb(var(--alt-purple-rgb));
+  }
+
+  .FunFact span {
+    color: rgb(247, 190, 54);
+    filter: drop-shadow(
+            0 0 4px
+            rgb(247, 190, 54, 0.8));
+  }
+
+  .FavouriteSong span {
+    color: rgb(239, 78, 78);
+    filter: drop-shadow(
+            0 0 4px
+            rgb(239, 78, 78, 0.6));
   }
 
 }

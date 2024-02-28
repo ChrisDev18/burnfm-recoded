@@ -41,7 +41,7 @@ export default function ProfileCard({profile}: {profile: Profile}) {
         <p className={styles.Description}>{profile.description}</p>
 
         {profile.fun_fact !== "" ?
-          <div className={styles.AdditionalContent}>
+          <div className={styles.FunFact}>
             <div>
               <span className={'material-symbols-rounded'}>bolt</span>
               <p className={styles.Header}>Fun fact</p>
@@ -52,7 +52,7 @@ export default function ProfileCard({profile}: {profile: Profile}) {
         }
 
         {profile.favourite_song !== "" ?
-          <div className={styles.AdditionalContent}>
+          <div className={styles.FavouriteSong}>
             <div>
               <span className={'material-symbols-rounded'}>favorite</span>
               <p className={styles.Header}>Favourite song</p>
