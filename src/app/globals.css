@@ -9,7 +9,7 @@
   --background-rgb: 255, 255, 255;
   --tertiary-rgb: 255, 255, 255;
   --purple-rgb: 93, 31, 116;
-  --inverse-purple-rgb: 213, 104, 237;
+  --alt-purple-rgb: 93, 31, 116;
 
 }
 
@@ -18,8 +18,7 @@
     --foreground-rgb: 255, 255, 255;
     --background-rgb: 0, 0, 0;
     --tertiary-rgb: 20, 20, 20;
-    --purple-rgb: 213, 104, 237;
-    --inverse-purple-rgb: 93, 31, 116;
+    --alt-purple-rgb: 209, 146, 240; /*213, 104, 237;*/
   }
 
   html {
@@ -31,6 +30,16 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.6em;
+  font-weight: 700;
 }
 
 html, body {

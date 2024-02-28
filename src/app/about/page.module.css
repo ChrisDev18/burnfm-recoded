@@ -64,7 +64,7 @@
   height: 300px;
   width: 800px;
   transform: rotate(-15deg);
-  background-color: rgb(93, 31, 116);
+  background-color: rgb(var(--purple-rgb));
   z-index: -1;
 
   @media only screen and (min-width: 1700px) {

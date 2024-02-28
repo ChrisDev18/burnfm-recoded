@@ -68,17 +68,17 @@
 }
 
 .Link:hover * {
-  color: rgb(var(--purple-rgb));
+  color: rgb(var(--alt-purple-rgb));
 }
 
 .Link:hover {
-  border-bottom: solid 5px rgb(var(--purple-rgb));
+  border-bottom: solid 5px rgb(var(--alt-purple-rgb));
 }
 
 .Link:active {
-  border-bottom: solid 0 rgb(var(--purple-rgb));
+  border-bottom: solid 0 rgb(var(--alt-purple-rgb));
 }
 
 .Selected {
-  border-bottom: solid 3px rgb(var(--purple-rgb));
+  border-bottom: solid 3px rgb(var(--alt-purple-rgb));
 }
