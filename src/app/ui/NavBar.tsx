@@ -2,7 +2,6 @@
 
 import {useEffect} from "react";
 import Link from "next/link";
-import logo_dark from "../../../public/logo-white.png";
 import Image from "next/image";
 import logo_light from "../../../public/logo-purple.png";
 import styles from "./NavBar.module.css"
@@ -49,17 +48,15 @@ export default function NavBar() {
     <header className={styles.Root}>
       <nav className={styles.Navbar} id={"header"}>
         <Link href="/">
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcSet={logo_dark.src}/>
-            <Image
+          <Image
               id={"image"}
               src={logo_light}
+              className={styles.Logo}
               alt="BurnFM Logo"
               height={100}
               width={100}
               priority
-            />
-          </picture>
+          />
 
         </Link>
 
