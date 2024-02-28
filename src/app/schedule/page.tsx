@@ -26,13 +26,6 @@ const init_popup: PopupState = {
 }
 
 
-// async function generateStaticParams() {
-//   return [
-//     { route: '/schedule' }, // Parameters for the about page
-//   ];
-// }
-
-
 export default function SchedulePage() {
 
   const [loading, setLoading] = useState(true);

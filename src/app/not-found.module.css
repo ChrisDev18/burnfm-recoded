@@ -1,0 +1,54 @@
+.Root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: rgb(var(--purple-rgb));
+  padding: 32px;
+  width: 500px;
+  overflow-y: hidden;
+
+  @media only screen and (max-width: 600px) {
+    width: 80%;
+  }
+
+  @media only screen and (min-width: 1000px) {
+    width: 900px;
+  }
+
+  box-shadow: 0 4px 20px 0 rgba(93, 31, 116, 0.50);
+}
+
+.Root::before {
+  content: "404";
+  color: rgb(0,0,0, 0.2);
+  z-index: 0;
+  display: block;
+  position: absolute;
+  top: 20px;
+  font-size: 6em;
+  font-weight: 500;
+  line-height: 0.7;
+  letter-spacing: 0.5em;
+  text-indent: 0.5em
+}
+
+.Root h1 {
+  z-index: 1;
+  color: white;
+}
+
+.Description {
+  font-size: 1.6em;
+  font-weight: 500;
+  color: rgb(255, 255, 255, 0.7);
+}
+
+.Message {
+  font-size: 1em;
+  color: white;
+  margin: 16px 0;
+  width: 80%;
+  text-align: center;
+}
