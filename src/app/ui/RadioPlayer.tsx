@@ -230,7 +230,7 @@ export default function RadioPlayer() {
             <p>{popup.excerpt === "" ? "This show has no excerpt" : popup.excerpt}</p>
 
             <Link className={buttons.Button} href={"/schedule"}>
-              See in schedule
+              Go to today&apos;s schedule
             </Link>
 
             <Close className={`${showpopup.Close} ${buttons.Clickable}`}>
