@@ -5,7 +5,7 @@ import showpopup from "@/app/ShowPopup.module.css"
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
-import {Show as ShowType, PopupState, ShowSchedule} from "@/app/lib/types";
+import {Show as ShowType, PopupState, ShowSchedule, DefaultExcerpts} from "@/app/lib/types";
 import {getNowPlaying} from "@/app/lib/fetchdata";
 import Show from "./Show";
 import {Dialog, DialogContent} from "@/app/ui/Popup";
@@ -227,7 +227,13 @@ export default function RadioPlayer() {
             }
 
             <h2>{popup.title}</h2>
-            <p>{popup.excerpt === "" ? "This show has no excerpt" : popup.excerpt}</p>
+
+            {
+              popup.excerpt !== "" ?
+                <p>{popup.excerpt}</p>
+                   :
+                <p className={showpopup.Default}>{DefaultExcerpts[Math.floor(Math.random() * DefaultExcerpts.length)]}</p>
+            }
 
             <Link className={buttons.Button} href={"/schedule"}>
               Go to today&apos;s schedule

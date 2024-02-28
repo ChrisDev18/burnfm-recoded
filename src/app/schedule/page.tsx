@@ -3,7 +3,7 @@
 import styles from './page.module.css'
 import React, {useEffect, useState} from "react";
 import {getWholeSchedule} from "@/app/lib/fetchdata";
-import {Day, days, PopupState, Show as ShowType} from "@/app/lib/types";
+import {Day, days, DefaultExcerpts, PopupState, Show as ShowType} from "@/app/lib/types";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show} from "@/app/lib/types";
@@ -119,7 +119,13 @@ export default function SchedulePage() {
             }
 
             <h2>{popup.title}</h2>
-            <p>{popup.excerpt === "" ? "This show has no excerpt" : popup.excerpt}</p>
+
+            {
+              popup.excerpt !== "" ?
+                <p>{popup.excerpt}</p>
+                :
+                <p className={showpopup.Default}>{DefaultExcerpts[Math.floor(Math.random() * DefaultExcerpts.length)]}</p>
+            }
 
             <Close className={`${showpopup.Close} ${styles.Clickable}`}>
               <span className={'material-symbols-rounded'}>close</span>

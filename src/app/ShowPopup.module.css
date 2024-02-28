@@ -21,3 +21,12 @@
 .Close span {
   font-size: 32px;
 }
+
+.Default {
+  opacity: 50%;
+  font-style: italic;
+}
+
+.Popup p {
+  margin-bottom: 4px;
+}
