@@ -52,7 +52,7 @@
     }
   }
 
-  .FunFact > div, .FavouriteSong > div {
+  .IconHeader {
     display: flex;
     flex-direction: row;
     align-items: center;

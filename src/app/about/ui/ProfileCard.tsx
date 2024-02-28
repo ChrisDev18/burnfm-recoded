@@ -4,14 +4,15 @@ import styles from "./ProfileCard.module.css"
 
 export default function ProfileCard({profile}: {profile: Profile}) {
   // get spotify track id
-  let spotify_id;
-  let temp = profile.favourite_song.match(/\/track\/([a-zA-Z0-9]+)/);
-  if (temp === null || temp.length < 2) {
-    console.error("Invalid url given for Spotify")
-  } else {
-    spotify_id = temp[1];
+  let spotify_id: string | null = null;
+  if (profile.favourite_song !== "") {
+    let temp = profile.favourite_song.match(/\/track\/([a-zA-Z0-9]+)/);
+    if (temp === null || temp.length < 2) {
+      console.error("Invalid url given for Spotify: " + profile.favourite_song + " goes to: " + temp)
+    } else {
+      spotify_id = temp[1];
+    }
   }
-
 
   return (
     <div className={styles.Root}>
@@ -42,7 +43,7 @@ export default function ProfileCard({profile}: {profile: Profile}) {
 
         {profile.fun_fact !== "" ?
           <div className={styles.FunFact}>
-            <div>
+            <div className={styles.IconHeader}>
               <span className={'material-symbols-rounded'}>bolt</span>
               <p className={styles.Header}>Fun fact</p>
             </div>
@@ -51,9 +52,9 @@ export default function ProfileCard({profile}: {profile: Profile}) {
           : <></>
         }
 
-        {profile.favourite_song !== "" ?
+        {(profile.favourite_song !== "" || spotify_id !== null) ?
           <div className={styles.FavouriteSong}>
-            <div>
+            <div className={styles.IconHeader}>
               <span className={'material-symbols-rounded'}>favorite</span>
               <p className={styles.Header}>Favourite song</p>
             </div>
