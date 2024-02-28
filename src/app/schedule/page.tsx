@@ -11,6 +11,7 @@ import {Dialog, DialogContent} from "@/app/ui/Popup";
 import showpopup from "@/app/ShowPopup.module.css";
 import buttons from "@/app/buttons.module.css";
 import {Close} from "@radix-ui/react-dialog";
+import "@/app/icons.css"
 
 
 const empty_schedule: Show[][] = []
