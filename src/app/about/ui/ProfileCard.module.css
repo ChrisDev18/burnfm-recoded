@@ -41,46 +41,40 @@
     overflow-wrap: anywhere;
   }
 
-  .FunFact, .FavouriteSong {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
 
-    .Header {
-      font-weight: 600;
-      font-size: 1.1em;
-    }
+
+}
+
+.FunFact, .FavouriteSong {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .Header {
+    font-weight: 600;
+    font-size: 1.1em;
   }
+}
 
-  .IconHeader {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 4px;
-    margin-top: 12px;
-  }
+.FunFact > p {
+  background: rgb(var(--alt-purple-rgb), 0.15);
+  padding: 8px 12px;
+  border-radius: 16px;
+  color: rgb(var(--alt-purple-rgb));
+}
 
-  .FunFact > p {
-    background: rgb(var(--alt-purple-rgb), 0.15);
-    padding: 8px 12px;
-    border-radius: 16px;
-    color: rgb(var(--alt-purple-rgb));
-  }
+.FunFact span {
+  color: rgb(247, 190, 54);
+  filter: drop-shadow(
+          0 0 4px
+          rgb(247, 190, 54, 0.8));
+}
 
-  .FunFact span {
-    color: rgb(247, 190, 54);
-    filter: drop-shadow(
-            0 0 4px
-            rgb(247, 190, 54, 0.8));
-  }
-
-  .FavouriteSong span {
-    color: rgb(239, 78, 78);
-    filter: drop-shadow(
-            0 0 4px
-            rgb(239, 78, 78, 0.6));
-  }
-
+.FavouriteSong span {
+  color: rgb(239, 78, 78);
+  filter: drop-shadow(
+          0 0 4px
+          rgb(239, 78, 78, 0.6));
 }
 
 .Content span {
@@ -103,4 +97,12 @@
 
 .ImgPlaceholder span {
   color: white;
+}
+
+.IconHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
 }

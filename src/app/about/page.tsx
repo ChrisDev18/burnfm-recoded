@@ -1,23 +1,28 @@
-'use client'
-
 import styles from './page.module.css'
-import React, {useEffect, useState} from "react";
+import React from "react";
 import ProfileCard from "@/app/about/ui/ProfileCard";
-import {Profile} from "@/app/lib/types";
-import {getProfiles} from "@/app/lib/fetchdata";
+// import {getProfiles} from "@/app/lib/fetchdata";
 import "@/app/icons.css"
+import {Profile} from "@/app/lib/types";
+import {promises as fs} from "fs";
 
+async function getProfiles(): Promise<Profile[]> {
+  let profiles: Profile[] = [];
 
-export default function AboutUs() {
-  const [profiles, setProfiles] = useState<Profile[]>([])
+  try {
+    let rawData = await fs.readFile('public/user_profile.json', 'utf8');
+    profiles = JSON.parse(rawData);
+  } catch (e) {
+    console.error("error: " + e);
+  }
 
-  useEffect(() => {
-    getProfiles()
-      .then((x) => setProfiles(x))
-      .catch((e) => console.error("Error when fetching profiles: " + e))
-  }, []);
+  return profiles;
+}
 
-  const profile_list = profiles.map((profile, i) =>
+export default async function AboutUs() {
+  const profiles: Profile[] = await getProfiles();
+
+  const profile_list: React.JSX.Element[] = profiles.map((profile, i) =>
     <ProfileCard key={i} profile={profile}/>
   );
 

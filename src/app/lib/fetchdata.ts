@@ -1,5 +1,5 @@
 import {Profile, ShowSchedule, Show} from "@/app/lib/types";
-import data from './profiles.json';
+import data from '../../../public/user_profile.json';
 
 export function decode_url(body: string) {
   // console.log("Splitting url");
@@ -122,24 +122,3 @@ export async function getWholeSchedule() {
   return schedule;
 }
 
-
-export async function getProfiles(): Promise<Profile[]> {
-
-  let profiles: Profile[] = [];
-
-  // let res = await fetch("https://burnfm.com/user_profile.json");
-  // if (! res.ok) {
-  //   console.error(res.statusText);
-  //   return profiles;
-  // }
-  //
-  // let json = await res.json();
-
-  try {
-    profiles = data; // change to json.body when using fetch;
-  } catch (e) {
-    console.error("JSON does not match Profile interface");
-  }
-
-  return profiles;
-}
