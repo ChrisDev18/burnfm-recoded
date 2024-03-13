@@ -1,5 +1,4 @@
-import {Profile, ShowSchedule, Show} from "@/app/lib/types";
-import data from '../../../public/user_profile.json';
+import {ShowSchedule, Show} from "@/app/lib/types";
 
 export function decode_url(body: string) {
   // console.log("Splitting url");
