@@ -1,11 +1,11 @@
 'use client'
 
 import styles from "./RadioPlayer.module.css";
-import showpopup from "@/app/ShowPopup.module.css"
+import showPopup from "@/app/ShowPopup.module.css"
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
-import {Show as ShowType, PopupState, ShowSchedule, DefaultExcerpts} from "@/app/lib/types";
+import {Show as ShowType, PopupState, ShowSchedule} from "@/app/lib/types";
 import {getNowPlaying} from "@/app/lib/fetchdata";
 import Show from "./Show";
 import {Dialog, DialogContent} from "@/app/ui/Popup";
@@ -14,6 +14,7 @@ import {usePathname} from "next/navigation";
 import {Close} from "@radix-ui/react-dialog";
 import buttons from "@/app/buttons.module.css"
 import Link from "next/link";
+import {pickExcerpt} from "@/app/lib/excerpts";
 
 const empty_schedule: ShowSchedule = {
   current_show: null,
@@ -215,15 +216,14 @@ export default function RadioPlayer() {
       {/*Popup for when a user clicks on a show*/}
       <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
         <DialogContent>
-          <div className={showpopup.Popup}>
-            {popup.img !== null ?
-              <Image className={showpopup.Image}
-                     src={popup.img === null ? fallback.src : popup.img}  // clean this up once decided on fallback show artwork
+          <div className={showPopup.Popup}>
+            {popup.img &&
+              <Image className={showPopup.Image}
+                     src={popup.img}
                      alt={"Cover image for the show: " + popup.title}
                      height={120}
                      width={120}
               />
-            : <></>
             }
 
             <h2>{popup.title}</h2>
@@ -232,14 +232,14 @@ export default function RadioPlayer() {
               popup.excerpt !== "" ?
                 <p>{popup.excerpt}</p>
                    :
-                <p className={showpopup.Default}>{DefaultExcerpts[Math.floor(Math.random() * DefaultExcerpts.length)]}</p>
+                <p className={showPopup.Default}>{pickExcerpt()}</p>
             }
 
             <Link className={buttons.Button} href={"/schedule"}>
               Go to today&apos;s schedule
             </Link>
 
-            <Close className={`${showpopup.Close} ${buttons.Clickable}`}>
+            <Close className={`${showPopup.Close} ${buttons.Clickable}`}>
               <span className={'material-symbols-rounded'}>close</span>
             </Close>
           </div>

@@ -3,20 +3,16 @@
 import styles from './page.module.css'
 import React, {useEffect, useState} from "react";
 import {getSchedule} from "@/app/lib/fetchdata";
-import {Day, days, DefaultExcerpts, PopupState, Show as ShowType} from "@/app/lib/types";
+import {Day, days, PopupState, Show as ShowType} from "@/app/lib/types";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show} from "@/app/lib/types";
 import {Dialog, DialogContent} from "@/app/ui/Popup";
-import showpopup from "@/app/ShowPopup.module.css";
+import showPopup from "@/app/ShowPopup.module.css";
 import buttons from "@/app/buttons.module.css";
 import {Close} from "@radix-ui/react-dialog";
 import "@/app/icons.css"
-
-
-const empty_schedule: Show[][] = []
-
-let Schedule: Show[][] = [];
+import {pickExcerpt} from "@/app/lib/excerpts";
 
 const init_popup: PopupState = {
   visible: false,
@@ -25,13 +21,11 @@ const init_popup: PopupState = {
   excerpt: "default excerpt"
 }
 
-
 export default function SchedulePage() {
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);  // TODO: implement loading UI
   const [schedule, setSchedule] = useState<Show[][]>([[],[],[],[],[],[],[]]);
-  // @ts-ignore
-  const [day, setDay] = useState<Day>(new Date().getDay())  // used to filter by day
+  const [day, setDay] = useState<Day>(new Date().getDay() as Day)  // used to filter by day
   const [popup, setPopup] = useState(init_popup);
 
   // Fetch whole Schedule from API
@@ -92,7 +86,7 @@ export default function SchedulePage() {
 
       <div className={`${styles.FilterList} ${styles.Padded}`}>
         { // Render the different day options as radio buttons
-          days.map((x, i) => {
+          days.map((_, i) => {
             i = (i+1) % 7;
             return (
               <div className={styles.FilterItem} key={i}>
@@ -108,27 +102,25 @@ export default function SchedulePage() {
 
       <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
         <DialogContent>
-          <div className={showpopup.Popup}>
-            {popup.img !== null ?
-              <Image className={showpopup.Image}
-                     src={popup.img === null ? fallback.src : popup.img}  // clean this up once decided on fallback show artwork
+          <div className={showPopup.Popup}>
+            {popup.img &&
+              <Image className={showPopup.Image}
+                     src={popup.img}
                      alt={"Cover image for the show: " + popup.title}
                      height={120}
                      width={120}
               />
-              : <></>
             }
 
             <h2>{popup.title}</h2>
 
-            {
-              popup.excerpt !== "" ?
-                <p>{popup.excerpt}</p>
-                :
-                <p className={showpopup.Default}>{DefaultExcerpts[Math.floor(Math.random() * DefaultExcerpts.length)]}</p>
+            {popup.excerpt !== "" ?
+              <p>{popup.excerpt}</p>
+              :
+              <p className={showPopup.Default}>{pickExcerpt()}</p>
             }
 
-            <Close className={`${showpopup.Close} ${styles.Clickable}`}>
+            <Close className={`${showPopup.Close} ${styles.Clickable}`}>
               <span className={'material-symbols-rounded'}>close</span>
             </Close>
           </div>
