@@ -1,3 +1,24 @@
+export type API = {
+  body: {
+    schedule: API_ScheduleItem[]
+  }
+}
+
+export type API_ScheduleItem = {
+  start_time_in_station_tz: number,
+  end_time_in_station_tz: number,
+  content: {
+    contentType: {
+      display_name: string,
+      slug: string,
+    },
+    display_title: string,
+    excerpt: string,
+    body: string,
+    href: string
+  }[]
+}
+
 export type Show = {
   title: string,
   excerpt: string,

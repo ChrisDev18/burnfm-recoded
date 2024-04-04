@@ -2,7 +2,7 @@
 
 import styles from './page.module.css'
 import React, {useEffect, useState} from "react";
-import {getWholeSchedule} from "@/app/lib/fetchdata";
+import {getSchedule} from "@/app/lib/fetchdata";
 import {Day, days, DefaultExcerpts, PopupState, Show as ShowType} from "@/app/lib/types";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
@@ -37,11 +37,12 @@ export default function SchedulePage() {
   // Fetch whole Schedule from API
   useEffect(() => {
     setLoading(true);
-    getWholeSchedule()
+    getSchedule()
       .then(x => setSchedule(x))
       .catch(e => console.error("Error: ", e))
       .finally(() => setLoading(false))
   }, []);
+
 
   // Map shows from schedule to UI elements
   const ShowList = schedule[day]

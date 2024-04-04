@@ -1,123 +1,104 @@
-import {ShowSchedule, Show} from "@/app/lib/types";
+import {API, API_ScheduleItem, Show, ShowSchedule} from "@/app/lib/types";
 
-export function decode_url(body: string) {
+function decode_url(body: string) {
   // console.log("Splitting url");
   let tokens = body.split(":");
   // console.log("Tokens: " + tokens);
 
-  let url = "https://api.broadcast.radio/api/image/" + tokens[1] + "." + tokens[0].split("/")[1] + "?g=center&w=400&h=400&c=true";
-  // console.log("URL: " + url);
-  return url;
+  return "https://api.broadcast.radio/api/image/" + tokens[1] + "." + tokens[0].split("/")[1] + "?g=center&w=400&h=400&c=true";
 }
 
-// Returns a Schedule object with a value for current_show and top few songs (undefined amount - decided by API).
+// Forms show object given a ScheduleItem from the API
+function formShow(show: API_ScheduleItem) {
+  let new_show: Show = {
+    title: "",
+    excerpt: "",
+    img: null,
+    start_time: new Date(show.start_time_in_station_tz),
+    end_time: new Date(show.end_time_in_station_tz),
+  };
+
+  show.content.forEach((content) => {
+    // only set the image if exists
+    if (content.contentType.slug === "featuredImage") {
+      new_show.img = decode_url(content.body);
+    }
+
+    // only set show details if exists
+    if (content.contentType.slug === "show") {
+      new_show.title = content.display_title;
+      new_show.excerpt = content.excerpt;
+    }
+
+  });
+  return new_show;
+}
+
+// Retrieve all the shows in the schedule from the API, sorted earliest to latest. Returns [] if there's an error
+async function getAllShows() {
+  let res = await fetch("https://api.broadcast.radio/api/nowplaying/957?scheduleLength=true");
+
+  if (! res.ok) {
+    console.error(res.statusText);
+    return [];
+  }
+
+  // Extract the API Body
+  let json = await res.json() as API;
+
+  return json.body.schedule
+      .map(scheduleItem => formShow(scheduleItem))
+      .toSorted((a, b) => a.start_time.getTime() < b.start_time.getTime() ? -1 : 1);
+}
+
+// Returns the current_show as well as a list of next_shows.
 export async function getNowPlaying() {
 
-  let schedule: ShowSchedule = {
+  let playerData: ShowSchedule = {
     current_show: null,
     next_shows: []
   };
 
-  let res = await fetch("https://api.broadcast.radio/api/nowplaying/957?");
-  if (! res.ok) {
-    console.error(res.statusText);
-    return schedule;
+  // Get all the shows from API (sorted from earliest to latest)
+  const allShows = await getAllShows();
+
+  // Go through the shows finding the current show, and the next three shows
+  for (const show of allShows) {
+    if (show.start_time.getTime() > Date.now() && playerData.next_shows.length < 3)
+      playerData.next_shows.push(show);
+
+    if (show.start_time.getTime() < Date.now() && show.end_time.getTime() > Date.now())
+      playerData.current_show = show;
+
+    if (playerData.next_shows.length >= 3 && playerData.current_show !== null)
+      break;
   }
 
-  let json = await res.json();
-
-
-  json.body.schedule.forEach((show: any) => {
-
-    let now = Date.now();
-
-    let new_show: Show = {
-      title: "",
-      excerpt: "",
-      img: null,
-      start_time: new Date(parseInt(show.start_tza)),
-      end_time: new Date(parseInt(show.end_tza)),
-    };
-
-    show.content.forEach((content: any) => {
-
-      if (content.contentType.slug === "featuredImage") {
-        new_show.img = decode_url(content.body);
-      }
-
-      if (content.contentType.slug === "show") {
-        new_show.title = content.display_title;
-        new_show.excerpt = content.excerpt;
-      }
-    });
-
-    if (now >= show.start_tza && now <= show.end_tza) {
-      // this is current show - assign current_show field
-      schedule.current_show = new_show;
-
-    } else {
-      // this is a show in the schedule
-      schedule.next_shows.push(new_show);
-    }
-  });
-  // console.log(schedule)
-  return schedule;
+  return playerData;
 }
 
-
-// Returns a Schedule object with no value for current_show, whole schedule.
-export async function getWholeSchedule() {
+// Returns a Schedule split up by weekdays. If error, returns a list of empty lists
+export async function getSchedule() {
 
   let schedule: Show[][] = [[],[],[],[],[],[],[]];
 
-  let res = await fetch("https://api.broadcast.radio/api/nowplaying/957?scheduleLength=true");
-  if (! res.ok) {
-    console.error(res.statusText);
-    return schedule;
-  }
+  const allShows = await getAllShows();
 
-  let json = await res.json();
-  json.body.schedule.forEach((show: any) => {
+  allShows.forEach(show => {
 
-    let new_show: Show = {
-      title: "",
-      excerpt: "",
-      img: null,
-      start_time: new Date(parseInt(show.start_tza)),
-      end_time: new Date(parseInt(show.end_tza)),
-    };
-
-    show.content.forEach((content: any) => {
-      // only set the image if exists
-      if (content.contentType.slug === "featuredImage") {
-        new_show.img = decode_url(content.body);
-      }
-
-      // only set show details if exists
-      if (content.contentType.slug === "show") {
-        new_show.title = content.display_title;
-        new_show.excerpt = content.excerpt;
-      }
-
-    });
-
-    // this is a show in the schedule
-    let day = new_show.start_time.getDay();
+    let day = show.start_time.getDay();
 
     // if a show with the same title and excerpt has already been added for the same day then stop
-    // NOTE: This code only works assuming the API returns shows sorted by time
     if (schedule[day].some(item =>
-      item.title === new_show.title
-      && item.excerpt === new_show.excerpt
-      && item.start_time.getHours() == new_show.start_time.getHours())) {
+      item.title === show.title
+      && item.excerpt === show.excerpt
+      && item.start_time.getHours() == show.start_time.getHours())) {
       return schedule;
     }
 
-    schedule[day].push(new_show);
-
+    schedule[day].push(show);
   });
 
-  // console.log("Schedule:", schedule)
   return schedule;
 }
 
