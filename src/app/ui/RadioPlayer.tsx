@@ -1,7 +1,7 @@
 'use client'
 
 import styles from "./RadioPlayer.module.css";
-import showPopup from "@/app/ShowPopup.module.css"
+import showPopup from "@/app/ui/ShowPopup.module.css"
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
@@ -12,7 +12,7 @@ import {Dialog, DialogContent} from "@/app/ui/Popup";
 import loading_styles from "./Spinner.module.css";
 import {usePathname} from "next/navigation";
 import {Close} from "@radix-ui/react-dialog";
-import buttons from "@/app/buttons.module.css"
+import buttons from "@/app/ui/buttons.module.css"
 import Link from "next/link";
 import {pickExcerpt} from "@/app/lib/excerpts";
 

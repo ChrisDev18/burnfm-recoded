@@ -8,10 +8,10 @@ import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show} from "@/app/lib/types";
 import {Dialog, DialogContent} from "@/app/ui/Popup";
-import showPopup from "@/app/ShowPopup.module.css";
-import buttons from "@/app/buttons.module.css";
+import showPopup from "@/app/ui/ShowPopup.module.css";
+import buttons from "@/app/ui/buttons.module.css";
 import {Close} from "@radix-ui/react-dialog";
-import "@/app/icons.css"
+import "@/app/ui/icons.css"
 import {pickExcerpt} from "@/app/lib/excerpts";
 
 const init_popup: PopupState = {

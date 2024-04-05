@@ -1,6 +1,6 @@
 import type {Metadata, Viewport} from 'next'
 import {Roboto, Source_Sans_3} from 'next/font/google'
-import './globals.css'
+import './ui/globals.css'
 
 import "@/app/layout.css";
 import NavBar from "@/app/ui/NavBar";

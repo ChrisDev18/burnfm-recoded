@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import buttons from './buttons.module.css'
+import buttons from './ui/buttons.module.css'
 import styles from './not-found.module.css'
-import "@/app/icons.css"
+import "@/app/ui/icons.css"
 
 export default function NotFound() {
   return (
