@@ -3,13 +3,11 @@
 import styles from './page.module.css'
 import buttons from '@/app/ui/buttons.module.css'
 
-import RadioPlayer from './ui/RadioPlayer';
 import './ui/icons.css';
 import Image from "next/image";
 import SpotifyIcon from "../../public/Spotify_icon.svg"
 import PodcastsIcon from "../../public/Podcasts_icon.svg"
 import Link from "next/link";
-import Card from "@/app/ui/Card";
 
 
 export default function Home() {

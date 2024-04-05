@@ -1,7 +1,7 @@
 'use client'
 
 import styles from './page.module.css'
-import React, {Suspense, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import ProfileCard from "@/app/about/ui/ProfileCard";
 import "@/app/ui/icons.css"
 import {Profile} from "@/app/lib/types";
