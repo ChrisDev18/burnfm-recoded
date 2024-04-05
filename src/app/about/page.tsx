@@ -11,20 +11,19 @@ export default function AboutUs() {
   const [profiles, setProfiles] = useState<Profile[]>([])
 
   useEffect(() => {
-    fetch('/user_profile.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        setProfiles(data as Profile[]);    // Do something with the fetched JSON data
-      })
-      .catch(error => {
-        console.error('There was a problem fetching the profile_data - ', error);
-      });
+      async function fetchData() {
+          try {
+              const response = await fetch('/user_profile.json');
+              if (!response.ok)
+                  throw new Error('Network response was not ok');
+              const data = await response.json();
+              setProfiles(data as Profile[]); // Do something with the fetched JSON data
+          } catch (error) {
+              console.error('There was a problem fetching the profile_data - ', error);
+          }
+      }
+
+      fetchData().then();
   }, []);
 
   const profile_list: React.JSX.Element[] = profiles.map((profile, i) =>
