@@ -41,7 +41,7 @@ export default function Home() {
             </a>
           </div>
           <div className={styles.CardIcon}>
-            <span className={"material-symbols-rounded"} style={{color: "#5D1F74"}}>
+            <span className={"material-symbols-rounded notranslate"} style={{color: "#5D1F74"}}>
               podcasts
             </span>
           </div>
@@ -91,7 +91,7 @@ export default function Home() {
             </Link>
           </div>
           <div className={styles.CardIcon}>
-            <span className={"material-symbols-rounded"} style={{color: "#32103F"}}>
+            <span className={"material-symbols-rounded notranslate"} style={{color: "#32103F"}}>
               overview
             </span>
           </div>
@@ -110,7 +110,7 @@ export default function Home() {
           </div>
 
           <div className={styles.CardIcon}>
-            <span className={"material-symbols-rounded"} style={{color: "#B751BB"}}>
+            <span className={"material-symbols-rounded notranslate"} style={{color: "#B751BB"}}>
               group
             </span>
           </div>

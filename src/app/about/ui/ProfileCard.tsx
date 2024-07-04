@@ -26,15 +26,15 @@ export default function ProfileCard({profile}: {profile: Profile}) {
         />
         :
         <div className={styles.ImgPlaceholder}>
-          <span className={'material-symbols-rounded'}>person</span>
+          <span className={'material-symbols-rounded notranslate'}>person</span>
         </div>
       }
 
       <div className={styles.Content}>
         <p className={styles.Title}>{profile.role}</p>
-        <p className={styles.Name}>{profile.name}</p>
+        <p className={`${styles.Name} notranslate`}>{profile.name}</p>
         {/*<div className={styles.Email}>*/}
-        {/*  <span className={"material-symbols-rounded"}>email</span>*/}
+        {/*  <span className={"material-symbols-rounded notranslate"}>email</span>*/}
         {/*  <p>{profile.email}</p>*/}
         {/*</div>*/}
 
@@ -44,7 +44,7 @@ export default function ProfileCard({profile}: {profile: Profile}) {
         {profile.fun_fact !== "" ?
           <div className={styles.FunFact}>
             <div className={styles.IconHeader}>
-              <span className={'material-symbols-rounded'}>bolt</span>
+              <span className={'material-symbols-rounded notranslate'}>bolt</span>
               <p className={styles.Header}>Fun fact</p>
             </div>
             <p>{profile.fun_fact}</p>
@@ -55,7 +55,7 @@ export default function ProfileCard({profile}: {profile: Profile}) {
         {(profile.favourite_song !== "" || spotify_id !== null) ?
           <div className={styles.FavouriteSong}>
             <div className={styles.IconHeader}>
-              <span className={'material-symbols-rounded'}>favorite</span>
+              <span className={'material-symbols-rounded notranslate'}>favorite</span>
               <p className={styles.Header}>Favourite song</p>
             </div>
             <iframe style={{borderRadius: "16px", border: "none"}}

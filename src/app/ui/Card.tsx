@@ -45,7 +45,7 @@ export default function Card({heading, body, links, colour, icon=null, image=nul
 
             {icon &&
                 <div className={styles.CardIcon}>
-                    <span className={"material-symbols-rounded"} style={{color: colour}}>
+                    <span className={"material-symbols-rounded notranslate"} style={{color: colour}}>
                       {icon}
                     </span>
                 </div>

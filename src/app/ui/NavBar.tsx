@@ -47,7 +47,7 @@ export default function NavBar() {
   return (
     <header className={styles.Root}>
       <nav className={styles.Navbar} id={"header"}>
-        <Link href="/">
+        <Link className={"notranslate"} href="/">
           <Image
               id={"image"}
               src={logo_light}
@@ -64,7 +64,7 @@ export default function NavBar() {
           <li>
             <Link className={path == '/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
                   href="/">
-              <span className={'material-symbols-rounded'}>
+              <span className={'material-symbols-rounded notranslate'}>
                 headphones
               </span>
               <p>Listen</p>
@@ -74,7 +74,7 @@ export default function NavBar() {
           <li>
             <Link className={path == '/schedule/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
                   href="/schedule/">
-              <span className={'material-symbols-rounded'}>
+              <span className={'material-symbols-rounded notranslate'}>
                 overview
               </span>
               <p>Schedule</p>
@@ -84,7 +84,7 @@ export default function NavBar() {
           <li>
             <Link className={path == '/about/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
                   href="/about/">
-              <span className={'material-symbols-rounded'}>
+              <span className={'material-symbols-rounded notranslate'}>
                 group
               </span>
               <p>About us</p>

@@ -56,7 +56,7 @@ export default function SchedulePage() {
 
           <div className={styles.ShowDetails}>
             <p>{time_string} - {duration == 1? `${duration} Hour` : `${duration} Hours`}</p>
-            <h3>{show.title}</h3>
+            <h3 className={"notranslate"}>{show.title}</h3>
             <p className={styles.ShowExcerpt}>{show.excerpt}</p>
           </div>
 
@@ -112,7 +112,7 @@ export default function SchedulePage() {
               />
             }
 
-            <h2>{popup.title}</h2>
+            <h2 className={"notranslate"}>{popup.title}</h2>
 
             {popup.excerpt !== "" ?
               <p>{popup.excerpt}</p>
@@ -121,7 +121,7 @@ export default function SchedulePage() {
             }
 
             <Close className={`${showPopup.Close} ${styles.Clickable}`}>
-              <span className={'material-symbols-rounded'}>close</span>
+              <span className={'material-symbols-rounded notranslate'}>close</span>
             </Close>
           </div>
         </DialogContent>

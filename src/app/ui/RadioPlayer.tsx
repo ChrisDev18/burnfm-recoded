@@ -226,7 +226,7 @@ export default function RadioPlayer() {
               />
             }
 
-            <h2>{popup.title}</h2>
+            <h2 className={"notranslate"}>{popup.title}</h2>
 
             {
               popup.excerpt !== "" ?
@@ -240,7 +240,7 @@ export default function RadioPlayer() {
             </Link>
 
             <Close className={`${showPopup.Close} ${buttons.Clickable}`}>
-              <span className={'material-symbols-rounded'}>close</span>
+              <span className={'material-symbols-rounded notranslate'}>close</span>
             </Close>
           </div>
         </DialogContent>
@@ -281,7 +281,7 @@ export default function RadioPlayer() {
 
           <div className={styles.PlayNow}>
             <button className={styles.Toggle_Button} onClick={handlePlayPause}>
-              <span className={"material-symbols-rounded"}>
+              <span className={"material-symbols-rounded notranslate"}>
                 {playing ? "stop" : "play_arrow"}
               </span>
             </button>
