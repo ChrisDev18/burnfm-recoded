@@ -8,7 +8,7 @@ import Image from "next/image";
 import SpotifyIcon from "../../public/Spotify_icon.svg"
 import PodcastsIcon from "../../public/Podcasts_icon.svg"
 import Link from "next/link";
-import React, {useRef} from "react";
+import React from "react";
 import RadioPlayer from "@/app/ui/RadioPlayer";
 
 
