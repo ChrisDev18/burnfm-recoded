@@ -2,7 +2,7 @@
 
 import styles from "./RadioPlayer.module.css";
 import showPopup from "@/app/ui/ShowPopup.module.css"
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show as ShowType, PopupState, ShowSchedule} from "@/app/lib/types";
@@ -10,11 +10,11 @@ import {getNowPlaying} from "@/app/lib/fetchdata";
 import Show from "./Show";
 import {Dialog, DialogContent} from "@/app/ui/Popup";
 import loading_styles from "./Spinner.module.css";
-import {usePathname} from "next/navigation";
 import {Close} from "@radix-ui/react-dialog";
 import buttons from "@/app/ui/buttons.module.css"
 import Link from "next/link";
 import {pickExcerpt} from "@/app/lib/excerpts";
+import {AudioContext} from "@/app/AudioContext";
 
 const empty_schedule: ShowSchedule = {
   current_show: null,
@@ -29,15 +29,12 @@ const init_popup: PopupState = {
 }
 
 export default function RadioPlayer() {
-  // Define references (used to directly control the audio element)
-  const audioRef = useRef<HTMLAudioElement|null>(null);
-
+  const audio = useContext(AudioContext);
   // Define states
   const [loading, setLoading] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [schedule, setSchedule] = useState(empty_schedule);
   const [popup, setPopup] = useState(init_popup);
-  const current_path = usePathname();
 
   // Effect for fetching data from API
   useEffect(() => {
@@ -74,7 +71,7 @@ export default function RadioPlayer() {
 
   // Add listeners for media control outside of React
   useEffect(() => {
-    const audioElement = audioRef.current;
+    const audioElement = audio;
 
     const handlePlay = () => setPlaying(true);
     const handlePause = () => setPlaying(false);
@@ -87,7 +84,7 @@ export default function RadioPlayer() {
       audioElement?.removeEventListener("play", handlePlay)
       audioElement?.removeEventListener("play", handlePause)
     };
-  }, []);
+  }, [audio]);
 
   // Update MediaSession whenever the current show changes
   useEffect(() => {
@@ -123,8 +120,8 @@ export default function RadioPlayer() {
     }
   }, [schedule.current_show]);
 
-  // Displays the Popup with details for the current show
-  const selectShow = (show: ShowType) => {
+  // Display the Popup with details for a given show
+  const displayPopup = (show: ShowType) => {
     setPopup({
       visible: true,
       title: show.title,
@@ -133,43 +130,39 @@ export default function RadioPlayer() {
     });
   }
 
+  // Play audio and set playing state to true
   const playAudio = async () => {
-    if (audioRef.current) {
-      await audioRef.current.play();
+    if (audio) {
+      await audio.play();
       setPlaying(true);
     }
   };
 
+  // Pause audio and set playing state to false
   const pauseAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
+    if (audio) {
+      audio.pause();
       setPlaying(false);
     }
   };
 
-  // Handles toggling between play and pause on player
-  const handlePlayPause = async () => {
-    if (playing) {
+  // Handle toggling between play and pause on player
+  const togglePlayPause = async () => {
+    if (playing)
       pauseAudio()
-    } else {
+    else
       await playAudio()
-    }
-  }
-
-  // Handles any errors with the audio HTML element
-  const handleNoAudio = () => {
-    console.error("Error accessing audio");
   }
 
   // Generate the list of shows
   const shows_list = schedule.next_shows.map((show, i) =>
-      <button className={buttons.Clickable} key={i} onClick={() => selectShow(show)} >
+      <button className={buttons.Clickable} key={i} onClick={() => displayPopup(show)} >
         <Show show={show} />
       </button>
   );
 
   return (
-    <div className={`${styles.Player_Root} ${current_path !== '/'? styles.Hidden: ""}`}>
+    <div className={styles.Player_Root}>
       {/*Popup for when a user clicks on a show*/}
       <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
         <DialogContent>
@@ -210,11 +203,6 @@ export default function RadioPlayer() {
         <p className={loading_styles.Message}>If this takes longer than a couple seconds, reload the page.</p>
       </div>
 
-      <audio ref={audioRef} id={"media"} onError={handleNoAudio}>
-        <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mp3"}/>
-        The broadcast has stopped, or your browser does not support the audio element.
-      </audio>
-
       {schedule.current_show === null ?
         // WHEN NOT BROADCASTING
         <div className={`${styles.Player_Left} ${styles.Player_Left_Empty}`}>
@@ -237,13 +225,14 @@ export default function RadioPlayer() {
           <h2 className={styles.Header}>On now</h2>
 
           <div className={styles.PlayNow}>
-            <button className={styles.Toggle_Button} onClick={handlePlayPause}>
+            <button className={styles.Toggle_Button} onClick={togglePlayPause}>
               <span className={"material-symbols-rounded notranslate"}>
                 {playing ? "stop" : "play_arrow"}
               </span>
             </button>
 
-            <button className={`${styles.PlayNow_Details} ${buttons.Clickable}`} onClick={() => schedule.current_show !== null? selectShow(schedule.current_show): null}>
+            <button className={`${styles.PlayNow_Details} ${buttons.Clickable}`}
+                    onClick={() => schedule.current_show !== null? displayPopup(schedule.current_show): null}>
               <p className={styles.Show_Times}>{schedule.current_show.start_time.toLocaleTimeString(['en'], {
                 hour: "2-digit",
                 minute: "2-digit"
