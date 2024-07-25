@@ -21,9 +21,25 @@ export default function RootLayout({
   const [audioRefState, setAudioRefState] =
       useState<HTMLAudioElement|null>(null);
 
+  const [lightMode, setLightMode] = useState<boolean>(true)
+
   useEffect(() => {
     if (!audioRef.current) return
     setAudioRefState(audioRef.current)
+  }, []);
+
+  // Add listeners to changing light/dark mode
+  useEffect(() => {
+    if (!window) return;
+
+    const theme = matchMedia('(prefers-color-scheme: light)')
+    setLightMode(theme.matches)
+
+    const updateTheme = (evt: MediaQueryListEvent) => setLightMode(evt.matches)
+
+    theme.addEventListener('change', updateTheme);
+
+    return () => theme.removeEventListener('change', updateTheme);
   }, []);
 
   return (
@@ -46,8 +62,7 @@ export default function RootLayout({
           <link rel="shortcut icon" href="/app-icons/favicon.ico?v=2"/>
 
           <meta name="msapplication-TileColor" content="#32103f"/>
-          <meta name="theme-color" content={matchMedia('(prefers-color-scheme: light)').matches ?
-                "rgb(255, 255, 255)" : "rgb(20, 20, 20)"}/>
+          <meta name="theme-color" content={lightMode? "rgb(255, 255, 255)" : "rgb(20, 20, 20)"}/>
         </head>
 
         <body>

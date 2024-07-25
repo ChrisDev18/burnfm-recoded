@@ -8,6 +8,7 @@
   padding: 32px;
   width: 500px;
   overflow-y: hidden;
+  margin: 32px;
 
   @media only screen and (max-width: 600px) {
     width: 80%;
