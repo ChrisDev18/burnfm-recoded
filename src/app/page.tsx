@@ -1,15 +1,15 @@
 'use client'
 
 import styles from './page.module.css'
-import buttons from '@/app/ui/buttons.module.css'
+import buttons from '@/app/styles/buttons.module.css'
 
-import './ui/icons.css';
+import './styles/icons.css';
 import Image from "next/image";
 import SpotifyIcon from "../../public/Spotify_icon.svg"
 import PodcastsIcon from "../../public/Podcasts_icon.svg"
 import Link from "next/link";
 import React from "react";
-import RadioPlayer from "@/app/ui/RadioPlayer";
+import RadioPlayer from "@/app/components/RadioPlayer/RadioPlayer";
 
 
 export default function Home() {

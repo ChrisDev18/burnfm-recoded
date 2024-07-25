@@ -3,19 +3,43 @@
 
 ## Project structure
 
-All source code can be found within `src/app`. Component-wise, this is the root directory.
+All source code can be found within `src/app`.
 
-- `page.tsx` files define the respective folder's webpage which will be rendered.
-- `layout.tsx` files define shared UI which can be inherited by children pages.
-- `app/ui/` contains React components which can be used by pages.
-- `app/lib/` contains functions which can be used within components/pages.
+### App Routing
 
-### App Router
+This project uses the new App Router architecture from Next.js. 
+Below is some information about how this project is organised using this router.
 
-This project uses the new App Router architecture from Next.js.
+- Each folder containing a `page.tsx` file represents a page on the website.
+- For example:
+[`app/page.tsx`](src/app/page.tsx) defines [burnfm.com](https://www.burnfm.com), and [`app/about/page.tsx`](src/app/about/page.tsx) defines [burnfm.com/about](https://www.burnfm.com/about).
 
-_See [Next.js - App Routing](https://nextjs.org/docs/app/building-your-application/routing)
-for information about this concept and its application._
+
+- `layout.tsx` files define shared UI which can be inherited by children pages 
+  a similar concept to templates).
+- For example: [`app/layout.tsx`](src/app/layout.tsx) defines the overall layout of the app (navbar at top, content below).
+
+_See [Next.js - App Routing](https://nextjs.org/docs/app/building-your-application/routing) for information about 
+ this concept and its application._
+
+
+### Further files
+
+Outside of these two special files, there are more places where code is organised:
+
+- [`app/components/`](src/app/components) contains React components which can be used elsewhere.
+  (e.g. [RadioPlayer](src/app/components/RadioPlayer))
+
+- [`app/styles/`](src/app/styles) contains stylesheets which can be used within components. 
+  (e.g. [buttons.module.css](src/app/styles/buttons.module.css))
+
+- [`app/lib/`](src/app/lib) contains functions which can be called within code elsewhere.
+  (e.g. [fetchdata.ts](src/app/lib/fetchdata.ts))
+
+- [`app/contexts/`](src/app/lib) contains React contexts which can be used to share data with children components easily.
+  (e.g. [AudioContext.tsx](src/app/contexts/AudioContext.tsx))
+
+
 
 ## Editing the project and viewing changes
 
@@ -31,7 +55,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000) with your browser to see the website running locally.
 
 ## Deploying to static HTML/CSS/JS
 

@@ -7,19 +7,9 @@
   align-self: stretch;
   flex-direction: row;
 
-  /*margin: 0 64px;*/
-
   @media only screen and (max-width: 1000px) {
     flex-direction: column;
   }
-
-  /*@media only screen and (max-width: 600px) {*/
-  /*  margin: 32px 0;*/
-  /*}*/
-
-  /*@media only screen and (min-width: 1700px) {*/
-  /*  margin: 32px 256px;*/
-  /*}*/
 
   overflow: clip;
 
@@ -44,7 +34,6 @@
   flex-direction: column;
 
   background-color: #5D1F74;
-
   color: white;
 
   transition: opacity 200ms ease;
@@ -55,11 +44,6 @@
   opacity: 0;
   pointer-events: none;
   user-focus: none;
-}
-
-/* Hide completely - won't take up space */
-.Hidden {
-  display: none;
 }
 
 .Header {

@@ -1,6 +1,6 @@
 import styles from "@/app/page.module.css";
 import Link from "next/link";
-import buttons from "@/app/ui/buttons.module.css";
+import buttons from "@/app/styles/buttons.module.css";
 import Image from "next/image";
 
 type props = {

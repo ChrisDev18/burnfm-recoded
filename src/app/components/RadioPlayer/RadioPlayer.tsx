@@ -1,20 +1,20 @@
 'use client'
 
 import styles from "./RadioPlayer.module.css";
-import showPopup from "@/app/ui/ShowPopup.module.css"
+import showPopup from "@/app/styles/ShowPopup.module.css"
 import React, {useContext, useEffect, useState} from "react";
 import Image from "next/image";
-import fallback from "../../../public/Radio-Microphone.png";
+import fallback from "../../../../public/Radio-Microphone.png";
 import {Show as ShowType, PopupState, ShowSchedule} from "@/app/lib/types";
 import {getNowPlaying} from "@/app/lib/fetchdata";
-import Show from "./Show";
-import {Dialog, DialogContent} from "@/app/ui/Popup";
-import loading_styles from "./Spinner.module.css";
+import Show from "../Show";
+import {Dialog, DialogContent} from "@/app/components/Popup/Popup";
+import loading_styles from "../../styles/Spinner.module.css";
 import {Close} from "@radix-ui/react-dialog";
-import buttons from "@/app/ui/buttons.module.css"
+import buttons from "@/app/styles/buttons.module.css"
 import Link from "next/link";
 import {pickExcerpt} from "@/app/lib/excerpts";
-import {AudioContext} from "@/app/AudioContext";
+import {AudioContext} from "@/app/contexts/AudioContext";
 
 const empty_schedule: ShowSchedule = {
   current_show: null,

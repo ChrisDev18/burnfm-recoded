@@ -7,11 +7,11 @@ import {Day, days, PopupState, Show as ShowType} from "@/app/lib/types";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show} from "@/app/lib/types";
-import {Dialog, DialogContent} from "@/app/ui/Popup";
-import showPopup from "@/app/ui/ShowPopup.module.css";
-import buttons from "@/app/ui/buttons.module.css";
+import {Dialog, DialogContent} from "@/app/components/Popup/Popup";
+import showPopup from "@/app/styles/ShowPopup.module.css";
+import buttons from "@/app/styles/buttons.module.css";
 import {Close} from "@radix-ui/react-dialog";
-import "@/app/ui/icons.css"
+import "@/app/styles/icons.css"
 import {pickExcerpt} from "@/app/lib/excerpts";
 
 const init_popup: PopupState = {

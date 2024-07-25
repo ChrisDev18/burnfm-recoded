@@ -1,13 +1,12 @@
 "use client"
 
 import {Source_Sans_3} from 'next/font/google'
-import './ui/globals.css'
+import './styles/globals.css'
 
 import "@/app/layout.css";
-import NavBar from "@/app/ui/NavBar";
+import NavBar from "@/app/components/NavBar";
 import React, {useEffect, useRef, useState} from "react";
-import {AudioContext} from "@/app/AudioContext";
-
+import {AudioContext} from "@/app/contexts/AudioContext";
 
 const sourceSans3 = Source_Sans_3({subsets: ['latin'], weight: "variable"});
 

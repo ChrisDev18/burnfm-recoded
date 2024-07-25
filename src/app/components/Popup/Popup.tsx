@@ -1,12 +1,6 @@
-import Rodal from 'rodal';
-import Image from "next/image";
-
-// your-dialog.jsx
 import React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
-
-// include styles
 import 'rodal/lib/rodal.css';
 import styles from './Popup.module.css';
 
