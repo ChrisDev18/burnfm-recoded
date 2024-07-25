@@ -2,7 +2,7 @@
 
 import styles from "./RadioPlayer.module.css";
 import showPopup from "@/app/ui/ShowPopup.module.css"
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
 import {Show as ShowType, PopupState, ShowSchedule} from "@/app/lib/types";
@@ -29,19 +29,15 @@ const init_popup: PopupState = {
 }
 
 export default function RadioPlayer() {
+  // Define references (used to directly control the audio element)
+  const audioRef = useRef<HTMLAudioElement|null>(null);
+
   // Define states
   const [loading, setLoading] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [schedule, setSchedule] = useState(empty_schedule);
   const [popup, setPopup] = useState(init_popup);
   const current_path = usePathname();
-
-  // Generate the list of shows
-  const shows_list = schedule.next_shows.map((show, i) =>
-      <button className={buttons.Clickable} key={i} onClick={() => selectShow(show)} >
-        <Show show={show} />
-      </button>
-  );
 
   // Effect for fetching data from API
   useEffect(() => {
@@ -52,125 +48,83 @@ export default function RadioPlayer() {
           setSchedule(x);
         })
         .catch(e => console.error("Error: ", e))
-        .finally(() => setLoading(false))  // TODO: uncomment this
+        .finally(() => setLoading(false));
     }
-
-    // Calculate the time until the next hour starts
-    const now = new Date();
-    const ms_until_next_half_hour = (30 - (now.getMinutes() % 30)) * 60 * 1000;
 
     update();
 
-    // Run the update function at the start of each hour
-    const intervalId = setInterval(() => {
-      update();
-    }, ms_until_next_half_hour);
+    // Calculate the time until the next hour starts
+    const now = new Date();
+    const msUntilNextHalfHour = (30 - (now.getMinutes() % 30)) * 60 * 1000;
 
-    // Clean up the interval when the component unmounts
-    return (() => {
-      clearInterval(intervalId);
-    });
+    // Set the initial timeout to sync with the next half-hour mark
+    const timeout = setTimeout(() => {
+      update();
+
+      // Set the interval to update every 30 minutes thereafter
+      const interval = setInterval(update, 30 * 60 * 1000);
+
+      // Clear the interval when the component unmounts
+      return () => clearInterval(interval);
+    }, msUntilNextHalfHour);
+
+    // Clear the timeout when the component unmounts
+    return () => clearTimeout(timeout);
   }, []);
 
-  // Effect for handling mediaSession
+  // Add listeners for media control outside of React
   useEffect(() => {
-    // Check if the audio tag is there
-    const audio = document.querySelector('audio');
-    if (audio == null) {
-      handleNoAudio();
-      return;
-    }
+    const audioElement = audioRef.current;
 
-    // Check if the Media Session API is supported by the browse
-    if (! ('mediaSession' in navigator)) {
-      console.warn('Media Session API not supported.');
-      return;
-    }
+    const handlePlay = () => setPlaying(true);
+    const handlePause = () => setPlaying(false);
 
+    audioElement?.addEventListener('play', handlePlay);
+    audioElement?.addEventListener('pause', handlePause);
+
+    // Clean up the action handlers when the component unmounts
+    return () => {
+      audioElement?.removeEventListener("play", handlePlay)
+      audioElement?.removeEventListener("play", handlePause)
+    };
+  }, []);
+
+  // Update MediaSession whenever the current show changes
+  useEffect(() => {
     // Set up the media session metadata if there is a current song
-    if (schedule.current_show === null) {
-      navigator.mediaSession.playbackState = 'none';
-      navigator.mediaSession.metadata = null;
-      navigator.mediaSession.setPositionState();
-    } else {
-
-      navigator.mediaSession.metadata = new window.MediaMetadata({
+    if (schedule.current_show !== null) {
+      navigator.mediaSession.metadata = new MediaMetadata({
         title: schedule.current_show?.title,
         artist: "BurnFM",
         artwork: [{
           src: schedule.current_show.img === null ? fallback.src : schedule.current_show.img,
           sizes: '192x192',
           type: 'image/jpeg'
-        }]
-      });
+        }]});
 
-      if ('setPositionState' in navigator.mediaSession) {
+      // navigator.mediaSession.setPositionState({ duration: Infinity });
 
-        let pos = Date.now() - schedule.current_show.start_time.getTime();
-        let len = schedule.current_show.end_time.getTime() - schedule.current_show.start_time.getTime();
-
-        navigator.mediaSession.setPositionState({
-          duration: Math.floor(len / 1000),
-          playbackRate: audio.playbackRate,
-          position: Math.floor(pos / 1000)
-        });
-
-      }
-
-      // Set up the media session actions
-
-      navigator.mediaSession.setActionHandler('play', () => {
-        handlePlayPause()
-          .then(() => {
-            setPlaying(true)
-            navigator.mediaSession.playbackState = "playing";
-          }).catch(e => {
-          console.error("Could not toggle", e);
-        })
-      });
-
-      navigator.mediaSession.setActionHandler('stop', () => {
-        handlePlayPause()
-          .then(() => {
-            navigator.mediaSession.playbackState = "paused";
-          }).catch(e => {
-          console.error("Could not toggle", e);
-        })
-      });
-
+      // if ('setPositionState' in navigator.mediaSession) {
+      //   const audioElement = audioRef.current;
+      //
+      //   let pos = Date.now() - schedule.current_show.start_time.getTime();
+      //   let len = schedule.current_show.end_time.getTime() - schedule.current_show.start_time.getTime();
+      //
+      //   navigator.mediaSession.setPositionState({
+      //     duration: Math.floor(len / 1000),
+      //     playbackRate: audioElement?.playbackRate,
+      //     position: Math.floor(pos / 1000)
+      //   });
+      // }
+    } else {
+      navigator.mediaSession.playbackState = 'none';
+      navigator.mediaSession.metadata = null;
+      // navigator.mediaSession.setPositionState();
     }
-
-    audio.addEventListener('play', () => {
-      navigator.mediaSession.playbackState = 'playing';
-    });
-
-    audio.addEventListener('pause', () => {
-      navigator.mediaSession.playbackState = 'paused';
-    });
-
-    // Clean up the event listeners when the component unmounts
-    return () => {
-      // Remove event listeners
-      navigator.mediaSession.setActionHandler('play', null);
-      navigator.mediaSession.setActionHandler('stop', null);
-
-      const audio = document.querySelector('audio');
-      if (audio == null) {
-        handleNoAudio();
-        return;
-      }
-
-      audio.removeEventListener('play', () => {
-        navigator.mediaSession.playbackState = 'playing';
-      });
-      audio.removeEventListener('pause', () => {
-        navigator.mediaSession.playbackState = 'paused';
-      });
-    }
-  }, [playing, schedule.current_show]);
+  }, [schedule.current_show]);
 
   // Displays the Popup with details for the current show
-  function selectShow(show: ShowType) {
+  const selectShow = (show: ShowType) => {
     setPopup({
       visible: true,
       title: show.title,
@@ -179,37 +133,40 @@ export default function RadioPlayer() {
     });
   }
 
+  const playAudio = async () => {
+    if (audioRef.current) {
+      await audioRef.current.play();
+      setPlaying(true);
+    }
+  };
+
+  const pauseAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setPlaying(false);
+    }
+  };
 
   // Handles toggling between play and pause on player
-  async function handlePlayPause() {
-    let player = document.getElementsByTagName('audio')[0];
-
-    let should_pause: boolean;
-    if ('mediaSession' in navigator) {
-      should_pause = navigator.mediaSession.playbackState == 'playing';
+  const handlePlayPause = async () => {
+    if (playing) {
+      pauseAudio()
     } else {
-      console.warn('Media Session API not supported.');
-      should_pause = playing;
-    }
-    if (should_pause) {
-      player.pause();
-      setPlaying( false);
-
-    } else {
-      try {
-        await player.play();
-        setPlaying(true);
-      } catch (e) {
-        console.error(e)
-        // needed to ensure that mediaSession doesn't mark media as playing when it couldn't
-      }
+      await playAudio()
     }
   }
 
   // Handles any errors with the audio HTML element
-  function handleNoAudio() {
+  const handleNoAudio = () => {
     console.error("Error accessing audio");
   }
+
+  // Generate the list of shows
+  const shows_list = schedule.next_shows.map((show, i) =>
+      <button className={buttons.Clickable} key={i} onClick={() => selectShow(show)} >
+        <Show show={show} />
+      </button>
+  );
 
   return (
     <div className={`${styles.Player_Root} ${current_path !== '/'? styles.Hidden: ""}`}>
@@ -253,7 +210,7 @@ export default function RadioPlayer() {
         <p className={loading_styles.Message}>If this takes longer than a couple seconds, reload the page.</p>
       </div>
 
-      <audio id={"media"} onError={handleNoAudio}>
+      <audio ref={audioRef} id={"media"} onError={handleNoAudio}>
         <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mp3"}/>
         The broadcast has stopped, or your browser does not support the audio element.
       </audio>
