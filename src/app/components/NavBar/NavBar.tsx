@@ -3,7 +3,7 @@
 import {useEffect} from "react";
 import Link from "next/link";
 import Image from "next/image";
-import logo_light from "../../../public/logo-purple.png";
+import logo_light from "../../../../public/logo-purple.png";
 import styles from "./NavBar.module.css"
 import {usePathname} from "next/navigation";
 
@@ -72,7 +72,7 @@ export default function NavBar() {
           </li>
 
           <li>
-            <Link className={path == '/schedule/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
+            <Link className={path.startsWith('/schedule/') ? `${styles.Link} ${styles.Selected}` : styles.Link}
                   href="/schedule/">
               <span className={'material-symbols-rounded notranslate'}>
                 overview
@@ -82,7 +82,7 @@ export default function NavBar() {
           </li>
 
           <li>
-            <Link className={path == '/about/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
+            <Link className={path.startsWith('/about/') ? `${styles.Link} ${styles.Selected}` : styles.Link}
                   href="/about/">
               <span className={'material-symbols-rounded notranslate'}>
                 group

@@ -79,6 +79,12 @@
   border-bottom: solid 0 rgb(var(--alt-purple-rgb));
 }
 
+.Link:focus {
+  border-bottom: solid 5px rgb(var(--focus));
+  outline: solid 2px rgb(var(--focus));
+  outline-offset: 4px;
+}
+
 .Selected {
   border-bottom: solid 3px rgb(var(--alt-purple-rgb));
 }
