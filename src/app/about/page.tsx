@@ -2,7 +2,7 @@
 
 import styles from './page.module.css'
 import React, {useEffect, useState} from "react";
-import ProfileCard from "@/app/about/ui/ProfileCard";
+import ProfileCard from "@/app/components/ProfileCard/ProfileCard";
 import "@/app/styles/icons.css"
 import {Profile} from "@/app/lib/types";
 

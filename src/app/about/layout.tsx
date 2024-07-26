@@ -1,7 +1,7 @@
 "use client"
 
 import styles from "./layout.module.css";
-import CommitteeSelector from "@/app/about/ui/CommitteeSelector";
+import Pills from "@/app/components/Pills/Pills";
 import React from "react";
 
 export default function AboutLayout({
@@ -14,7 +14,9 @@ export default function AboutLayout({
         <div className={styles.Root}>
           <div className={styles.Rectangle}/>
             <h1 className={styles.Header}>About us</h1>
-            <CommitteeSelector className={styles.Selector}/>
+            <Pills data={[{link: "/about/", text: "Current"},
+                                      {link: "/about/2023-24/", text: "2023-2024"}]}
+                   className={styles.Selector}/>
             {children}
           </div>
   )
