@@ -46,7 +46,7 @@
 .pill.active {
     background-color: rgb(255,255,255, 0.9);
     color: rgb(var(--purple-rgb));
-    padding: 4px 32px;
+    /*padding: 4px 24px;*/
 }
 
 .pill:focus {
@@ -57,5 +57,5 @@
 .pill:active {
     background-color: rgb(255,255,255, 0.9);
     color: rgb(var(--purple-rgb));
-    padding: 4px 32px;
+    /*padding: 4px 24px;*/
 }

@@ -10,13 +10,17 @@ import PodcastsIcon from "../../public/Podcasts_icon.svg"
 import Link from "next/link";
 import React from "react";
 import RadioPlayer from "@/app/components/RadioPlayer/RadioPlayer";
+import { motion } from 'framer-motion';
 
 
 export default function Home() {
 
 
   return (
-    <div className={styles.Root}>
+    <motion.div className={styles.Root}
+                transition={{ duration: 0.2, type: "tween", delay: 0.2}}
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}>
       <RadioPlayer/>
 
       <div className={styles.Cards}>
@@ -91,7 +95,7 @@ export default function Home() {
               </p>
             </div>
 
-            <Link href={'/schedule'} className={buttons.Button}>
+            <Link href={`/schedule/${new Date().getDay()}`} className={buttons.Button}>
               View Schedule
             </Link>
           </div>
@@ -122,6 +126,6 @@ export default function Home() {
 
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

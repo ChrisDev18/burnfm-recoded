@@ -81,55 +81,53 @@ export default function SchedulePage() {
   }
 
   return (
-    <div className={styles.Root}>
-      <h1 className={styles.Padded}>Show Schedule</h1>
-
-      <div className={`${styles.FilterList} ${styles.Padded}`}>
-        { // Render the different day options as radio buttons
-          days.map((_, i) => {
-            i = (i+1) % 7;
-            return (
-              <div className={styles.FilterItem} key={i}>
-                <input className={styles.RadioButton} id={`radio-${i}`} type={"radio"} name={"day_filter"} value={i}
-                       checked={i == day} onChange={handleChange}/>
-                <label htmlFor={`radio-${i}`}>{new Date().getDay() == i ? "Today" : days[i]}</label>
-              </div>
+      <>
+        <div className={`${styles.FilterList} ${styles.Padded}`}>
+          { // Render the different day options as radio buttons
+            days.map((_, i) => {
+                  i = (i + 1) % 7;
+                  return (
+                      <div className={styles.FilterItem} key={i}>
+                        <input className={styles.RadioButton} id={`radio-${i}`} type={"radio"} name={"day_filter"} value={i}
+                               checked={i == day} onChange={handleChange}/>
+                        <label htmlFor={`radio-${i}`}>{new Date().getDay() == i ? "Today" : days[i]}</label>
+                      </div>
+                  )
+                }
             )
-            }
-          )
-        }
-      </div>
+          }
+        </div>
 
-      <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
-        <DialogContent>
-          <div className={showPopup.Popup}>
-            {popup.img &&
-              <Image className={showPopup.Image}
-                     src={popup.img}
-                     alt={"Cover image for the show: " + popup.title}
-                     height={120}
-                     width={120}
-              />
-            }
+        <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
+          <DialogContent>
+            <div className={showPopup.Popup}>
+              {popup.img &&
+                  <Image className={showPopup.Image}
+                         src={popup.img}
+                         alt={"Cover image for the show: " + popup.title}
+                         height={120}
+                         width={120}
+                  />
+              }
 
-            <h2 className={"notranslate"}>{popup.title}</h2>
+              <h2 className={"notranslate"}>{popup.title}</h2>
 
-            {popup.excerpt !== "" ?
-              <p>{popup.excerpt}</p>
-              :
-              <p className={showPopup.Default}>{pickExcerpt()}</p>
-            }
+              {popup.excerpt !== "" ?
+                  <p>{popup.excerpt}</p>
+                  :
+                  <p className={showPopup.Default}>{pickExcerpt()}</p>
+              }
 
-            <Close className={`${showPopup.Close} ${styles.Clickable}`}>
-              <span className={'material-symbols-rounded notranslate'}>close</span>
-            </Close>
-          </div>
-        </DialogContent>
-      </Dialog>
+              <Close className={`${showPopup.Close} ${styles.Clickable}`}>
+                <span className={'material-symbols-rounded notranslate'}>close</span>
+              </Close>
+            </div>
+          </DialogContent>
+        </Dialog>
 
-      <div className={`${styles.ScheduleList} ${styles.Padded}`}>
-        {ShowList}
-      </div>
-    </div>
+        <div className={`${styles.ScheduleList} ${styles.Padded}`}>
+          {ShowList}
+        </div>
+      </>
   );
 }

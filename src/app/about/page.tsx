@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import ProfileCard from "@/app/components/ProfileCard/ProfileCard";
 import "@/app/styles/icons.css"
 import {Profile} from "@/app/lib/types";
+import { motion } from 'framer-motion';
 
 export default function AboutPage() {
 
@@ -41,10 +42,13 @@ export default function AboutPage() {
         <div className={styles.Team_Section}>
           <h2 className={styles.Header}>The Team</h2>
 
-          <div className={styles.ProfileGrid}>
+          <motion.div className={styles.ProfileGrid}
+                      transition={{duration: 0.2, type: "tween", delay: 0.2}}
+                      initial={{opacity: 0}}
+                      animate={{opacity: 1}}>
             {profile_list}
-          </div>
+          </motion.div>
         </div>
       </>
-  );
+);
 }
