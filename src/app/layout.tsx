@@ -4,7 +4,7 @@ import {Source_Sans_3} from 'next/font/google'
 import './styles/globals.css'
 
 import "@/app/layout.css";
-import NavBar from "@/app/components/NavBar";
+import NavBar from "@/app/components/NavBar/NavBar";
 import React, {useEffect, useRef, useState} from "react";
 import {AudioContext} from "@/app/contexts/AudioContext";
 

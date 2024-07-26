@@ -47,7 +47,7 @@ export default function NavBar() {
   return (
     <header className={styles.Root}>
       <nav className={styles.Navbar} id={"header"}>
-        <Link className={"notranslate"} href="/">
+        <Link className={`${styles.LogoLink} notranslate`} href="/">
           <Image
               id={"image"}
               src={logo_light}

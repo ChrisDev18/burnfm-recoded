@@ -7,7 +7,7 @@ import Image from "next/image";
 import fallback from "../../../../public/Radio-Microphone.png";
 import {Show as ShowType, PopupState, ShowSchedule} from "@/app/lib/types";
 import {getNowPlaying} from "@/app/lib/fetchdata";
-import Show from "../Show";
+import Show from "../Show/Show";
 import {Dialog, DialogContent} from "@/app/components/Popup/Popup";
 import loading_styles from "../../styles/Spinner.module.css";
 import {Close} from "@radix-ui/react-dialog";

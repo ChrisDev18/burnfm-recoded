@@ -4,6 +4,11 @@
   z-index: 10;
 }
 
+.LogoLink:focus {
+  outline: 2px solid rgb(var(--focus));
+  outline-offset: 2px;
+}
+
 .Logo {
   @media (prefers-color-scheme: dark) {
     filter: invert(100%) hue-rotate(180deg) brightness(1000%) saturate(0%);

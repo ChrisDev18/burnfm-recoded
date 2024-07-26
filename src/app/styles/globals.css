@@ -10,7 +10,7 @@
   --tertiary-rgb: 255, 255, 255;
   --purple-rgb: 93, 31, 116;
   --alt-purple-rgb: 93, 31, 116;
-
+  --focus: 255, 204, 0;
 }
 
 @media (prefers-color-scheme: dark) {
