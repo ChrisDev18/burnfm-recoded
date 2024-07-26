@@ -4,9 +4,16 @@
   z-index: 10;
 }
 
-.LogoLink:focus {
+.LogoLink:focus-visible {
   outline: 2px solid rgb(var(--focus));
   outline-offset: 2px;
+}
+
+@supports not selector(:focus-visible) {
+  .LogoLink:focus {
+    outline: 2px solid rgb(var(--focus));
+    outline-offset: 2px;
+  }
 }
 
 .Logo {
@@ -84,10 +91,18 @@
   border-bottom: solid 0 rgb(var(--alt-purple-rgb));
 }
 
-.Link:focus {
+.Link:focus-visible {
   border-bottom: solid 5px rgb(var(--focus));
   outline: solid 2px rgb(var(--focus));
   outline-offset: 4px;
+}
+
+@supports not selector(:focus-visible) {
+  .Link:focus {
+    border-bottom: solid 5px rgb(var(--focus));
+    outline: solid 2px rgb(var(--focus));
+    outline-offset: 4px;
+  }
 }
 
 .Selected {

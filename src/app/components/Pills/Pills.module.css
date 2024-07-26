@@ -43,15 +43,22 @@
     color: rgb(var(--purple-rgb));
 }
 
-.pill.active {
+.pill.selected {
     background-color: rgb(255,255,255, 0.9);
     color: rgb(var(--purple-rgb));
     /*padding: 4px 24px;*/
 }
 
-.pill:focus {
+.pill:focus-visible {
     outline: 3px solid rgb(var(--focus));
     outline-offset: 2px;
+}
+
+@supports not selector(:focus-visible) {
+    .pill:focus {
+        outline: 3px solid rgb(var(--focus));
+        outline-offset: 2px;
+    }
 }
 
 .pill:active {

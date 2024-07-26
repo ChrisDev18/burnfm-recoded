@@ -12,7 +12,7 @@ export default function Pills({
 }) {
   const path = usePathname();
   const links = data.map((x, i) =>
-      <Link key={i} href={x.link} className={`${styles.pill} ${path === x.link ? styles.active : ""}`}>{x.text}</Link>
+      <Link key={i} href={x.link} className={`${styles.pill} ${path === x.link ? styles.selected : ""}`}>{x.text}</Link>
   );
 
   return (
