@@ -3,7 +3,7 @@
 import {useEffect} from "react";
 import Link from "next/link";
 import Image from "next/image";
-import logo_light from "../../../../public/logo-purple.png";
+import logo_light from "../../../../public/BurnFM-logo.svg";
 import styles from "./NavBar.module.css"
 import {usePathname} from "next/navigation";
 
