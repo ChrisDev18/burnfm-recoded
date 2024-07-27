@@ -15,11 +15,12 @@ import { motion } from 'framer-motion';
 
 export default function Home() {
 
+  const isJavaScriptEnabled = typeof window !== 'undefined'
 
   return (
     <motion.div className={styles.Root}
                 transition={{ duration: 0.2, type: "tween", delay: 0.2}}
-                initial={{opacity: 0}}
+                initial={isJavaScriptEnabled? {opacity: 0}: {opacity: 1}}
                 animate={{opacity: 1}}>
       <RadioPlayer/>
 
@@ -95,7 +96,7 @@ export default function Home() {
               </p>
             </div>
 
-            <Link href={`/schedule/${new Date().getDay()}`} className={buttons.Button}>
+            <Link href={`/schedule?day=${new Date().getDay()}`} className={buttons.Button}>
               View Schedule
             </Link>
           </div>

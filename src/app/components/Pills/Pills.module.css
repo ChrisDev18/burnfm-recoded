@@ -8,7 +8,7 @@
 
 .pillsContainer {
     list-style: none;
-    padding: 0;
+    padding: 1px;
     display: flex;
     flex-direction: row;
     gap: 16px;

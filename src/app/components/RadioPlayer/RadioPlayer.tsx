@@ -15,6 +15,7 @@ import buttons from "@/app/styles/buttons.module.css"
 import Link from "next/link";
 import {pickExcerpt} from "@/app/lib/excerpts";
 import {AudioContext} from "@/app/contexts/AudioContext";
+import HScroll from "@/app/components/HScroll/HScroll";
 
 const empty_schedule: ShowSchedule = {
   current_show: null,
@@ -267,18 +268,21 @@ export default function RadioPlayer() {
         className={schedule.next_shows.length == 0 ? `${styles.Player_Right} ${styles.Player_Right_Empty}` : styles.Player_Right}>
         <h2 className={`${styles.Header}`}>Coming up</h2>
 
-        <div className={styles.ScrollWrapper}>
-          {shows_list.length > 0 ?
-            <div className={styles.ShowList}>
-              {shows_list}
-            </div>
-            :
-            <div className={styles.EmptyScheduleMessage}>
-              <p>That&apos;s it for now!</p>
-              <p>Our schedule is empty, but check back later for new shows to come!</p>
-            </div>
-          }
-        </div>
+
+          <div className={styles.ScrollWrapper}>
+            <HScroll color={"#32103F"}>
+            {shows_list.length > 0 ?
+                <div className={styles.ShowList}>
+                  {shows_list}
+                </div>
+                :
+                <div className={styles.EmptyScheduleMessage}>
+                  <p>That&apos;s it for now!</p>
+                  <p>Our schedule is empty, but check back later for new shows to come!</p>
+                </div>
+            }
+            </HScroll>
+          </div>
       </div>
 
     </div>

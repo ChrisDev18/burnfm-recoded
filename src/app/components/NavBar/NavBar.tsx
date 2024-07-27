@@ -73,7 +73,7 @@ export default function NavBar() {
 
           <li>
             <Link className={path.startsWith('/schedule/') ? `${styles.Link} ${styles.Selected}` : styles.Link}
-                  href={`/schedule/${new Date().getDay()}`}>
+                  href={`/schedule/?day=${new Date().getDay()}`}>
               <span className={'material-symbols-rounded notranslate'}>
                 overview
               </span>

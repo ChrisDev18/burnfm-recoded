@@ -1,0 +1,51 @@
+.root {
+    display: flex;
+    position: relative;
+    align-items: center;
+    width: 100%;
+}
+
+.scrollContainer {
+    overflow-x: scroll;
+    overflow-y: visible;
+    scrollbar-width: none;
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.scrollContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.left, .right {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    width: 80px;
+    height: 100%;
+    padding: 4px;
+    z-index: 1;
+}
+
+.left {
+    justify-content: flex-start;
+    left: 0;
+    background: linear-gradient(270deg, transparent 0%, rgba(var(--purple-rgb)) 100%);
+}
+
+.right {
+    justify-content: flex-end;
+    right: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(var(--purple-rgb)) 100%);
+}
+
+.button {
+    background-color: white;
+    border-radius: 50%;
+    pointer-events: fill;
+}
+
+.button > span {
+    font-size: 24px;
+    color: black;
+    margin: -4px;
+}

@@ -1,0 +1,142 @@
+
+.Root {
+  position: relative;
+  display: flex;
+  overflow-x: hidden;
+
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 32px;
+  padding-top: 32px;
+
+  /*@media only screen and (max-width: 600px) {*/
+  /*  padding: 0*/
+  /*}*/
+
+  /*@media only screen and (min-width: 1700px) {*/
+  /*  padding: 0 256px;*/
+  /*}*/
+}
+
+.Padded {
+  padding: 0 64px;
+
+  @media only screen and (max-width: 600px) {
+    padding: 0 32px;
+  }
+
+  @media only screen and (min-width: 1700px) {
+    padding: 0 256px;
+  }
+}
+
+.ScheduleList {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: rgb(var(--background-rgb));
+}
+
+.ScheduleList h2 {
+  background-color: rgb(93, 31, 116);
+  color: white;
+  padding: 4px 12px;
+}
+
+.ShowItem {
+  display: flex;
+  gap: 16px;
+}
+
+.ShowDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 1000px;
+}
+
+.ShowExcerpt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  /*-webkit-box-orient: vertical;*/
+  max-height: calc(2em * 1.4);
+}
+
+/* Filter section */
+
+.FilterList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  overflow-x: scroll;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.FilterList::after {
+  display: inline-block;
+  position: absolute;
+  content: "";
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(var(--background-rgb), 0) 0%, rgb(var(--background-rgb)) 100%);
+  pointer-events: none;
+}
+
+.FilterItem {
+  display: flex;
+  border-radius: 100px;
+  cursor: pointer;
+  background-color: rgba(var(--background-rgb), 0.5);
+  /*border: solid rgb(var(--purple-rgb)) 2px;*/
+  transition: background-color 50ms ease-out;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.FilterItem label {
+  display: block;
+  justify-items: center;
+  text-transform: capitalize;
+  color: rgb(var(--foreground-rgb));
+  cursor: pointer;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition: color, font-size, padding 200ms ease;
+  padding: 4px 16px;
+}
+
+.RadioButton {
+  display: none;
+}
+
+.FilterItem:has(.RadioButton:checked) {
+  background-color: rgb(var(--purple-rgb));
+  color: #fff;
+}
+
+.FilterItem:has(.RadioButton:checked) label {
+  color: white;
+  padding: 4px 32px;
+}
+
+.FilterItem:active {
+  background-color: rgba(var(--purple-rgb), 1);
+  transition: background-color 200ms ease-out;
+}
+
+.FilterItem:active label {
+  color: white;
+}
+
+
+

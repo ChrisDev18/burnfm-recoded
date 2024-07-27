@@ -74,7 +74,12 @@ export async function getNowPlaying() {
       break;
   }
 
+  // return {
+  //   current_show: playerData.current_show,
+  //   next_shows: [playerData.current_show, playerData.current_show, playerData.current_show]
+  // }
   return playerData;
+
 }
 
 // Returns a Schedule split up by weekdays. If error, returns a list of empty lists
