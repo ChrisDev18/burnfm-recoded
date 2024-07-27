@@ -17,9 +17,18 @@
 }
 
 .Logo {
+  color: rgb(var(--purple-rgb));
+  height: 100px;
+  width: 100px;
+  transition: height 300ms, width 300ms;
   @media (prefers-color-scheme: dark) {
-    filter: invert(100%) hue-rotate(180deg) brightness(1000%) saturate(0%);
+    color: white;
   }
+}
+
+.Logo[data-size='small'] {
+  height: 50px;
+  width: 50px;
 }
 
 .Navbar {

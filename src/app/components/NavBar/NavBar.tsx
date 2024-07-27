@@ -2,36 +2,31 @@
 
 import {useEffect} from "react";
 import Link from "next/link";
-import Image from "next/image";
-import logo_light from "../../../../public/BurnFM-logo.svg";
 import styles from "./NavBar.module.css"
 import {usePathname} from "next/navigation";
+import BurnLogo from "@/app/components/BurnLogo";
 
 export default function NavBar() {
   const path = usePathname();
+
   useEffect(() => {
     const header = document.getElementById('header');
     const image = document.getElementById('image');
     if (image == null || header == null) {
       return;
     }
+
     image.dataset.size = 'big';
 
     const handleScroll = () => {
       if (window.scrollY > 0) {
         if (image.dataset.size === 'big') {
           image.dataset.size = 'small';
-          image.style.transition = 'all 300ms';
-          image.style.height = '50px';
-          image.style.width = '50px';
         }
         header.style.boxShadow = "0px 4px 8px 0px rgba(0, 0, 0, 0.25)";
       } else {
         if (image.dataset.size === 'small') {
           image.dataset.size = 'big';
-          image.style.transition = 'all 300ms';
-          image.style.height = '100px';
-          image.style.width = '100px';
           header.style.boxShadow = "none";
         }
       }
@@ -48,22 +43,13 @@ export default function NavBar() {
     <header className={styles.Root}>
       <nav className={styles.Navbar} id={"header"}>
         <Link className={`${styles.LogoLink} notranslate`} href="/">
-          <Image
-              id={"image"}
-              src={logo_light}
-              className={styles.Logo}
-              alt="BurnFM Logo"
-              height={100}
-              width={100}
-              priority
-          />
-
+          <BurnLogo id={"image"} className={styles.Logo}/>
         </Link>
 
         <ul className={styles.LinkList}>
           <li>
             <Link className={path == '/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
-                  href="/">
+                  href={"/"}>
               <span className={'material-symbols-rounded notranslate'}>
                 headphones
               </span>
@@ -83,7 +69,7 @@ export default function NavBar() {
 
           <li>
             <Link className={path.startsWith('/about/') ? `${styles.Link} ${styles.Selected}` : styles.Link}
-                  href="/about/">
+                  href={"/about/"}>
               <span className={'material-symbols-rounded notranslate'}>
                 group
               </span>

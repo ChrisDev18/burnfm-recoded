@@ -23,10 +23,8 @@ export default function Pills({
       }
     }
     return true;
-    // return (p.map((param) => params.get(param.key) === param.value)).every(x => x);
   }
 
-  console.log(path)
   const links = data.map((x, i) => {
     let link = x.link;
     if (x.params && Object.keys(x.params).length > 0) {
@@ -45,9 +43,6 @@ export default function Pills({
       // })
     }
 
-    console.log("params", x.params);
-    console.log("link: " + link)
-    console.log("params match?: " + checkParams(x.params))
     return <Link key={i} href={{
       pathname: x.link,
       query: x.params,
