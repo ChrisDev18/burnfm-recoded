@@ -36,11 +36,6 @@ export default function Pills({
           link += `&${key}=${x.params[key]}`
         }
       }
-
-      // x.params.shift();
-      // x.params.forEach(param => {
-      //
-      // })
     }
 
     return <Link key={i} href={{

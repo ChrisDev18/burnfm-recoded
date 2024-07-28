@@ -87,6 +87,10 @@
     transition: all 200ms cubic-bezier(0.24, 0.89, 0.57, 1.58);
   }
 
+  .Toggle_Button > span {
+    font-size: 64px;
+  }
+
   .Toggle_Button:focus-visible {
     outline: 2px solid rgb(var(--focus));
   }

@@ -45,8 +45,8 @@
   align-self: stretch;
 
   background: rgba(var(--tertiary-rgb));
-  -webkit-backdrop-filter: blur(30px);
-  backdrop-filter: blur(30px);
+  /*-webkit-backdrop-filter: blur(30px);*/
+  /*backdrop-filter: blur(30px);*/
 }
 
 .Root ul {
@@ -100,6 +100,40 @@
   border-bottom: solid 0 rgb(var(--alt-purple-rgb));
 }
 
+.Selected {
+  border-bottom: solid 3px rgb(var(--alt-purple-rgb));
+}
+
+
+.alt .Logo {
+  color: white;
+}
+
+.alt .Navbar {
+  background: rgb(var(--purple-rgb));
+}
+
+.alt li > * {
+  color: white;
+}
+
+
+.alt .Link:hover * {
+  color: white;
+}
+
+.alt .Link:hover {
+  border-bottom: solid 5px white;
+}
+
+.alt .Link:active {
+  border-bottom: solid 0 white;
+}
+
+.alt .Selected {
+  border-bottom: solid 3px white;
+}
+
 .Link:focus-visible {
   border-bottom: solid 5px rgb(var(--focus));
   outline: solid 2px rgb(var(--focus));
@@ -112,8 +146,4 @@
     outline: solid 2px rgb(var(--focus));
     outline-offset: 4px;
   }
-}
-
-.Selected {
-  border-bottom: solid 3px rgb(var(--alt-purple-rgb));
 }

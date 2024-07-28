@@ -41,8 +41,6 @@
     overflow-wrap: anywhere;
   }
 
-
-
 }
 
 .FunFact, .FavouriteSong {
@@ -97,6 +95,7 @@
 
 .ImgPlaceholder span {
   color: white;
+  font-size: 64px;
 }
 
 .IconHeader {

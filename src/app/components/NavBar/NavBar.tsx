@@ -23,7 +23,11 @@ export default function NavBar() {
         if (image.dataset.size === 'big') {
           image.dataset.size = 'small';
         }
-        header.style.boxShadow = "0px 4px 8px 0px rgba(0, 0, 0, 0.25)";
+
+        if (path !== "/schedule/") {
+          header.style.boxShadow = "0px 4px 8px 0px rgba(0, 0, 0, 0.25)";
+        }
+
       } else {
         if (image.dataset.size === 'small') {
           image.dataset.size = 'big';
@@ -37,10 +41,10 @@ export default function NavBar() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [path]);
 
   return (
-    <header className={styles.Root}>
+    <header className={`${styles.Root} ${path === "/schedule/" ? styles.alt : ""}`}>
       <nav className={styles.Navbar} id={"header"}>
         <Link className={`${styles.LogoLink} notranslate`} href="/">
           <BurnLogo id={"image"} className={styles.Logo}/>

@@ -56,7 +56,7 @@ export default function HScroll({
   const scrollRight = () => {
     if (!content.current?.scrollTo) return;
     const div = content.current;
-    const scrollAmount = div.clientWidth * 0.7;
+    const scrollAmount = div.clientWidth * 0.5;
     const maxScrollLeft = div.scrollWidth - div.clientWidth - div.scrollLeft;
     const scrollBy = Math.min(scrollAmount, maxScrollLeft);
     content.current.scrollBy({

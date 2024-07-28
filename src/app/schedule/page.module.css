@@ -1,26 +1,44 @@
-
-.Root {
+.root {
   position: relative;
+  align-self: stretch;
   display: flex;
-  overflow-x: hidden;
+  padding: 32px 0;
+  padding-top: 0;
+  flex-grow: 1;
+  /*overflow-x: hidden;*/
 
   flex-direction: column;
-  align-items: flex-start;
-  align-self: stretch;
-  gap: 32px;
-  padding-top: 32px;
-}
-
-.Padded {
-  padding: 0 64px;
 
   @media only screen and (max-width: 600px) {
-    padding: 0 32px;
+    padding: 32px 0;
+    padding-top: 0;
   }
 
   @media only screen and (min-width: 1700px) {
-    padding: 0 256px;
+    padding: 32px 256px 64px;
+    padding-top: 0;
   }
+}
+
+.headerSection {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  padding: 16px 64px 24px;
+  padding-top: 32px;
+  background-color: rgb(var(--purple-rgb));
+  position: sticky;
+  top: 0; /* required */;
+  z-index: 1;
+
+  @media only screen and (max-width: 600px) {
+    padding: 16px 32px 24px;
+  }
+}
+
+.header {
+  color: white;
+  margin-bottom: 16px;
 }
 
 .content {
@@ -39,40 +57,11 @@
 .ScheduleList {
   display: flex;
   align-self: stretch;
-  /*justify-self: stretch;*/
   width: 100%;
   flex-direction: column;
-  gap: 32px;
-  padding: 32px;
+  gap: 24px;
+  padding: 32px 64px;
+  @media only screen and (max-width: 600px) {
+    padding: 32px;
+  }
 }
-
-/*.ScheduleList h2 {*/
-/*  background-color: rgb(93, 31, 116);*/
-/*  color: white;*/
-/*  padding: 4px 12px;*/
-/*}*/
-
-.ShowItem {
-  display: flex;
-  gap: 16px;
-}
-
-.ShowDetails {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  max-width: 1000px;
-}
-
-.ShowExcerpt {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  /*-webkit-box-orient: vertical;*/
-  max-height: calc(2em * 1.4);
-}
-
-
-

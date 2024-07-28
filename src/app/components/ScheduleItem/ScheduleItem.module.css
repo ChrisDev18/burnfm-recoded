@@ -1,0 +1,143 @@
+.root {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    padding: 0;
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit text color */
+    background-color: rgb(var(--tertiary-rgb), 0.7);
+    border: solid 1px rgba(var(--alt-purple-rgb), 0.3);
+    position: relative;
+    /*height: 140px;*/
+    /*outline-offset: -2px;*/
+}
+
+.right {
+    display: flex;
+    padding: 16px 36px 16px 16px;
+    flex-grow: 1;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    flex-grow: 1;
+    /*padding: 16px;*/
+    gap: 4px;
+}
+
+.timing {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(var(--foreground-rgb), 0.7);
+    text-decoration: none;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.title {
+    font-size: 1.4rem;
+}
+
+.excerpt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    font-size: 1rem;
+    max-height: calc(2em * 1.4);
+    -webkit-box-orient: vertical;
+}
+
+.icon {
+    font-size: 40px;
+    transition: transform 200ms ease, opacity 100ms ease;
+    text-decoration: none;
+    transform: translateX(-4px);
+    opacity: 0;
+}
+
+.root:focus,
+.root:hover {
+    background-color: rgb(var(--foreground-rgb), 0.08);
+}
+
+.root:focus .info,
+.root:hover .info {
+    text-decoration:  underline;
+}
+
+.root:focus .icon,
+.root:hover .icon {
+    transform: translateX(0);
+    opacity: 100%;
+}
+
+.root:active {
+    background-color: rgb(var(--foreground-rgb), 0.1);
+}
+
+.root:active .icon {
+    color: rgb(var(--alt-purple-rgb));
+    transform: translateX(8px);
+    opacity: 100%;
+}
+
+.root:focus {
+    outline: 3px solid rgb(var(--focus));
+    outline-offset: 3px;
+}
+
+
+.ImageContainer {
+    position: relative;
+    right: 0;
+    top: 0;
+    height: 140px;
+    width: auto;
+    aspect-ratio: 1 / 1;
+    /*z-index: 0;*/
+
+    .ImageOverlay {
+        position: absolute;
+        display: none;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        /*z-index: 2;*/
+        background: linear-gradient(90deg, rgb(14,14,14) 10%, rgb(var(--tertiary-rgb), 0) 100%);
+        pointer-events: none;
+
+        @media only screen and (max-width: 600px) {
+            display: block;
+        }
+    }
+
+    .img {
+        height: 100%;
+        width: 100%;
+    }
+
+}
+
+@media only screen and (max-width: 600px) {
+    .root {
+        flex-direction: row-reverse;
+    }
+
+    .right {
+        margin-right: -140px;
+    }
+
+}
