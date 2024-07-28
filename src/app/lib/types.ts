@@ -7,6 +7,7 @@ export type API = {
 export type API_ScheduleItem = {
   start_time_in_station_tz: number,
   end_time_in_station_tz: number,
+  contentId: number,
   content: {
     contentType: {
       display_name: string,
@@ -20,6 +21,7 @@ export type API_ScheduleItem = {
 }
 
 export type Show = {
+  id: number,
   title: string,
   excerpt: string,
   start_time: Date,
@@ -34,9 +36,7 @@ export type ShowSchedule = {
 
 export type PopupState = {
   visible: boolean,
-  img: string | null,
-  title: string,
-  excerpt: string
+  show: Show,
 }
 
 export type Profile = {

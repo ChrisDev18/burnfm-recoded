@@ -6,24 +6,20 @@ import React from "react";
 import Link from "next/link";
 
 import "@/app/styles/icons.css";
+import {Show} from "@/app/lib/types";
 
 // An item shown in ScheduleList.
 export default function ScheduleItem({
-  timeString,
-  duration,
-  title,
-  excerpt,
-  img
+  show
 }: {
-  timeString: string;
-  duration: number;
-  title: string;
-  excerpt: string;
-  img: string | null;
+  show: Show
 }) {
 
+  const duration = Math.round((show.end_time.getTime() - show.start_time.getTime()) / (1000 * 60 * 60));
+  const timeString = show.start_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"});
+
   return (
-      <Link href={"/show?id=1"} className={`${styles.root}`}>
+      <Link href={"/show?id=" + show.id} className={`${styles.root}`}>
 
         {/*<Image src={img !== null ? img : fallback.src}*/}
         {/*       className={styles.img}*/}
@@ -34,9 +30,9 @@ export default function ScheduleItem({
 
         <div className={styles.ImageContainer}>
           <span className={styles.ImageOverlay}/>
-          <Image src={img !== null ? img : fallback.src}
+          <Image src={show.img !== null ? show.img : fallback.src}
                  className={styles.img}
-                 alt={"Cover photo for the show: " + title}
+                 alt={"Cover photo for the show: " + show.title}
                  height={140}
                  width={140}
           />
@@ -46,8 +42,8 @@ export default function ScheduleItem({
           <div className={styles.details}>
             <p className={styles.timing}>{timeString} - {duration == 1 ? `${duration} Hour` : `${duration} Hours`}</p>
             <div className={styles.info}>
-              <h3 className={`${styles.title} notranslate`}>{title}</h3>
-              <p className={styles.excerpt}>{excerpt !== "" ? excerpt : "This show has no excerpt"}</p>
+              <h3 className={`${styles.title} notranslate`}>{show.title}</h3>
+              <p className={styles.excerpt}>{show.excerpt !== "" ? show.excerpt : "This show has no excerpt"}</p>
             </div>
           </div>
 

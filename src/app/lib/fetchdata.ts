@@ -11,6 +11,7 @@ function decode_url(body: string) {
 // Forms show object given a ScheduleItem from the API
 function formShow(show: API_ScheduleItem) {
   let new_show: Show = {
+    id: show.contentId,
     title: "",
     excerpt: "",
     img: null,
@@ -49,6 +50,12 @@ async function getAllShows() {
   return json.body.schedule
       .map(scheduleItem => formShow(scheduleItem))
       .toSorted((a, b) => a.start_time.getTime() < b.start_time.getTime() ? -1 : 1);
+}
+
+// Retrieve a show from the API.
+export async function getShow(id: number) {
+  const shows = await getAllShows();
+  return shows.find(show => show.id == id);
 }
 
 // Returns the current_show as well as a list of next_shows.

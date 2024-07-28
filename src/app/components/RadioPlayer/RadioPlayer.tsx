@@ -24,9 +24,14 @@ const empty_schedule: ShowSchedule = {
 
 const init_popup: PopupState = {
   visible: false,
-  img: fallback.src,
-  title: "default title",
-  excerpt: "default excerpt"
+  show: {
+    id: 0,
+    title: "",
+    excerpt: "",
+    start_time: new Date(),
+    end_time: new Date(),
+    img: null
+  }
 }
 
 export default function RadioPlayer() {
@@ -125,9 +130,7 @@ export default function RadioPlayer() {
   const displayPopup = (show: ShowType) => {
     setPopup({
       visible: true,
-      title: show.title,
-      excerpt: show.excerpt,
-      img: show.img
+      show: show,
     });
   }
 
@@ -168,27 +171,33 @@ export default function RadioPlayer() {
       <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
         <DialogContent>
           <div className={showPopup.Popup}>
-            {popup.img &&
+            {popup.show.img &&
               <Image className={showPopup.Image}
-                     src={popup.img}
-                     alt={"Cover image for the show: " + popup.title}
+                     src={popup.show.img}
+                     alt={"Cover image for the show: " + popup.show.title}
                      height={120}
                      width={120}
               />
             }
 
-            <h2 className={"notranslate"}>{popup.title}</h2>
+            <h2 className={"notranslate"}>{popup.show.title}</h2>
 
             {
-              popup.excerpt !== "" ?
-                <p>{popup.excerpt}</p>
+              popup.show.excerpt !== "" ?
+                <p>{popup.show.excerpt}</p>
                    :
                 <p className={showPopup.Default}>{pickExcerpt()}</p>
             }
 
-            <Link className={buttons.Button} href={"/schedule"}>
-              Go to today&apos;s schedule
-            </Link>
+            <div className={showPopup.buttonRow}>
+              <Link className={buttons.Button} href={"/schedule?day=" + popup.show.start_time.getDay()}>
+                View in Schedule
+              </Link>
+
+              <Link className={buttons.Button} href={"/show?id=" + popup.show.id}>
+                See show&apos;s page
+              </Link>
+            </div>
 
             <Close className={`${showPopup.Close} ${buttons.Clickable}`}>
               <span className={'material-symbols-rounded notranslate'}>close</span>

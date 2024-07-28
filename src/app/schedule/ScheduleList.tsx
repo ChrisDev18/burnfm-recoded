@@ -17,18 +17,7 @@ export default function ScheduleList({day}: { day: number }) {
 
   const isJavaScriptEnabled = typeof window !== 'undefined'
 
-  const list = schedule.map((show, i) => {
-    const duration = Math.round((show.end_time.getTime() - show.start_time.getTime()) / (1000 * 60 * 60))
-    const time_string = show.start_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})
-    return (
-        <ScheduleItem key={i}
-                      title={show.title}
-                      img={show.img}
-                      excerpt={show.excerpt}
-                      duration={duration}
-                      timeString={time_string}/>
-    )
-  });
+  const list = schedule.map((show, i) => <ScheduleItem key={i} show={show}/>);
 
   if (schedule.length > 0) return (
       <motion.div className={styles.ScheduleList}

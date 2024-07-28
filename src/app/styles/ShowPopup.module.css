@@ -30,3 +30,9 @@
 .Popup p {
   margin-bottom: 4px;
 }
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
