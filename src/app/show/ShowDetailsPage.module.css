@@ -1,0 +1,77 @@
+
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 64px;
+  padding: 64px;
+
+  @media only screen and (max-width: 600px) {
+    padding: 64px 32px 64px;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  @media only screen and (min-width: 1700px) {
+    padding: 32px 256px 64px;
+  }
+
+  background-color: rgb(var(--tertiary-rgb));
+}
+
+
+.image, .imgPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  width: 360px;
+  height: auto;
+  object-fit: cover;
+  background-color: rgb(var(--purple-rgb));
+  box-shadow: 0 20px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.imgPlaceholder .icon {
+  font-size: 64px;
+  color: white;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+
+  @media only screen and (max-width: 600px) {
+    gap: 32px;
+  }
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: 500;
+  margin-left: -4px;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+
+.times {
+  font-size: 1.2rem;
+  font-weight: 500;
+  @media only screen and (max-width: 600px) {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+}
+
+.placeholderText {
+  font-size: 1rem;
+  color: rgba(var(--foreground-rgb), 0.7);
+}

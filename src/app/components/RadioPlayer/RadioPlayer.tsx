@@ -190,12 +190,12 @@ export default function RadioPlayer() {
             }
 
             <div className={showPopup.buttonRow}>
-              <Link className={buttons.Button} href={"/schedule?day=" + popup.show.start_time.getDay()}>
-                View in Schedule
-              </Link>
+              {/*<Link className={buttons.Button} href={"/schedule?day=" + popup.show.start_time.getDay()}>*/}
+              {/*  View in Schedule*/}
+              {/*</Link>*/}
 
               <Link className={buttons.Button} href={"/show?id=" + popup.show.id}>
-                See show&apos;s page
+                Go to Show Page
               </Link>
             </div>
 

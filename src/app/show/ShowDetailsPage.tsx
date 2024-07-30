@@ -1,7 +1,10 @@
 import {useEffect, useState} from "react";
 import {getShow} from "@/app/lib/fetchdata";
 import {notFound} from "next/navigation";
-import {Show} from "@/app/lib/types";
+import {Show} from "@/app/lib/types"
+
+import styles from "./ShowDetailsPage.module.css"
+import Image from "next/image";
 
 export default function ShowDetailsPage({id}: {id: number}) {
   const [show, setShow] = useState<Show|null|undefined>(null);
@@ -13,15 +16,32 @@ export default function ShowDetailsPage({id}: {id: number}) {
   if (show === undefined) return notFound();
 
   return (
-      <div>
-        <p>
-          {show?.start_time
-            .toLocaleTimeString(['en'], {weekday: "short", hour: "2-digit", minute: "2-digit"})} - {show?.end_time
-            .toLocaleTimeString(['en'], {weekday: "short", hour: "2-digit", minute: "2-digit"})}
-        </p>
-        <h1>{show?.title}</h1>
-        <p>{show?.excerpt !== "" ? show?.excerpt : "This show has no excerpt"}</p>
-        <p>{show?.img}</p>
+      <div className={styles.root}>
+        {show?.img ?
+            <Image src={show.img} alt={"Cover photo for" + show.title}/>
+            :
+            <div className={styles.imgPlaceholder}>
+              <span className={`${styles.icon} material-symbols-rounded notranslate`}>interpreter_mode</span>
+            </div>
+        }
+
+        <div className={styles.details}>
+          <div>
+            <h1 className={styles.title}>{show?.title}</h1>
+            <p className={styles.times}>
+              {show?.start_time.toLocaleDateString("en", {weekday: "long"})}s {show?.start_time
+                  .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {show?.end_time
+                .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}
+            </p>
+          </div>
+
+          {show?.excerpt !== "" ?
+              <p>{show?.excerpt}</p>
+              :
+              <p className={styles.placeholderText}>This show has no excerpt</p>
+          }
+        </div>
+
       </div>
   )
 }

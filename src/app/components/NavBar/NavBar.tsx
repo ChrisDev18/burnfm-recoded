@@ -36,6 +36,10 @@ export default function NavBar() {
       }
     };
 
+    if (path === "/schedule/") {
+      header.style.boxShadow = "none";
+    }
+
     window.addEventListener('scroll', handleScroll);
 
     return () => {
