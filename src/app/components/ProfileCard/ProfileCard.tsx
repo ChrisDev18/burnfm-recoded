@@ -22,7 +22,7 @@ export default function ProfileCard({profile}: {profile: Profile}) {
                alt={`Profile picture of ${profile.name}`}
                height={200}
                width={300}
-               priority
+               // priority
         />
         :
         <div className={styles.ImgPlaceholder}>
@@ -62,6 +62,7 @@ export default function ProfileCard({profile}: {profile: Profile}) {
                     src={`https://open.spotify.com/embed/track/${spotify_id}?utm_source=generator`} width="100%"
                     height="80"
                     allowFullScreen={false}
+                    title={"Spotify player"}
                     loading="lazy"
             />
           </div>

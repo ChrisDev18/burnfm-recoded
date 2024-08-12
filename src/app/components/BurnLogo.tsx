@@ -1,6 +1,9 @@
-export default function BurnLogo({id, className}: {id?: string, className?: string}) {
+export default function BurnLogo(
+    {id, className, width, height}:
+    {id?: string, className?: string, width?: number, height?: number}
+) {
   return (
-      <svg width="565" height="564" viewBox="0 0 565 564" fill="none" xmlns="http://www.w3.org/2000/svg" id={id} className={className}>
+      <svg width={width ? width : "565"} height={height ? height : "564"} viewBox="0 0 565 564" fill="none" xmlns="http://www.w3.org/2000/svg" id={id} className={className}>
         <g clipPath="url(#clip0_0_3)">
           <g mask="url(#mask0_0_3)">
             <path

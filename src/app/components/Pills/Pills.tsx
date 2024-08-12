@@ -38,10 +38,17 @@ export default function Pills({
       }
     }
 
-    return <Link key={i} href={{
-      pathname: x.link,
-      query: x.params,
-    }} className={`${styles.pill} ${path === x.link && checkParams(x.params) ? styles.selected : ""}`}>{x.text}</Link>
+    return (
+        <li key={i}>
+          <Link href={{
+                  pathname: x.link,
+                  query: x.params,
+                }}
+                className={`${styles.pill} ${path === x.link && checkParams(x.params) ? styles.selected : ""}`}>
+            {x.text}
+          </Link>
+        </li>
+    )
   });
 
   return (
