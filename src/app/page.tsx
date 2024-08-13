@@ -74,7 +74,7 @@ export default function Home() {
                 height={28}
                 width={28}
               />
-              Go to our Spotify profile
+              Visit our Spotify profile
             </a>
           </div>
           <Image

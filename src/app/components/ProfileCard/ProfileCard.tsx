@@ -2,7 +2,7 @@ import Image from "next/image";
 import {Profile} from "@/app/lib/types";
 import styles from "./ProfileCard.module.css"
 
-export default function ProfileCard({profile}: {profile: Profile}) {
+export default function ProfileCard({profile, priority}: {profile: Profile, priority: boolean}) {
   // get spotify track id
   let spotify_id: string | null = null;
   if (profile.favourite_song !== "") {
@@ -18,11 +18,11 @@ export default function ProfileCard({profile}: {profile: Profile}) {
     <div className={styles.Root}>
       {profile.picture !== "" ?
         <Image className={styles.Image}
+               priority={priority}
                src={"https://burnfm.com" + profile.picture}  //.replace(/\.[^/.]+$/, "")
                alt={`Profile picture of ${profile.name}`}
                height={200}
                width={300}
-               // priority
         />
         :
         <div className={styles.ImgPlaceholder}>
@@ -33,11 +33,6 @@ export default function ProfileCard({profile}: {profile: Profile}) {
       <div className={styles.Content}>
         <p className={styles.Title}>{profile.role}</p>
         <p className={`${styles.Name} notranslate`}>{profile.name}</p>
-        {/*<div className={styles.Email}>*/}
-        {/*  <span className={"material-symbols-rounded notranslate"}>email</span>*/}
-        {/*  <p>{profile.email}</p>*/}
-        {/*</div>*/}
-
         <p>{profile.course !== ""? `Studies: ${profile.course}`: ""}</p>
         <p className={styles.Description}>{profile.description}</p>
 

@@ -29,7 +29,7 @@ export default function AboutPage() {
   }, []);
 
   const profile_list: React.JSX.Element[] = profiles.map((profile, i) =>
-    <ProfileCard key={i} profile={profile}/>
+    <ProfileCard key={i} profile={profile} priority={i<3}/>
   );
 
   return (
