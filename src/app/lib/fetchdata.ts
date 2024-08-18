@@ -17,12 +17,21 @@ function formShow(show: API_ScheduleItem) {
     img: null,
     start_time: new Date(show.start_time_in_station_tz),
     end_time: new Date(show.end_time_in_station_tz),
+    presenter: undefined
   };
 
   show.content.forEach((content) => {
     // only set the image if exists
     if (content.contentType.slug === "featuredImage") {
       new_show.img = decode_url(content.body);
+    }
+
+    // only set the presenter if exists
+    if (content.contentType.slug === "presenter") {
+      new_show.presenter = {
+        name: content.display_title,
+        excerpt: content.excerpt,
+      }
     }
 
     // only set show details if exists
@@ -55,7 +64,9 @@ async function getAllShows() {
 // Retrieve a show from the API.
 export async function getShow(id: number) {
   const shows = await getAllShows();
-  return shows.find(show => show.id == id);
+  return shows.find(show => show.id === id);
+  // let matches = shows.filter(show => show.id == id);
+
 }
 
 // Returns the current_show as well as a list of next_shows.

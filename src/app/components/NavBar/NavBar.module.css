@@ -4,6 +4,10 @@
   z-index: 10;
 }
 
+.LogoLink {
+  line-height: 80%;
+}
+
 .LogoLink:focus-visible {
   outline: 2px solid rgb(var(--focus));
   outline-offset: 2px;
@@ -27,8 +31,8 @@
 }
 
 .Logo[data-size='small'] {
-  height: 50px;
-  width: 50px;
+  height: 64px;
+  width: 64px;
 }
 
 .Navbar {

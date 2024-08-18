@@ -5,6 +5,7 @@ import {Show} from "@/app/lib/types"
 
 import styles from "./ShowDetailsPage.module.css"
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function ShowDetailsPage({id}: {id: number}) {
   const [show, setShow] = useState<Show|null|undefined>(null);
@@ -15,10 +16,16 @@ export default function ShowDetailsPage({id}: {id: number}) {
 
   if (show === undefined) return notFound();
 
+  const isJavaScriptEnabled = typeof window !== 'undefined'
+
+
   return (
-      <div className={styles.root}>
+      <motion.div className={styles.root}
+                  transition={{duration: 0.2, type: "tween", delay: 0.2}}
+                  initial={isJavaScriptEnabled ? {opacity: 0} : {opacity: 1}}
+                  animate={{opacity: 1}}>
         {show?.img ?
-            <Image src={show.img} alt={"Cover photo for" + show.title}/>
+            <Image className={styles.image} src={show.img} alt={"Cover photo for" + show.title} height={400} width={400} priority />
             :
             <div className={styles.imgPlaceholder}>
               <span className={`${styles.icon} material-symbols-rounded notranslate`}>interpreter_mode</span>
@@ -40,8 +47,15 @@ export default function ShowDetailsPage({id}: {id: number}) {
               :
               <p className={styles.placeholderText}>This show has no excerpt</p>
           }
+
+          {show?.presenter &&
+              <div>
+                  <h2>Presented by</h2>
+                  <p>{show.presenter.name}</p>
+              </div>
+          }
         </div>
 
-      </div>
+      </motion.div>
   )
 }

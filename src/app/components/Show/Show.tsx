@@ -24,11 +24,11 @@ export default function Show({show}: { show: Show }) {
             ['en'],
             {weekday: "short", hour: "2-digit", minute: "2-digit"}
           )}
-           -
-          {show.end_time.toLocaleTimeString(
-            ['en'],
-            {hour: "2-digit", minute: "2-digit"}
-          )}
+          {/* -*/}
+          {/*{show.end_time.toLocaleTimeString(*/}
+          {/*  ['en'],*/}
+          {/*  {hour: "2-digit", minute: "2-digit"}*/}
+          {/*)}*/}
         </p>
         <p className={`${styles.Show_Title} notranslate`}>{show.title}</p>
         {show.excerpt != "" ? <p className={styles.Show_Excerpt}>{show.excerpt}</p> : <></>}

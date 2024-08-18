@@ -81,5 +81,14 @@
 }
 
 .CardIcon > span {
-  font-size: 46px;
+  font-size: 44px;
+}
+
+.cardButtons {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
+  gap: 16px;
 }

@@ -20,13 +20,19 @@ export type API_ScheduleItem = {
   }[]
 }
 
+export type Presenter = {
+  name: string,
+  excerpt: string
+}
+
 export type Show = {
   id: number,
   title: string,
   excerpt: string,
   start_time: Date,
   end_time: Date,
-  img: string | null
+  img: string | null,
+  presenter?: Presenter
 }
 
 export type ShowSchedule = {

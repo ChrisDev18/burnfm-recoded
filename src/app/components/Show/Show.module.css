@@ -24,7 +24,7 @@
     height: 100%;
     width: auto;
     /*z-index: 1;*/
-    background: linear-gradient(90deg, rgba(50, 16, 63, 0.00) 0%, #32103F 100%);
+    background: linear-gradient(90deg, rgba(50, 16, 63, 0) 0%, rgba(50, 16, 63, 0.85) 70%, #32103F 100%);
     pointer-events: none;
   }
 
@@ -45,6 +45,7 @@
   gap: 8px;
   z-index: 1;
   margin-left: -28px;
+  min-width: 140px;
 
   .Show_Times {
     color: #FFF;
