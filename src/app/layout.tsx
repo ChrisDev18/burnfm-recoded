@@ -66,7 +66,7 @@ export default function RootLayout({
         <body>
 
           <audio ref={audioRef} id={"media"} onError={() => console.error("Error accessing audio")}>
-            <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mp3"}/>
+            <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mpeg"}/>
             The broadcast has stopped, or your browser does not support the audio element.
           </audio>
 
