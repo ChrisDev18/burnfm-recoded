@@ -16,10 +16,11 @@
   position: absolute;
   top: 24px;
   right: 24px;
+  padding: 4px;
 }
 
 .Close span {
-  font-size: 32px;
+  font-size: 24px;
 }
 
 .Default {

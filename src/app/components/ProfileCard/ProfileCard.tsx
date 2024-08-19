@@ -34,7 +34,14 @@ export default function ProfileCard({profile, priority}: {profile: Profile, prio
         <p className={styles.Title}>{profile.role}</p>
         <p className={`${styles.Name} notranslate`}>{profile.name}</p>
         <p>{profile.course !== ""? `Studies: ${profile.course}`: ""}</p>
-        <p className={styles.Description}>{profile.description}</p>
+
+        <div className={styles.Description}>
+          {profile.description.split("\n").map((line, index) => (
+              <p key={index}>
+                {line}
+              </p>
+          ))}
+        </div>
 
         {profile.fun_fact !== "" ?
           <div className={styles.FunFact}>

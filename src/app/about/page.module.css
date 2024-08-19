@@ -24,6 +24,6 @@
   align-self: stretch;
 
   @media only screen and (max-width: 800px) {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 }

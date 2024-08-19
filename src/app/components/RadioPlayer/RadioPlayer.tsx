@@ -199,7 +199,7 @@ export default function RadioPlayer() {
               </Link>
             </div>
 
-            <Close className={`${showPopup.Close} ${buttons.Clickable}`}>
+            <Close className={`${buttons.Button} ${showPopup.Close}`}>
               <span className={'material-symbols-rounded notranslate'}>close</span>
             </Close>
           </div>

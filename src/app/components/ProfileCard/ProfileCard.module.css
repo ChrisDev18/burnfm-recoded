@@ -29,6 +29,12 @@
     height: 100%;
   }
 
+  .Description {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
   .Email {
     display: flex;
     flex-direction: row;
