@@ -43,29 +43,34 @@ export default function RootLayout({
 
   return (
       <html lang="en" className={sourceSans3.className}>
-        <head>
-          <title>BurnFM</title>
-          <meta name="description" content="Tune into BurnFM, the University of Birmingham's official radio station."/>
-          <meta name="apple-mobile-web-app-title" content="BurnFM"/>
-          <meta name="apple-itunes-app" content="app-id=6476577938"/>
+      <head>
+        <title>BurnFM</title>
+        <meta name="description" content="Tune into BurnFM, the University of Birmingham's official radio station."/>
 
-          <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon1.png"/>
-          <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon2.png"/>
-          <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon3.png"/>
-          <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon4.png"/>
-          <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon5.png"/>
-          <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon2.png"/>
-          <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon1.png"/>
-          <link rel="manifest" href="/icons/site.webmanifest"/>
-          <link rel="mask-icon" href="/icons/icon.svg" color="#32103f"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-mobile-web-app-title" content="BurnFM"/>
+        <meta name="apple-itunes-app" content="app-id=6476577938"/>
 
-          <meta name="msapplication-TileColor" content="#32103f"/>
-          <meta name="theme-color" content={lightMode? "rgb(255, 255, 255)" : "rgb(20, 20, 20)"}/>
-        </head>
+        <link rel="apple-touch-icon" sizes="58x58" href="/icons/apple-58.png"/>
+        <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-76.png"/>
+        <link rel="apple-touch-icon" sizes="80x80" href="/icons/apple-80.png"/>
+        <link rel="apple-touch-icon" sizes="87x87" href="/icons/apple-87.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-114.png"/>
+        <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-120.png"/>
+        <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-152.png"/>
+        <link rel="apple-touch-icon" sizes="167x167" href="/icons/apple-167.png"/>
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-180.png"/>
 
-        <body>
+        <link rel="icon" href="/icons/favicon.ico"/>
+        <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg"/>
 
-          <audio ref={audioRef} id={"media"} onError={() => console.error("Error accessing audio")}>
+        <meta name="msapplication-TileColor" content="#32103f"/>
+        <meta name="theme-color" content={lightMode ? "rgb(255, 255, 255)" : "rgb(20, 20, 20)"}/>
+      </head>
+
+      <body>
+
+      <audio ref={audioRef} id={"media"} onError={() => console.error("Error accessing audio")}>
             <source src={"https://streaming.broadcastradio.com:8572/burnfm"} type={"audio/mpeg"}/>
             The broadcast has stopped, or your browser does not support the audio element.
           </audio>
