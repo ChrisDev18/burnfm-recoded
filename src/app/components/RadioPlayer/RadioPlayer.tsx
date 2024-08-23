@@ -1,6 +1,7 @@
 'use client'
 
 import styles from "./RadioPlayer.module.css";
+import buttons from "@/app/styles/buttons.module.css"
 import showPopup from "@/app/styles/ShowPopup.module.css"
 import React, {useContext, useEffect, useState} from "react";
 import Image from "next/image";
@@ -11,7 +12,7 @@ import Show from "../Show/Show";
 import {Dialog, DialogContent} from "@/app/components/Popup/Popup";
 import loading_styles from "../../styles/Spinner.module.css";
 import {Close} from "@radix-ui/react-dialog";
-import buttons from "@/app/styles/buttons.module.css"
+
 import Link from "next/link";
 import {pickExcerpt} from "@/app/lib/excerpts";
 import {AudioContext} from "@/app/contexts/AudioContext";
@@ -199,7 +200,7 @@ export default function RadioPlayer() {
               </Link>
             </div>
 
-            <Close className={`${buttons.Button} ${showPopup.Close}`}>
+            <Close className={`${showPopup.Close}`}>
               <span className={'material-symbols-rounded notranslate'}>close</span>
             </Close>
           </div>
