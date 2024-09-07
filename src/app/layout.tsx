@@ -44,11 +44,11 @@ export default function RootLayout({
   return (
       <html lang="en" className={sourceSans3.className}>
       <head>
-        <title>BurnFM</title>
-        <meta name="description" content="Tune into BurnFM, the University of Birmingham's official radio station."/>
+        <title>Burn FM</title>
+        <meta name="description" content="Tune into Burn FM, the University of Birmingham's official radio station."/>
 
         <meta name="apple-mobile-web-app-capable" content="yes"/>
-        <meta name="apple-mobile-web-app-title" content="BurnFM"/>
+        <meta name="apple-mobile-web-app-title" content="Burn FM"/>
         <meta name="apple-itunes-app" content="app-id=6476577938"/>
 
         <link rel="apple-touch-icon" sizes="58x58" href="/icons/apple-58.png"/>

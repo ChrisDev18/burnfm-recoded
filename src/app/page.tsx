@@ -29,7 +29,7 @@ export default function Home() {
 
         <div className={styles.CardWrapper}>
           <div className={styles.Card} style={{background: "#32103F"}}>
-            <h2>BurnFM on Instagram</h2>
+            <h2>Burn FM on Instagram</h2>
             <p>
               Socials, signup sheets, and info about our new committee - it&apos;ll all be there on Instagram. Follow us
               so that you don&apos;t miss anything!
@@ -61,7 +61,7 @@ export default function Home() {
           <div className={styles.Card} style={{background: '#5D1F74'}}>
             <h2>Burn Podcasts</h2>
             <p>
-              BurnFM doesn&apos;t just do radio - we also have a large and vibrant community of podcasters.
+              Burn FM doesn&apos;t just do radio - we also have a large and vibrant community of podcasters.
             </p>
 
             <div className={styles.cardButtons}>
@@ -94,14 +94,14 @@ export default function Home() {
 
         <div className={styles.CardWrapper}>
           <div className={styles.Card} style={{background: '#1D1D1D'}}>
-            <h2>BurnFM Mixes on Spotify</h2>
+            <h2>Burn FM Mixes on Spotify</h2>
             <p>
               Music and Radio go hand in hand, so we made a Spotify account! Follow us on @theburnfm and:
             </p>
             <ul>
-              <li>discover new sub-genres of music listening to <i>BurnFM Introduces...</i></li>
+              <li>discover new sub-genres of music listening to <i>Burn FM Introduces...</i></li>
               <li>play back the songs from our past Media Balls,</li>
-              <li>and explore all the other playlists from the past, curated here at BurnFM.</li>
+              <li>and explore all the other playlists from the past, curated here at Burn FM.</li>
             </ul>
             <a className={buttons.Button} href={"https://open.spotify.com/user/theburnfm"}>
               <Image

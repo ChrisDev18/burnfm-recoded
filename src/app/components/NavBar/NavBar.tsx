@@ -50,7 +50,7 @@ export default function NavBar() {
   return (
     <header className={`${styles.Root} ${path === "/schedule/" ? styles.alt : ""}`}>
       <nav className={styles.Navbar} id={"header"}>
-        <Link className={`${styles.LogoLink} notranslate`} href="/" aria-label="BurnFM Homepage">
+        <Link className={`${styles.LogoLink} notranslate`} href="/" aria-label="Burn FM Homepage">
           <BurnLogo id={"image"} className={styles.Logo} width={100} height={100} />
         </Link>
 

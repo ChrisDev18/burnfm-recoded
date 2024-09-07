@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'BurnFM',
-    short_name: 'BurnFM',
-    description: 'Tune into BurnFM, the University of Birmingham\'s official radio station.',
+    name: 'Burn FM',
+    short_name: 'Burn FM',
+    description: 'Tune into Burn FM, the University of Birmingham\'s official radio station.',
     start_url: '../',
     display: 'standalone',
     theme_color: "#5d1f74",

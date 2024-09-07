@@ -99,7 +99,7 @@ export default function RadioPlayer() {
     if (schedule.current_show !== null) {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: schedule.current_show?.title,
-        artist: "BurnFM",
+        artist: "Burn FM",
         artwork: [{
           src: schedule.current_show.img === null ? fallback.src : schedule.current_show.img,
           sizes: '192x192',

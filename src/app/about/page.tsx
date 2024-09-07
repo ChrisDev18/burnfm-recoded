@@ -35,7 +35,7 @@ export default function AboutPage() {
   return (
       <>
         <p className={styles.Subtitle}>
-          BurnFM runs thanks to its dedicated committee members.
+          Burn FM runs thanks to its dedicated committee members.
           Find out a little more about their roles below (as well as a few favourite songs and fun facts).
         </p>
 
