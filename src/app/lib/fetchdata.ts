@@ -11,9 +11,11 @@ function formShow(show: API_ScheduleItem): Show {
 
   [h, m, s] = show.end_time.split(':').map(Number);
   end.setHours(h, m, s);
+  end.setSeconds(end.getSeconds() + 1);
 
   [h, m, s] = show.duration.split(':').map(Number);
   duration.setHours(h, m, s);
+  duration.setSeconds(duration.getSeconds() + 1);
 
   return {
     id: show.id,

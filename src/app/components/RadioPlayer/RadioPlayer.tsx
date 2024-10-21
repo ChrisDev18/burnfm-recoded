@@ -289,7 +289,7 @@ export default function RadioPlayer() {
             <span className={styles.ImageOverlay}/>
             <Image
               className={styles.Image}
-              src={schedule.current_show.img === null ? fallback : schedule.current_show.img}
+              src={!schedule.current_show.img ? fallback : schedule.current_show.img}
               alt={"Cover image for the show: " + schedule.current_show.title}
               height={233}
               width={233}
