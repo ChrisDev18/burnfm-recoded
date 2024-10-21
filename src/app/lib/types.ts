@@ -5,7 +5,8 @@ export type Schedule_API = {
 }
 
 export type Now_Playing_API = {
-  now_playing: API_ScheduleItem[]
+  now_playing: API_ScheduleItem[],
+  up_next: API_ScheduleItem[]
 }
 
 export type API_ScheduleItem = {

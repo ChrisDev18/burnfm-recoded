@@ -24,28 +24,6 @@ const empty_schedule: ShowSchedule = {
   next_shows: []
 }
 
-
-// const placeholder_schedule: ShowSchedule = {
-//   current_show: {
-//     id: 0,
-//     title: "Burn Out",
-//     description: "Nonstop tunes over the holidays.",
-//     start_time: new Date("2024-10-17 00:00:00"),
-//     end_time: new Date("2024-10-17 23:59:59"),
-//     img: null,
-//     hosts: ["Burn FM"],
-//   },
-//   next_shows: [{
-//     id: 0,
-//     title: "Burn Out",
-//     description: "Nonstop tunes over the holidays.",
-//     start_time: new Date("2024-10-17 00:00:00"),
-//     end_time: new Date("2024-10-17 23:59:59"),
-//     img: null,
-//     hosts: ["Burn FM"],
-//   }]
-// }
-
 const init_popup: PopupState = {
   visible: false,
   show: {
@@ -75,7 +53,7 @@ export default function RadioPlayer() {
       setLoading(true);
       getNowPlaying()
         .then(x => {
-          setSchedule({current_show: x, next_shows: []});  // TODO: get_now_playing needs to also get coming up shows
+          setSchedule(x);
         })
         .catch(e => console.error("Error: ", e))
         .finally(() => setLoading(false));

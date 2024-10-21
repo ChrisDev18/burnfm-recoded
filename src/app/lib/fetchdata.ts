@@ -1,4 +1,12 @@
-import {API_ScheduleItem, days, Now_Playing_API, Schedule_API, Show} from "@/app/lib/types";
+import {
+  API_ScheduleItem,
+  days,
+  Now_Playing_API,
+  Schedule_API,
+  Show as ShowType,
+  Show,
+  ShowSchedule
+} from "@/app/lib/types";
 
 // Forms show object given a ScheduleItem from the API
 function formShow(show: API_ScheduleItem): Show {
@@ -55,19 +63,38 @@ export async function getSchedule(day?: number): Promise<Show[]> {
 }
 
 // Returns the current_show as well as a list of next_shows.
-export async function getNowPlaying(): Promise<Show | null> {
+export async function getNowPlaying(): Promise<ShowSchedule> {
   let res = await fetch("https://api.burnfm.com/get_schedule?now_playing=true");
 
   if (! res.ok) {
     console.error(res.statusText);
-    return null;
+    return {
+      current_show: null,
+      next_shows: []
+    };
   }
 
   // Extract the API Body
   let json = await res.json() as Now_Playing_API;
 
-  return json.now_playing[0] ? formShow(json.now_playing[0]) : null;
+  const upNext = json.up_next.map(formShow)
 
+  const BurnOut: ShowType = {
+    id: -1,
+    day: days[new Date().getDay()],
+    duration: new Date(),
+    title: "Burn Out",
+    description: "Nonstop tunes over the holidays.",
+    start_time: new Date(),
+    end_time: upNext? upNext[0].start_time : new Date(),
+    img: "",
+    hosts: ["Burn FM"]
+  }
+
+  return {
+    current_show: json.now_playing ? formShow(json.now_playing[0]) : BurnOut,
+    next_shows: upNext
+  }
 }
 
 // Retrieve a show from the API.
