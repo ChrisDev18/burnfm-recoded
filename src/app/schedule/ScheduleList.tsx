@@ -12,7 +12,7 @@ export default function ScheduleList({day}: { day: number }) {
   const [schedule, setSchedule] = useState<Show[]>([]);
 
   useEffect(() => {
-    getSchedule().then(s => setSchedule(s[day]));
+    getSchedule(day).then(s => setSchedule(s));
   }, [day]);
 
   const isJavaScriptEnabled = typeof window !== 'undefined'

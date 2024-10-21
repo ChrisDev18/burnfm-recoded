@@ -31,7 +31,7 @@ export default function Show({show}: { show: Show }) {
           {/*)}*/}
         </p>
         <p className={`${styles.Show_Title} notranslate`}>{show.title}</p>
-        {show.excerpt != "" ? <p className={styles.Show_Excerpt}>{show.excerpt}</p> : <></>}
+        {show.description != "" ? <p className={styles.Show_Excerpt}>{show.description}</p> : <></>}
 
       </div>
     </div>

@@ -77,7 +77,7 @@
 
 .root:focus,
 .root:hover {
-    background-color: rgb(var(--foreground-rgb), 0.08);
+    background-color: rgb(var(--tertiary-hover-rgb));
 }
 
 .root:focus .info,
@@ -92,7 +92,7 @@
 }
 
 .root:active {
-    background-color: rgb(var(--foreground-rgb), 0.1);
+    background-color: rgb(var(--tertiary-active-rgb));
 }
 
 .root:active .icon {
@@ -135,6 +135,14 @@
         width: 100%;
     }
 
+}
+
+.root:hover .ImageOverlay, .root:focus .ImageOverlay {
+    background: linear-gradient(90deg, rgb(var(--tertiary-hover-rgb)) 0%, rgb(var(--tertiary-hover-rgb), 0.9) 20%, rgb(var(--tertiary-hover-rgb), 0) 100%);
+}
+
+.root:active .ImageOverlay {
+    background: linear-gradient(90deg, rgb(var(--tertiary-active-rgb)) 0%, rgb(var(--tertiary-active-rgb), 0.9) 20%, rgb(var(--tertiary-active-rgb), 0) 100%);
 }
 
 @media only screen and (max-width: 600px) {

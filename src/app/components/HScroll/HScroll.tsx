@@ -72,7 +72,7 @@ export default function HScroll({
         <div className={styles.left} id={"button-left"} style={{background: `linear-gradient(270deg, transparent 0%, ${color} 100%)`}}>
             <button className={`${bStyles.iconic} ${styles.button} ${styles.back}`}
                     onClick={scrollLeft}>
-              <span className={"material-symbols-rounded"}>
+              <span className={"material-symbols-rounded notranslate"}>
                 chevron_left
               </span>
             </button>
@@ -86,7 +86,7 @@ export default function HScroll({
         <div className={styles.right} id={"button-right"} style={{background: `linear-gradient(90deg, transparent 0%, ${color} 100%)`}}>
             <button className={`${bStyles.iconic} ${styles.button} ${styles.forward}`}
                     onClick={scrollRight}>
-              <span className={"material-symbols-rounded"}>
+              <span className={"material-symbols-rounded notranslate"}>
                 chevron_right
               </span>
             </button>

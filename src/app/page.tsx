@@ -27,6 +27,32 @@ export default function Home() {
 
       <div className={styles.Cards}>
 
+        {/*<div className={styles.CardWrapper}>*/}
+        {/*  <div className={styles.Card} style={{background: "#32103F"}}>*/}
+        {/*    <h2>Apply to run your own show</h2>*/}
+        {/*    <div className={styles.pWrapper}>*/}
+        {/*      <p>*/}
+        {/*        The forms for registering for you own Podcast or Radio show are now open. Click below to apply.*/}
+        {/*      </p>*/}
+        {/*    </div>*/}
+
+        {/*    <div className={styles.cardButtons}>*/}
+        {/*      <a href={"https://forms.gle/jtEiK2kUt6N7WnQt9"} className={buttons.Button}>*/}
+        {/*        Apply for Podcast*/}
+        {/*      </a>*/}
+
+        {/*      <a href={"https://forms.gle/hNXJDx9WianyF7Tu8"} className={buttons.Button}>*/}
+        {/*        Apply for Radio Show*/}
+        {/*      </a>*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*  <div className={styles.CardIcon}>*/}
+        {/*    <span className={"material-symbols-rounded notranslate"} style={{color: "#32103F"}}>*/}
+        {/*      campaign*/}
+        {/*    </span>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+
         <div className={styles.CardWrapper}>
           <div className={styles.Card} style={{background: "#32103F"}}>
             <h2>Burn FM on Instagram</h2>

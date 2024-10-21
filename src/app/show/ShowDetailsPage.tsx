@@ -34,7 +34,7 @@ export default function ShowDetailsPage({id}: {id: number}) {
 
         <div className={styles.details}>
           <div>
-            <h1 className={styles.title}>{show?.title}</h1>
+            <h1 className={`notranslate ${styles.title}`}>{show?.title}</h1>
             <p className={styles.times}>
               {show?.start_time.toLocaleDateString("en", {weekday: "long"})}s {show?.start_time
                   .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {show?.end_time
@@ -42,16 +42,16 @@ export default function ShowDetailsPage({id}: {id: number}) {
             </p>
           </div>
 
-          {show?.excerpt !== "" ?
-              <p>{show?.excerpt}</p>
+          {show?.description !== "" ?
+              <p>{show?.description}</p>
               :
               <p className={styles.placeholderText}>This show has no excerpt</p>
           }
 
-          {show?.presenter &&
+          {show?.hosts &&
               <div>
                   <h2>Presented by</h2>
-                  <p>{show.presenter.name}</p>
+                  <p>{show.hosts}</p>
               </div>
           }
         </div>

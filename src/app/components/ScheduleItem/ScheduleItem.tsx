@@ -30,7 +30,7 @@ export default function ScheduleItem({
 
         <div className={styles.ImageContainer}>
           <span className={styles.ImageOverlay}/>
-          <Image src={show.img !== null ? show.img : fallback.src}
+          <Image src={show.img !== "" ? show.img : fallback.src}
                  className={styles.img}
                  alt={"Cover photo for the show: " + show.title}
                  height={140}
@@ -43,14 +43,14 @@ export default function ScheduleItem({
             <p className={styles.timing}>{timeString} - {duration == 1 ? `${duration} Hour` : `${duration} Hours`}</p>
             <div className={styles.info}>
               <h3 className={`${styles.title} notranslate`}>{show.title}</h3>
-              <p className={styles.excerpt}>{show.excerpt !== "" ? show.excerpt : "This show has no excerpt"}</p>
+              <p className={styles.excerpt}>{show.description !== "" ? show.description : "This show has no excerpt"}</p>
             </div>
           </div>
 
 
-          <span className={`${styles.icon} material-symbols-rounded`}>
-          chevron_right
-        </span>
+          <span className={`${styles.icon} material-symbols-rounded notranslate`}>
+            chevron_right
+          </span>
         </div>
 
       </Link>

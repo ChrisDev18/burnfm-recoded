@@ -1,23 +1,23 @@
-export type API = {
-  body: {
-    schedule: API_ScheduleItem[]
-  }
+export type Day = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
+
+export type Schedule_API = {
+  schedule: API_ScheduleItem[]
+}
+
+export type Now_Playing_API = {
+  now_playing: API_ScheduleItem[]
 }
 
 export type API_ScheduleItem = {
-  start_time_in_station_tz: number,
-  end_time_in_station_tz: number,
-  contentId: number,
-  content: {
-    contentType: {
-      display_name: string,
-      slug: string,
-    },
-    display_title: string,
-    excerpt: string,
-    body: string,
-    href: string
-  }[]
+  id: number,
+  day: Day,
+  start_time: string,
+  end_time: string,
+  duration: string,
+  title: string,
+  description: string,
+  photo: string | null,
+  hosts: string[]
 }
 
 export type Presenter = {
@@ -27,12 +27,14 @@ export type Presenter = {
 
 export type Show = {
   id: number,
+  day: Day,
   title: string,
-  excerpt: string,
+  description: string,
+  duration: Date,
   start_time: Date,
   end_time: Date,
-  img: string | null,
-  presenter?: Presenter
+  img: string,
+  hosts: string[]
 }
 
 export type ShowSchedule = {
@@ -64,5 +66,3 @@ export const days = [
   'Friday',
   'Saturday'
 ] as const;
-
-export type Day = 0 | 1 | 2 | 3 | 4 | 5 | 6;

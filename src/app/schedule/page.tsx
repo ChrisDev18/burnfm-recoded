@@ -2,7 +2,7 @@
 
 import React from "react";
 import ScheduleList from "@/app/schedule/ScheduleList";
-import {notFound, useSearchParams} from "next/navigation";
+import {notFound, useRouter, useSearchParams} from "next/navigation";
 import styles from "./page.module.css"
 import '@/app/styles/icons.css';
 import HScroll from "@/app/components/HScroll/HScroll";
@@ -12,8 +12,12 @@ import {motion} from "framer-motion";
 
 export default function SchedulePage() {
   const searchParams = useSearchParams();
-  const day = searchParams.get('day');
+  let day = searchParams.get('day');
   const isJavaScriptEnabled = typeof window !== 'undefined'
+  const router = useRouter()
+
+  // // if no day argument is given, set the current day to today
+  // if (!day) return router.push(`/schedule?day=${new Date().getDay()}`)
 
   if (!day) return (
       <motion.div className={styles.root}
@@ -54,13 +58,13 @@ export default function SchedulePage() {
           <h1 className={styles.header}>Show Schedule</h1>
           <HScroll color={"rgba(93, 31, 116)"}>
             <Pills data={[
-              {link: "/schedule/", text: "Monday", params: {day: "1"}},
-              {link: "/schedule/", text: "Tuesday", params: {day: "2"}},
-              {link: "/schedule/", text: "Wednesday", params: {day: "3"}},
-              {link: "/schedule/", text: "Thursday", params: {day: "4"}},
-              {link: "/schedule/", text: "Friday", params: {day: "5"}},
-              {link: "/schedule/", text: "Saturday", params: {day: "6"}},
-              {link: "/schedule/", text: "Sunday", params: {day: "0"}}
+              {link: "/schedule/", text: "Monday", params: {day: 1}},
+              {link: "/schedule/", text: "Tuesday", params: {day: 2}},
+              {link: "/schedule/", text: "Wednesday", params: {day: 3}},
+              {link: "/schedule/", text: "Thursday", params: {day: 4}},
+              {link: "/schedule/", text: "Friday", params: {day: 5}},
+              {link: "/schedule/", text: "Saturday", params: {day: 6}},
+              {link: "/schedule/", text: "Sunday", params: {day: 0}}
             ]}
                    className={styles.Selector}
             />

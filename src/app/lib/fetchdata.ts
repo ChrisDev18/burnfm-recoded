@@ -1,52 +1,43 @@
-import {API, API_ScheduleItem, Show, ShowSchedule} from "@/app/lib/types";
-
-function decode_url(body: string) {
-  // console.log("Splitting url");
-  let tokens = body.split(":");
-  // console.log("Tokens: " + tokens);
-
-  return "https://api.broadcast.radio/api/image/" + tokens[1] + "." + tokens[0].split("/")[1] + "?g=center&w=400&h=400&c=true";
-}
+import {API_ScheduleItem, days, Now_Playing_API, Schedule_API, Show} from "@/app/lib/types";
 
 // Forms show object given a ScheduleItem from the API
-function formShow(show: API_ScheduleItem) {
-  let new_show: Show = {
-    id: show.contentId,
-    title: "",
-    excerpt: "",
-    img: null,
-    start_time: new Date(show.start_time_in_station_tz),
-    end_time: new Date(show.end_time_in_station_tz),
-    presenter: undefined
+function formShow(show: API_ScheduleItem): Show {
+  const start = new Date();
+  const end = new Date();
+  const duration = new Date();
+
+  let [h, m, s] = show.start_time.split(':').map(Number);
+  start.setHours(h, m, s);
+
+  [h, m, s] = show.end_time.split(':').map(Number);
+  end.setHours(h, m, s);
+
+  [h, m, s] = show.duration.split(':').map(Number);
+  duration.setHours(h, m, s);
+
+  return {
+    id: show.id,
+    day: show.day,
+    title: show.title,
+    description: show.description,
+    img: show.photo ? "https://api.burnfm.com/schedule_img/" + show.photo : "",
+    duration: duration,
+    start_time: start,
+    end_time: end,
+    hosts: show.hosts
   };
-
-  show.content.forEach((content) => {
-    // only set the image if exists
-    if (content.contentType.slug === "featuredImage") {
-      new_show.img = decode_url(content.body);
-    }
-
-    // only set the presenter if exists
-    if (content.contentType.slug === "presenter") {
-      new_show.presenter = {
-        name: content.display_title,
-        excerpt: content.excerpt,
-      }
-    }
-
-    // only set show details if exists
-    if (content.contentType.slug === "show") {
-      new_show.title = content.display_title;
-      new_show.excerpt = content.excerpt;
-    }
-
-  });
-  return new_show;
 }
 
-// Retrieve all the shows in the schedule from the API, sorted earliest to latest. Returns [] if there's an error
-async function getAllShows() {
-  let res = await fetch("https://api.broadcast.radio/api/nowplaying/957?scheduleLength=true");
+// Gets a list of shows from the schedule. If a day is specified, it only gets that day's shows.
+export async function getSchedule(day?: number): Promise<Show[]> {
+  let endpoint;
+  if (day !== undefined) {
+    endpoint = "https://api.burnfm.com/get_schedule?day=" + days[day];
+  } else {
+    endpoint = "https://api.burnfm.com/get_schedule";
+  }
+
+  const res = await fetch(endpoint);
 
   if (! res.ok) {
     console.error(res.statusText);
@@ -54,74 +45,34 @@ async function getAllShows() {
   }
 
   // Extract the API Body
-  let json = await res.json() as API;
+  let json = await res.json() as Schedule_API;
 
-  return json.body.schedule
+  return json.schedule
       .map(scheduleItem => formShow(scheduleItem))
       .toSorted((a, b) => a.start_time.getTime() < b.start_time.getTime() ? -1 : 1);
 }
 
-// Retrieve a show from the API.
-export async function getShow(id: number) {
-  const shows = await getAllShows();
-  return shows.find(show => show.id === id);
-  // let matches = shows.filter(show => show.id == id);
-
-}
-
 // Returns the current_show as well as a list of next_shows.
-export async function getNowPlaying() {
+export async function getNowPlaying(): Promise<Show | null> {
+  let res = await fetch("https://api.burnfm.com/get_schedule?now_playing=true");
 
-  let playerData: ShowSchedule = {
-    current_show: null,
-    next_shows: []
-  };
-
-  // Get all the shows from API (sorted from earliest to latest)
-  const allShows = await getAllShows();
-
-  // Go through the shows finding the current show, and the next three shows
-  for (const show of allShows) {
-    if (show.start_time.getTime() > Date.now() && playerData.next_shows.length < 3)
-      playerData.next_shows.push(show);
-
-    if (show.start_time.getTime() < Date.now() && show.end_time.getTime() > Date.now())
-      playerData.current_show = show;
-
-    if (playerData.next_shows.length >= 3 && playerData.current_show !== null)
-      break;
+  if (! res.ok) {
+    console.error(res.statusText);
+    return null;
   }
 
-  // return {
-  //   current_show: playerData.current_show,
-  //   next_shows: [playerData.current_show, playerData.current_show, playerData.current_show]
-  // }
-  return playerData;
+  // Extract the API Body
+  let json = await res.json() as Now_Playing_API;
+
+  return json.now_playing[0] ? formShow(json.now_playing[0]) : null;
 
 }
 
-// Returns a Schedule split up by weekdays. If error, returns a list of empty lists
-export async function getSchedule() {
-
-  let schedule: Show[][] = [[],[],[],[],[],[],[]];
-
-  const allShows = await getAllShows();
-
-  allShows.forEach(show => {
-
-    let day = show.start_time.getDay();
-
-    // if a show with the same title and excerpt has already been added for the same day then stop
-    if (schedule[day].some(item =>
-      item.title === show.title
-      && item.excerpt === show.excerpt
-      && item.start_time.getHours() == show.start_time.getHours())) {
-      return schedule;
-    }
-
-    schedule[day].push(show);
-  });
-
-  return schedule;
+// Retrieve a show from the API.
+export async function getShow(id: number) {
+  const shows = await getSchedule();
+  const occurrences = shows.filter(show => show.id === id);
+  if (!occurrences.length)
+    return null
+  return occurrences[0]  // right now only gets first, worth editing for if a show runs multiple times a week
 }
-

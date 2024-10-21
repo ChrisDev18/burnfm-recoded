@@ -8,6 +8,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-rgb: 255, 255, 255;
   --tertiary-rgb: 255, 255, 255;
+  --tertiary-hover-rgb: 245, 245, 245;
+  --tertiary-active-rgb: 235, 235, 235;
   --purple-rgb: 93, 31, 116;
   --dark-purple-rgb: 50, 16, 63;
   --alt-purple-rgb: 93, 31, 116;
@@ -19,6 +21,8 @@
     --foreground-rgb: 255, 255, 255;
     --background-rgb: 0, 0, 0;
     --tertiary-rgb: 20, 20, 20;
+    --tertiary-hover-rgb: 25, 25, 25;
+    --tertiary-active-rgb: 20, 20, 20;
     --alt-purple-rgb: 209, 146, 240; /*213, 104, 237;*/
   }
 

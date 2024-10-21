@@ -18,20 +18,46 @@ import {pickExcerpt} from "@/app/lib/excerpts";
 import {AudioContext} from "@/app/contexts/AudioContext";
 import HScroll from "@/app/components/HScroll/HScroll";
 
+
 const empty_schedule: ShowSchedule = {
   current_show: null,
   next_shows: []
 }
 
+
+// const placeholder_schedule: ShowSchedule = {
+//   current_show: {
+//     id: 0,
+//     title: "Burn Out",
+//     description: "Nonstop tunes over the holidays.",
+//     start_time: new Date("2024-10-17 00:00:00"),
+//     end_time: new Date("2024-10-17 23:59:59"),
+//     img: null,
+//     hosts: ["Burn FM"],
+//   },
+//   next_shows: [{
+//     id: 0,
+//     title: "Burn Out",
+//     description: "Nonstop tunes over the holidays.",
+//     start_time: new Date("2024-10-17 00:00:00"),
+//     end_time: new Date("2024-10-17 23:59:59"),
+//     img: null,
+//     hosts: ["Burn FM"],
+//   }]
+// }
+
 const init_popup: PopupState = {
   visible: false,
   show: {
     id: 0,
+    day: "Monday",
     title: "",
-    excerpt: "",
+    duration: new Date(),
+    description: "",
     start_time: new Date(),
     end_time: new Date(),
-    img: null
+    img: "",
+    hosts: []
   }
 }
 
@@ -49,7 +75,7 @@ export default function RadioPlayer() {
       setLoading(true);
       getNowPlaying()
         .then(x => {
-          setSchedule(x);
+          setSchedule({current_show: x, next_shows: []});  // TODO: get_now_playing needs to also get coming up shows
         })
         .catch(e => console.error("Error: ", e))
         .finally(() => setLoading(false));
@@ -184,8 +210,8 @@ export default function RadioPlayer() {
             <h2 className={"notranslate"}>{popup.show.title}</h2>
 
             {
-              popup.show.excerpt !== "" ?
-                <p>{popup.show.excerpt}</p>
+              popup.show.description !== "" ?
+                <p>{popup.show.description}</p>
                    :
                 <p className={showPopup.Default}>{pickExcerpt()}</p>
             }
@@ -253,8 +279,8 @@ export default function RadioPlayer() {
               })}
               </p>
               <p className={styles.Show_Title}>{schedule.current_show.title}</p>
-              {schedule.current_show.excerpt !== "" ?
-                <p className={styles.Show_Excerpt}>{schedule.current_show.excerpt}</p> : <></>}
+              {schedule.current_show.description !== "" ?
+                <p className={styles.Show_Excerpt}>{schedule.current_show.description}</p> : <></>}
             </button>
           </div>
 
@@ -280,18 +306,18 @@ export default function RadioPlayer() {
 
 
           <div className={styles.ScrollWrapper}>
-            <HScroll color={"#32103F"}>
             {shows_list.length > 0 ?
-                <div className={styles.ShowList}>
-                  {shows_list}
-                </div>
+                <HScroll color={"#32103F"}>
+                  <div className={styles.ShowList}>
+                    {shows_list}
+                  </div>
+                </HScroll>
                 :
                 <div className={styles.EmptyScheduleMessage}>
-                  <p>That&apos;s it for now!</p>
-                  <p>Our schedule is empty, but check back later for new shows to come!</p>
+                  <p>That&apos;s it for now! Our schedule is empty, but check back later for new shows to come!</p>
                 </div>
             }
-            </HScroll>
+
           </div>
       </div>
 
