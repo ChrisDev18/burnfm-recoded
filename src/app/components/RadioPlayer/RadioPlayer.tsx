@@ -177,20 +177,27 @@ export default function RadioPlayer() {
         <DialogContent>
           <div className={showPopup.Popup}>
             {popup.show.img &&
-              <Image className={showPopup.Image}
-                     src={popup.show.img}
-                     alt={"Cover image for the show: " + popup.show.title}
-                     height={120}
-                     width={120}
-              />
+                <Image className={showPopup.Image}
+                       src={popup.show.img}
+                       alt={"Cover image for the show: " + popup.show.title}
+                       height={120}
+                       width={120}
+                />
             }
 
-            <h2 className={"notranslate"}>{popup.show.title}</h2>
+            <div>
+              <h2 className={"notranslate"}>{popup.show.title}</h2>
 
-            {
-              popup.show.description !== "" ?
+              <p className={showPopup.timing}>
+                {popup.show.start_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {
+                popup.show.end_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}
+              </p>
+            </div>
+
+
+            {popup.show.description ?
                 <p>{popup.show.description}</p>
-                   :
+                :
                 <p className={showPopup.Default}>{pickExcerpt()}</p>
             }
 
@@ -267,7 +274,7 @@ export default function RadioPlayer() {
             <span className={styles.ImageOverlay}/>
             <Image
               className={styles.Image}
-              src={!schedule.current_show.img ? fallback : schedule.current_show.img}
+              src={schedule.current_show.img ? schedule.current_show.img : fallback}
               alt={"Cover image for the show: " + schedule.current_show.title}
               height={233}
               width={233}

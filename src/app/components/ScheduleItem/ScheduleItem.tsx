@@ -16,21 +16,14 @@ export default function ScheduleItem({
 }) {
 
   const duration = Math.round((show.end_time.getTime() - show.start_time.getTime()) / (1000 * 60 * 60));
-  const timeString = show.start_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"});
+  const timeString = `${show.start_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - ${show.end_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}`;
 
   return (
       <Link href={"/show?id=" + show.id} className={`${styles.root}`}>
 
-        {/*<Image src={img !== null ? img : fallback.src}*/}
-        {/*       className={styles.img}*/}
-        {/*       alt={"Cover photo for the show: " + title}*/}
-        {/*       height={140}*/}
-        {/*       width={140}*/}
-        {/*/>*/}
-
         <div className={styles.ImageContainer}>
           <span className={styles.ImageOverlay}/>
-          <Image src={show.img !== "" ? show.img : fallback.src}
+          <Image src={show.img? show.img : fallback}
                  className={styles.img}
                  alt={"Cover photo for the show: " + show.title}
                  height={140}
@@ -40,7 +33,7 @@ export default function ScheduleItem({
 
         <div className={styles.right}>
           <div className={styles.details}>
-            <p className={styles.timing}>{timeString} - {duration == 1 ? `${duration} Hour` : `${duration} Hours`}</p>
+            <p className={styles.timing}>{timeString}</p> {/*- {duration == 1 ? `${duration} Hour` : `${duration} Hours`}*/}
             <div className={styles.info}>
               <h3 className={`${styles.title} notranslate`}>{show.title}</h3>
               <p className={styles.excerpt}>{show.description !== "" ? show.description : "This show has no excerpt"}</p>

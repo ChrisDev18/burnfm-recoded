@@ -12,6 +12,17 @@
   gap: 16px;
 }
 
+.Popup h2 {
+  margin-bottom: 4px;
+}
+
+.timing {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(var(--foreground-rgb), 0.7);
+  text-decoration: none;
+}
+
 
 .Close {
   transition: all 100ms ease-out;

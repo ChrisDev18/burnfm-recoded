@@ -66,13 +66,7 @@ export async function getSchedule(day?: number): Promise<Show[]> {
 export async function getNowPlaying(): Promise<ShowSchedule> {
   let res = await fetch("https://api.burnfm.com/get_schedule?now_playing=true");
 
-  if (! res.ok) {
-    console.error(res.statusText);
-    return {
-      current_show: null,
-      next_shows: []
-    };
-  }
+  if (! res.ok) throw new Error(res.statusText);
 
   // Extract the API Body
   let json = await res.json() as Now_Playing_API;
@@ -83,8 +77,8 @@ export async function getNowPlaying(): Promise<ShowSchedule> {
     id: -1,
     day: days[new Date().getDay()],
     duration: new Date(),
-    title: "Burn Out",
-    description: "Nonstop tunes over the holidays.",
+    title: "BurnOut",
+    description: "This is the pulse of Birmingham's campus with nonstop tunes 24/7.",
     start_time: new Date(),
     end_time: upNext? upNext[0].start_time : new Date(),
     img: "",
@@ -92,7 +86,7 @@ export async function getNowPlaying(): Promise<ShowSchedule> {
   }
 
   return {
-    current_show: json.now_playing ? formShow(json.now_playing[0]) : BurnOut,
+    current_show: json.now_playing.length ? formShow(json.now_playing[0]) : BurnOut,
     next_shows: upNext
   }
 }

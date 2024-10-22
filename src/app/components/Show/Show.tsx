@@ -10,7 +10,7 @@ export default function Show({show}: { show: Show }) {
         <span className={styles.ImageOverlay}/>
         <Image
           className={styles.Image}
-          src={show.img === null? fallback : show.img}
+          src={show.img ? show.img : fallback}
           alt={"Cover photo for the show: " + show.title}
           height={128}
           width={128}
