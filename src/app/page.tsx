@@ -119,6 +119,34 @@ export default function Home() {
         </div>
 
         <div className={styles.CardWrapper}>
+          <div className={styles.Card} style={{background: "#5D1F74"}}>
+            <h2>Check out our new shows!</h2>
+            <p>
+              Applications for this term are now closed, and the new shows are live! Check out the schedule and see
+              what catches your fancy ;)
+            </p>
+            <p>
+              Although the applications for this term are closed, next term we will reopen applications if you decide
+              to apply!
+            </p>
+            <div className={styles.cardButtons}>
+              <a href={'https://www.guildofstudents.com/studentgroups/societies/burnfm/'} className={buttons.Button}>
+                Our Guild of Students page
+              </a>
+              <Link href={`/schedule?day=${new Date().getDay()}`} className={buttons.Button}>
+                Discover our new shows
+              </Link>
+            </div>
+          </div>
+
+          <div className={styles.CardIcon}>
+            <span className={"material-symbols-rounded notranslate"} style={{color: "#5D1F74"}}>
+              mic_external_on
+            </span>
+          </div>
+        </div>
+
+        <div className={styles.CardWrapper}>
           <div className={styles.Card} style={{background: '#1D1D1D'}}>
             <h2>Burn FM Mixes on Spotify</h2>
             <p>
@@ -146,38 +174,6 @@ export default function Home() {
               height={64}
               width={64}
           />
-        </div>
-
-        <div className={styles.CardWrapper}>
-          <div className={styles.Card} style={{background: "#5D1F74"}}>
-            <h2>Interested in joining?</h2>
-            <p>
-              We are the University of Birmingham&apos;s official radio station. If you are interested in radio or
-              podcasting (no matter your
-              experience), this is the society for you!
-              {/*Many of our members are newbies to radio and podcasting, so don&apos;t feel you need to be an expert in*/}
-              {/*anything.*/}
-            </p>
-            <p>
-              If you are looking for new societies to join during the coming year at UoB, please come see us at the
-              societies
-              fair on <u>Friday 27th September 2024</u>.
-            </p>
-            <div className={styles.cardButtons}>
-              <a href={'https://www.guildofstudents.com/studentgroups/societies/burnfm/'} className={buttons.Button}>
-                Our Guild of Students page
-              </a>
-              <a href={'https://www.guildofstudents.com/welcome/events/event/9374/'} className={buttons.Button}>
-                Info about Societies Fair
-              </a>
-            </div>
-          </div>
-
-          <div className={styles.CardIcon}>
-            <span className={"material-symbols-rounded notranslate"} style={{color: "#5D1F74"}}>
-              waving_hand
-            </span>
-          </div>
         </div>
 
         <div className={styles.CardWrapper}>

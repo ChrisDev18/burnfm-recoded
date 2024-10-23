@@ -36,7 +36,7 @@ export default function ScheduleItem({
             <p className={styles.timing}>{timeString}</p> {/*- {duration == 1 ? `${duration} Hour` : `${duration} Hours`}*/}
             <div className={styles.info}>
               <h3 className={`${styles.title} notranslate`}>{show.title}</h3>
-              <p className={styles.excerpt}>{show.description !== "" ? show.description : "This show has no excerpt"}</p>
+              {show.description && <p className={styles.excerpt}>{show.description}</p>}
             </div>
           </div>
 
