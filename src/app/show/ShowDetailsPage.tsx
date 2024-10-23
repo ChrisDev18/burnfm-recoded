@@ -36,7 +36,7 @@ export default function ShowDetailsPage({id}: {id: number}) {
           <div>
             <h1 className={`notranslate ${styles.title}`}>{show?.title}</h1>
             <p className={styles.times}>
-              {show?.start_time.toLocaleDateString("en", {weekday: "long"})}s {show?.start_time
+              {show?.day}s {show?.start_time
                   .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {show?.end_time
                 .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}
             </p>

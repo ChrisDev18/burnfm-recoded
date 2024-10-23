@@ -263,7 +263,7 @@ export default function RadioPlayer() {
                 minute: "2-digit"
               })}
               </p>
-              <p className={styles.Show_Title}>{schedule.current_show.title}</p>
+              <p className={`${styles.Show_Title} notranslate`}>{schedule.current_show.title}</p>
               {schedule.current_show.description !== "" ?
                 <p className={styles.Show_Excerpt}>{schedule.current_show.description}</p> : <></>}
             </button>

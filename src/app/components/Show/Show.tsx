@@ -20,9 +20,9 @@ export default function Show({show}: { show: Show }) {
 
       <div className={styles.Details}>
         <p className={styles.Show_Times}>
-          {show.start_time.toLocaleTimeString(
+          {show.day.substring(0,3)} {show.start_time.toLocaleTimeString(
             ['en'],
-            {weekday: "short", hour: "2-digit", minute: "2-digit"}
+            {hour: "2-digit", minute: "2-digit"}
           )}
           {/* -*/}
           {/*{show.end_time.toLocaleTimeString(*/}
