@@ -15,7 +15,12 @@ export default function AboutPage() {
   useEffect(() => {
       async function fetchData() {
           try {
-              const response = await fetch('/committee/2024-25.json');
+              const response = await fetch('https://api.burnfm.com/committee/2024-25.json', {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json', // Inform the server about the content type you expect
+                },
+              });
               if (!response.ok)
                   throw new Error('Network response was not ok');
               const data = await response.json();

@@ -76,7 +76,7 @@
   max-width: 800px;
   padding: 32px;
   width: 100%;
-  background-color: rgb(var(--tertiary-rgb));
+  background-color: rgb(var(--tertiary-active-rgb));
 
   margin-bottom: 32px;
   @media only screen and (max-width: 800px) {

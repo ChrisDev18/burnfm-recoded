@@ -19,7 +19,7 @@ export default function ProfileCard({profile, priority}: {profile: Profile, prio
       {profile.picture !== "" ?
         <Image className={styles.Image}
                priority={priority}
-               src={"https://burnfm.com" + profile.picture}  //.replace(/\.[^/.]+$/, "")
+               src={"https://api.burnfm.com/committee" + profile.picture}
                alt={`Profile picture of ${profile.name}`}
                height={200}
                width={300}
