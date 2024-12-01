@@ -96,6 +96,6 @@ export async function getShow(id: number) {
   const shows = await getSchedule();
   const occurrences = shows.filter(show => show.id === id);
   if (!occurrences.length)
-    return null
+    return undefined;
   return occurrences[0]  // right now only gets first, worth editing for if a show runs multiple times a week
 }

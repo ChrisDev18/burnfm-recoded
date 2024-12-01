@@ -43,7 +43,7 @@ export default function RadioPlayer() {
   const audio = useContext(AudioContext);
   // Define states
   const [loading, setLoading] = useState(true);
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState<"playing"|"stopped"|"loading">(audio && ! audio.paused ? "playing" : "stopped");
   const [schedule, setSchedule] = useState(empty_schedule);
   const [popup, setPopup] = useState(init_popup);
 
@@ -84,8 +84,8 @@ export default function RadioPlayer() {
   useEffect(() => {
     const audioElement = audio;
 
-    const handlePlay = () => setPlaying(true);
-    const handlePause = () => setPlaying(false);
+    const handlePlay = () => setPlaying("playing");
+    const handlePause = () => setPlaying("stopped");
 
     audioElement?.addEventListener('play', handlePlay);
     audioElement?.addEventListener('pause', handlePause);
@@ -142,8 +142,12 @@ export default function RadioPlayer() {
   // Play audio and set playing state to true
   const playAudio = async () => {
     if (audio) {
+      console.log("loading")
+      setPlaying("loading")
+      await new Promise((resolve) => setTimeout(resolve, 0)); // Let the UI update first
       await audio.play();
-      setPlaying(true);
+      console.log("done")
+      setPlaying("playing");
     }
   };
 
@@ -151,13 +155,13 @@ export default function RadioPlayer() {
   const pauseAudio = () => {
     if (audio) {
       audio.pause();
-      setPlaying(false);
+      setPlaying("stopped");
     }
   };
 
   // Handle toggling between play and pause on player
   const togglePlayPause = async () => {
-    if (playing)
+    if (playing != "stopped")
       pauseAudio()
     else
       await playAudio()
@@ -248,13 +252,17 @@ export default function RadioPlayer() {
 
           <div className={styles.PlayNow}>
             <button className={styles.Toggle_Button} onClick={togglePlayPause}>
-              <span className={"material-symbols-rounded notranslate"}>
-                {playing ? "stop" : "play_arrow"}
-              </span>
+              {playing != "loading" ?
+                  <span className={"material-symbols-rounded notranslate"}>
+                    {playing == "playing" ? "stop" : "play_arrow"}
+                  </span>
+                  :
+                  <div className={`${loading_styles.Spinner} ${loading_styles.Light} ${styles.play_spinner}`}/>
+              }
             </button>
 
-            <button className={`${styles.PlayNow_Details} ${buttons.Clickable}`}
-                    onClick={() => schedule.current_show !== null? displayPopup(schedule.current_show): null}>
+                <button className={`${styles.PlayNow_Details} ${buttons.Clickable}`}
+              onClick={() => schedule.current_show !== null ? displayPopup(schedule.current_show): null}>
               <p className={styles.Show_Times}>{schedule.current_show.start_time.toLocaleTimeString(['en'], {
                 hour: "2-digit",
                 minute: "2-digit"

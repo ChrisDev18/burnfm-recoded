@@ -21,9 +21,11 @@ export type API_ScheduleItem = {
   hosts: string[]
 }
 
-export type Presenter = {
-  name: string,
-  excerpt: string
+export type Recording = {
+  id: number,
+  show_id: number,
+  recording: string,
+  recorded_at: Date
 }
 
 export type Show = {

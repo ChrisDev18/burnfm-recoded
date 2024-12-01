@@ -279,3 +279,7 @@
     font-weight: 500;
   }
 }
+
+.play_spinner {
+  margin: 20px;
+}
