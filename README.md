@@ -3,7 +3,7 @@
 
 ## Project structure
 
-All source code can be found within `src/app`.
+All source code for the frontend can be found within `src`. Backend config files and php files can be found in `server`.
 
 ### App Routing
 
@@ -33,11 +33,11 @@ Outside of these two special files, there are more places where code is organise
 - [`app/styles/`](src/app/styles) contains stylesheets which can be used within components. 
   (e.g. [buttons.module.css](src/app/styles/buttons.module.css))
 
-- [`app/lib/`](src/app/lib) contains functions which can be called within code elsewhere.
-  (e.g. [fetchdata.ts](src/app/lib/fetchdata.ts))
+- [`app/lib/`](src/lib) contains functions which can be called within code elsewhere.
+  (e.g. [api.ts](src/lib/api.ts))
 
-- [`app/contexts/`](src/app/lib) contains React contexts which can be used to share data with children components easily.
-  (e.g. [AudioContext.tsx](src/app/contexts/AudioContext.tsx))
+- [`app/contexts/`](src/lib) contains React contexts which can be used to share data with children components easily.
+  (e.g. [AudioContext.tsx](src/contexts/AudioContext.tsx))
 
 
 

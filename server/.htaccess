@@ -1,0 +1,18 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Redirect requests to PHP without requiring .php extension
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ $1.php [L,QSA]
+
+# Allow CORS for .json files from specific origins
+<FilesMatch "\.json$">
+    Header set Access-Control-Allow-Origin "*"
+    # Add more methodws below as required, stick to GET for allow-origin: '*'
+    Header set Access-Control-Allow-Methods "GET"
+    Header set Access-Control-Allow-Headers "Content-Type, Accept"
+</FilesMatch>
+
+# Define headers for each API endpoint in the respective files
+# Since each endpoint will likely have different requirements
