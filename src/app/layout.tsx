@@ -6,7 +6,7 @@ import './styles/globals.css'
 import "@/app/layout.css";
 import NavBar from "@/app/components/NavBar/NavBar";
 import React, {useEffect, useRef, useState} from "react";
-import {AudioContext} from "@/app/contexts/AudioContext";
+import {AudioContext} from "@/contexts/AudioContext";
 
 const sourceSans3 = Source_Sans_3({subsets: ['latin'], weight: "variable"});
 

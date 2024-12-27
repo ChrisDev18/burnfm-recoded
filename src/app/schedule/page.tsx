@@ -69,9 +69,13 @@ export default function SchedulePage() {
             />
           </HScroll>
         </div>
-        <div className={styles.content}>
+
+        <motion.div className={styles.content}
+                    transition={{duration: 0.2, type: "tween", delay: 0.2}}
+                    initial={isJavaScriptEnabled ? {opacity: 0} : {opacity: 1}}
+                    animate={{opacity: 1}}>
           <ScheduleList day={dayNumber}/>
-        </div>
+        </motion.div>
       </motion.div>
   );
 }

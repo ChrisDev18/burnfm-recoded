@@ -1,41 +1,62 @@
 'use client'
 
 import styles from './page.module.css'
-import React, {useEffect, useState} from "react";
+import React, {ReactElement, useEffect, useReducer} from "react";
 import ProfileCard from "@/app/components/ProfileCard/ProfileCard";
 import "@/app/styles/icons.css"
-import {Profile} from "@/app/lib/types";
+import {Profile} from "@/lib/types";
 import { motion } from 'framer-motion';
+import {committeeReducer, initialState} from "@/reducers/committeeReducer";
+import {fetchClient} from "@/lib/api";
+import {COMMITTEE_ENDPOINT} from "@/lib/endpoints";
 
 export default function AboutPage() {
 
-  const [profiles, setProfiles] = useState<Profile[]>([])
+  const [state, dispatch] = useReducer(committeeReducer, initialState);
 
-  // Fetch data from json file
   useEffect(() => {
-      async function fetchData() {
-          try {
-              const response = await fetch('https://api.burnfm.com/committee/2024-25.json', {
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json', // Inform the server about the content type you expect
-                },
-              });
-              if (!response.ok)
-                  throw new Error('Network response was not ok');
-              const data = await response.json();
-              setProfiles(data as Profile[]); // Do something with the fetched JSON data
-          } catch (error) {
-              console.error('There was a problem fetching the profile_data - ', error);
-          }
-      }
+    const fetchCommittee = async () => {
+      dispatch({ type: 'FETCH_REQUEST' });
 
-      fetchData().then();
+      try {
+        const committee = await fetchClient<Profile[]>(COMMITTEE_ENDPOINT + "/2024-25.json");
+        dispatch({ type: 'FETCH_SUCCESS', payload: committee });
+      } catch (error: any) {
+        dispatch({
+          type: 'FETCH_FAILURE',
+          payload: error.message || 'An error occurred',
+        });
+      }
+    };
+
+    fetchCommittee().then();
   }, []);
 
-  const profile_list: React.JSX.Element[] = profiles.map((profile, i) =>
-    <ProfileCard key={i} profile={profile} priority={i<3}/>
-  );
+  let content: ReactElement | ReactElement[];
+
+  // UI while loading
+  if (state.loading) {
+    content = (
+        <p>Loading committee</p>
+    );
+  }
+
+  // UI if there's an error
+  if (state.error || ! state.committee) {
+    content = (
+        <div>
+          <p>Could not retrieve the team</p>
+          <p>More information: {state.error}</p>
+        </div>
+    );
+  }
+
+  // Usual content
+  else {
+    content = state.committee.map((profile, i) =>
+        <ProfileCard key={i} profile={profile} priority={i<3}/>
+    )
+  }
 
   return (
       <>
@@ -51,7 +72,7 @@ export default function AboutPage() {
                       transition={{duration: 0.2, type: "tween", delay: 0.2}}
                       initial={{opacity: 0}}
                       animate={{opacity: 1}}>
-            {profile_list}
+            { content }
           </motion.div>
         </div>
       </>

@@ -1,7 +1,7 @@
 import styles from "@/app/components/Show/Show.module.css";
 import Image from "next/image";
 import fallback from "../../../../public/Radio-Microphone.png";
-import {Show} from "@/app/lib/types";
+import {Show} from "@/lib/types";
 
 export default function Show({show}: { show: Show }) {
   return (

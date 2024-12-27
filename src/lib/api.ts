@@ -6,7 +6,9 @@ import {
   Show as ShowType,
   Show,
   ShowSchedule
-} from "@/app/lib/types";
+} from "@/lib/types";
+import {NOW_PLAYING_ENDPOINT, SCHEDULE_ENDPOINT} from "@/lib/endpoints";
+
 
 // Forms show object given a ScheduleItem from the API
 function formShow(show: API_ScheduleItem): Show {
@@ -30,7 +32,7 @@ function formShow(show: API_ScheduleItem): Show {
     day: show.day,
     title: show.title,
     description: show.description,
-    img: show.photo ? "https://api.burnfm.com/schedule_img/" + show.photo : "",
+    img: show.photo ? "http://api.burnfm.com/schedule_img/" + show.photo : "",
     duration: duration,
     start_time: start,
     end_time: end,
@@ -42,20 +44,12 @@ function formShow(show: API_ScheduleItem): Show {
 export async function getSchedule(day?: number): Promise<Show[]> {
   let endpoint;
   if (day !== undefined) {
-    endpoint = "https://api.burnfm.com/get_schedule?day=" + days[day];
+    endpoint = SCHEDULE_ENDPOINT + "?day=" + days[day];
   } else {
-    endpoint = "https://api.burnfm.com/get_schedule";
+    endpoint = SCHEDULE_ENDPOINT;
   }
 
-  const res = await fetch(endpoint);
-
-  if (! res.ok) {
-    console.error(res.statusText);
-    return [];
-  }
-
-  // Extract the API Body
-  let json = await res.json() as Schedule_API;
+  const json = await fetchClient<Schedule_API>(endpoint);
 
   return json.schedule
       .map(scheduleItem => formShow(scheduleItem))
@@ -64,12 +58,7 @@ export async function getSchedule(day?: number): Promise<Show[]> {
 
 // Returns the current_show as well as a list of next_shows.
 export async function getNowPlaying(): Promise<ShowSchedule> {
-  let res = await fetch("https://api.burnfm.com/get_schedule?now_playing=true");
-
-  if (! res.ok) throw new Error(res.statusText);
-
-  // Extract the API Body
-  let json = await res.json() as Now_Playing_API;
+  let json = await fetchClient<Now_Playing_API>(NOW_PLAYING_ENDPOINT);
 
   const upNext = json.up_next.map(formShow)
 
@@ -95,7 +84,40 @@ export async function getNowPlaying(): Promise<ShowSchedule> {
 export async function getShow(id: number) {
   const shows = await getSchedule();
   const occurrences = shows.filter(show => show.id === id);
-  if (!occurrences.length)
-    return undefined;
+  if (occurrences.length == 0)
+    throw Error("404 - not found");
   return occurrences[0]  // right now only gets first, worth editing for if a show runs multiple times a week
+}
+
+interface FetchOptions extends RequestInit {
+  headers?: Record<string, string>;
+}
+
+export async function fetchClient<T>(url: string, options?: FetchOptions): Promise<T> {
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        ...options?.headers,
+      },
+    });
+
+    if (!response.ok) {
+      // Parse error response
+      const errorMessage = await response.text();
+      throw new Error(
+          `Error: ${response.status} - ${response.statusText} - ${errorMessage}`
+      );
+    }
+
+    // Safely parse JSON if content exists
+    if (response.status !== 204) {
+      return await response.json();
+    }
+
+    return {} as T; // Return empty object for no content
+  } catch (error: any) {
+    // Handle network or parsing errors
+    throw new Error(error.message || 'An unexpected error occurred');
+  }
 }

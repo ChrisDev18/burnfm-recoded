@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {Profile} from "@/app/lib/types";
+import {Profile} from "@/lib/types";
 import styles from "./ProfileCard.module.css"
 
 export default function ProfileCard({profile, priority}: {profile: Profile, priority: boolean}) {

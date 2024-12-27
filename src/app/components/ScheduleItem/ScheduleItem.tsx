@@ -6,7 +6,7 @@ import React from "react";
 import Link from "next/link";
 
 import "@/app/styles/icons.css";
-import {Show} from "@/app/lib/types";
+import {Show} from "@/lib/types";
 
 // An item shown in ScheduleList.
 export default function ScheduleItem({
@@ -19,6 +19,7 @@ export default function ScheduleItem({
   const timeString = `${show.start_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - ${show.end_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}`;
 
   return (
+
       <Link href={"/show?id=" + show.id} className={`${styles.root}`}>
 
         <div className={styles.ImageContainer}>
