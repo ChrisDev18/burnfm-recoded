@@ -1,13 +1,5 @@
-import {
-  API_ScheduleItem,
-  days,
-  Now_Playing_API,
-  Schedule_API,
-  Show as ShowType,
-  Show,
-  ShowSchedule
-} from "@/lib/types";
-import {NOW_PLAYING_ENDPOINT, SCHEDULE_ENDPOINT} from "@/lib/endpoints";
+import {API_ScheduleItem, API_ShowExtended, IShow, IShowExtended, Schedule_API, Show, ShowSchedule} from "@/lib/types";
+import {GET_RADIOSHOW_ENDPOINT, SCHEDULE_ENDPOINT} from "@/lib/endpoints";
 
 
 // Forms show object given a ScheduleItem from the API
@@ -28,11 +20,11 @@ function formShow(show: API_ScheduleItem): Show {
   duration.setSeconds(duration.getSeconds() + 1);
 
   return {
-    id: show.id,
+    id: show.show_id,
     day: show.day,
     title: show.title,
-    description: show.description,
-    img: show.photo ? "http://api.burnfm.com/schedule_img/" + show.photo : "",
+    description: show.description ?? "",
+    img: show.photo ? "http://api.burnfm.com/uploads/schedule_img/" + show.photo : "",
     duration: duration,
     start_time: start,
     end_time: end,
@@ -44,49 +36,53 @@ function formShow(show: API_ScheduleItem): Show {
 export async function getSchedule(day?: number): Promise<Show[]> {
   let endpoint;
   if (day !== undefined) {
-    endpoint = SCHEDULE_ENDPOINT + "?day=" + days[day];
+    endpoint = SCHEDULE_ENDPOINT + "?day=" + day;
   } else {
     endpoint = SCHEDULE_ENDPOINT;
   }
 
   const json = await fetchClient<Schedule_API>(endpoint);
 
-  return json.schedule
+  return json.data
       .map(scheduleItem => formShow(scheduleItem))
       .toSorted((a, b) => a.start_time.getTime() < b.start_time.getTime() ? -1 : 1);
 }
 
 // Returns the current_show as well as a list of next_shows.
 export async function getNowPlaying(): Promise<ShowSchedule> {
-  let json = await fetchClient<Now_Playing_API>(NOW_PLAYING_ENDPOINT);
+  let json = await fetchClient<Schedule_API>(SCHEDULE_ENDPOINT + "?include_default=true");
 
-  const upNext = json.up_next.map(formShow)
+  const shows = json.data.map(formShow);
 
-  const BurnOut: ShowType = {
-    id: -1,
-    day: days[new Date().getDay()],
-    duration: new Date(),
-    title: "BurnOut",
-    description: "This is the pulse of Birmingham's campus with nonstop tunes 24/7.",
-    start_time: new Date(),
-    end_time: upNext? upNext[0].start_time : new Date(),
-    img: "",
-    hosts: ["Burn FM"]
-  }
+  const now = new Date();
+
+  // Find the currently playing show
+  const current_show = shows.find(
+      show => show.day === now.getDay() &&
+      show.start_time.getTime() <= now.getTime() &&
+      now.getTime() < show.end_time.getTime()
+  );
+
+  // Find the next show
+  const upNext = shows
+      .filter(show => show.start_time.getTime() > now.getTime()) // Only future shows
+      .sort((a, b) => a.start_time.getTime() - b.start_time.getTime()) // Get the next soonest show
+      .slice(0, 2) || null;
 
   return {
-    current_show: json.now_playing.length ? formShow(json.now_playing[0]) : BurnOut,
-    next_shows: upNext
-  }
+    current_show: current_show ?? null,
+    next_shows: upNext ? upNext : []
+  };
 }
 
 // Retrieve a show from the API.
-export async function getShow(id: number) {
-  const shows = await getSchedule();
-  const occurrences = shows.filter(show => show.id === id);
-  if (occurrences.length == 0)
-    throw Error("404 - not found");
-  return occurrences[0]  // right now only gets first, worth editing for if a show runs multiple times a week
+export async function getShow(id: number): Promise<IShowExtended> {
+  const show =  await fetchClient<API_ShowExtended>(GET_RADIOSHOW_ENDPOINT(id));
+
+  console.log(show.show);
+
+  return show.show;
+
 }
 
 interface FetchOptions extends RequestInit {

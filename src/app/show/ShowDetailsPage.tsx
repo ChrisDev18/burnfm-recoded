@@ -1,7 +1,7 @@
 import React, {useEffect, useReducer} from "react";
 import {getShow} from "@/lib/api";
 import {notFound} from "next/navigation";
-import {Recording} from "@/lib/types"
+import {days, Recording} from "@/lib/types"
 
 import styles from "./ShowDetailsPage.module.css"
 import Image from "next/image";
@@ -53,8 +53,6 @@ export default function ShowDetailsPage({id}: {id: number}) {
 
   const isJavaScriptEnabled = typeof window !== 'undefined';
 
-  const recordings: Recording[] = []; // [{ id: 2, show_id: 2, recording: "idk", recorded_at: new Date()}]
-
   return (
       <motion.div className={styles.root}
                   transition={{duration: 0.2, type: "tween", delay: 0.2}}
@@ -62,30 +60,30 @@ export default function ShowDetailsPage({id}: {id: number}) {
                   animate={{opacity: 1}}>
 
         <div className={styles.hero}>
-          {state.show?.img ?
+          {state.show?.photo ?
               <>
                 <Image className={styles.image}
-                       src={state.show.img}
+                       src={"https://api.burnfm.com/uploads/schedule_img/" + state.show.photo}
                        alt={"Cover photo for" + state.show.title}
                        height={400}
                        width={400}
                        priority
                 />
                 <h1 className={`notranslate ${styles.title}`}>{state.show?.title}</h1>
-                <p className={styles.times}>
-                  {state.show?.day}s {state.show?.start_time
-                    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {state.show?.end_time
-                    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}
-                </p>
+                {/*<p className={styles.times}>*/}
+                {/*  {days[state.show?.day]}s {state.show?.start_time*/}
+                {/*    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {state.show?.end_time*/}
+                {/*    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}*/}
+                {/*</p>*/}
               </>
               :
               <>
                 <h1 className={`notranslate ${styles.title}`}>{state.show?.title}</h1>
-                <p className={styles.times}>
-                  {state.show?.day}s {state.show?.start_time
-                    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {state.show?.end_time
-                    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}
-                </p>
+                {/*<p className={styles.times}>*/}
+                {/*  {days[state.show?.day]}s {state.show?.start_time*/}
+                {/*    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {state.show?.end_time*/}
+                {/*    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}*/}
+                {/*</p>*/}
               </>
           }
         </div>
@@ -100,7 +98,13 @@ export default function ShowDetailsPage({id}: {id: number}) {
           {state.show?.hosts &&
               <div>
                   <h3 className={styles.sectionHeader}>Presented by</h3>
-                  <p className={styles.hosts}>{state.show.hosts}</p>
+                  <p className={styles.hosts}>
+                    { state.show.hosts.length > 1 ?
+                        state.show.hosts.slice(0, -1).join(", ") + " and " + state.show.hosts[state.show.hosts.length - 1]
+                      :
+                        state.show.hosts[0]
+                    }
+                  </p>
               </div>
           }
         </div>
@@ -110,13 +114,12 @@ export default function ShowDetailsPage({id}: {id: number}) {
           <p>Listen back to previous episodes</p>
 
           <div>
-            {
-              recordings.map((recording, i) =>
-                  <a key={i} href={recording.recording}>{recording.recorded_at.toLocaleTimeString()}</a>
+            { state.show.recordings.map((recording, i) =>
+                  <a key={i} href={"https://api.burnfm.com/" + recording.recording}>{recording.title}</a>
               )
             }
 
-            {recordings.length == 0 &&
+            { state.show.recordings.length == 0 &&
                 <p className={styles.placeholderText}>No recordings for this show</p>
             }
           </div>

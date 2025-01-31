@@ -1,7 +1,7 @@
 import styles from "@/app/components/Show/Show.module.css";
 import Image from "next/image";
 import fallback from "../../../../public/Radio-Microphone.png";
-import {Show} from "@/lib/types";
+import {days, Show} from "@/lib/types";
 
 export default function Show({show}: { show: Show }) {
   return (
@@ -20,7 +20,7 @@ export default function Show({show}: { show: Show }) {
 
       <div className={styles.Details}>
         <p className={styles.Show_Times}>
-          {show.day.substring(0,3)} {show.start_time.toLocaleTimeString(
+          {days[show.day].substring(0, 3)} {show.start_time.toLocaleTimeString(
             ['en'],
             {hour: "2-digit", minute: "2-digit"}
           )}

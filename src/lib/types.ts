@@ -1,7 +1,5 @@
-export type Day = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
-
 export type Schedule_API = {
-  schedule: API_ScheduleItem[]
+  data: API_ScheduleItem[]
 }
 
 export type Now_Playing_API = {
@@ -10,16 +8,45 @@ export type Now_Playing_API = {
 }
 
 export type API_ScheduleItem = {
-  id: number,
-  day: Day,
+  show_id: number,
+  day: number,
   start_time: string,
   end_time: string,
   duration: string,
   title: string,
-  description: string,
+  description: string | null,
   photo: string | null,
   hosts: string[]
 }
+
+export type IShow = {
+  id: number,
+  title: string,
+  description: string | null,
+  hosts: string[],
+  photo: string | null,
+}
+
+export type IShowExtended = IShow & {
+  recordings: {
+    id: number,
+    title: string | null,
+    recording: string,
+    recorded_at: string
+  } [],
+  timings: {
+    start_time: string,
+    end_time: string,
+    day: number,
+    start_date: string | null,
+    end_date: string | null
+  } []
+}
+
+export type API_ShowExtended = IShow & {
+  show: IShowExtended
+}
+
 
 export type Recording = {
   id: number,
@@ -30,7 +57,7 @@ export type Recording = {
 
 export type Show = {
   id: number,
-  day: Day,
+  day: number,
   title: string,
   description: string,
   duration: Date,
