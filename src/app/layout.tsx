@@ -83,7 +83,7 @@ export default function RootLayout({
             </main>
           </AudioContext.Provider>
           <footer>
-            <p>Copyright © 2024 Burn FM. All rights reserved.</p>
+            <p>Copyright © 2025 Burn FM. All rights reserved.</p>
           </footer>
 
         </body>
