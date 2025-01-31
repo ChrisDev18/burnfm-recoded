@@ -23,7 +23,7 @@ const init_popup: PopupState = {
   visible: false,
   show: {
     id: 0,
-    day: "Monday",
+    day: 1,
     title: "",
     duration: new Date(),
     description: "",
