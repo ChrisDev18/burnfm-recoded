@@ -1,6 +1,6 @@
 export const COMMITTEE_ENDPOINT = "https://api.burnfm.com/committee"
 export const SCHEDULE_ENDPOINT = "https://api.burnfm.com/new/schedule/get_collated"
-export const NOW_PLAYING_ENDPOINT = SCHEDULE_ENDPOINT + "?now_playing=true" // TODO: switch to this endpoint (needs to be implemented in backend)
+export const NOW_PLAYING_ENDPOINT = (limit: number = 0) => SCHEDULE_ENDPOINT + "?limit_shows=" + limit;
 
 export const GET_RADIOSHOW_ENDPOINT = (id?: number) => {
   if (id)

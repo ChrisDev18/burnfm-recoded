@@ -1,5 +1,5 @@
 import {API_ScheduleItem, API_ShowExtended, IShow, IShowExtended, Schedule_API, Show, ShowSchedule} from "@/lib/types";
-import {GET_RADIOSHOW_ENDPOINT, SCHEDULE_ENDPOINT} from "@/lib/endpoints";
+import {GET_RADIOSHOW_ENDPOINT, NOW_PLAYING_ENDPOINT, SCHEDULE_ENDPOINT} from "@/lib/endpoints";
 
 
 // Forms show object given a ScheduleItem from the API
@@ -50,28 +50,13 @@ export async function getSchedule(day?: number): Promise<Show[]> {
 
 // Returns the current_show as well as a list of next_shows.
 export async function getNowPlaying(): Promise<ShowSchedule> {
-  let json = await fetchClient<Schedule_API>(SCHEDULE_ENDPOINT + "?include_default=true");
+  let json = await fetchClient<Schedule_API>(NOW_PLAYING_ENDPOINT(4));
 
   const shows = json.data.map(formShow);
 
-  const now = new Date();
-
-  // Find the currently playing show
-  const current_show = shows.find(
-      show => show.day === now.getDay() &&
-      show.start_time.getTime() <= now.getTime() &&
-      now.getTime() < show.end_time.getTime()
-  );
-
-  // Find the next show
-  const upNext = shows
-      .filter(show => show.start_time.getTime() > now.getTime()) // Only future shows
-      .sort((a, b) => a.start_time.getTime() - b.start_time.getTime()) // Get the next soonest show
-      .slice(0, 2) || null;
-
   return {
-    current_show: current_show ?? null,
-    next_shows: upNext ? upNext : []
+    current_show: shows.shift() ?? null,
+    next_shows: shows
   };
 }
 
