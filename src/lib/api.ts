@@ -1,4 +1,4 @@
-import {API_ScheduleItem, API_ShowExtended, IShow, IShowExtended, Schedule_API, Show, ShowSchedule} from "@/lib/types";
+import {API_ScheduleItem, API_ShowExtended, IShowExtended, Schedule_API, Show, ShowSchedule} from "@/lib/types";
 import {GET_RADIOSHOW_ENDPOINT, NOW_PLAYING_ENDPOINT, SCHEDULE_ENDPOINT} from "@/lib/endpoints";
 
 
@@ -9,15 +9,15 @@ function formShow(show: API_ScheduleItem): Show {
   const duration = new Date();
 
   let [h, m, s] = show.start_time.split(':').map(Number);
-  start.setHours(h, m, s);
+  start.setUTCHours(h, m, s);
 
   [h, m, s] = show.end_time.split(':').map(Number);
-  end.setHours(h, m, s);
-  end.setSeconds(end.getSeconds() + 1);
+  end.setUTCHours(h, m, s);
+  end.setUTCSeconds(end.getUTCSeconds() + 1);
 
   [h, m, s] = show.duration.split(':').map(Number);
-  duration.setHours(h, m, s);
-  duration.setSeconds(duration.getSeconds() + 1);
+  duration.setUTCHours(h, m, s);
+  duration.setUTCSeconds(duration.getUTCSeconds() + 1);
 
   return {
     id: show.show_id,
