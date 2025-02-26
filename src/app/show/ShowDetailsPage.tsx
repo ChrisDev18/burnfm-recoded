@@ -1,13 +1,13 @@
 import React, {useEffect, useReducer} from "react";
 import {getShow} from "@/lib/api";
 import {notFound} from "next/navigation";
-import {days, Recording} from "@/lib/types"
 
 import styles from "./ShowDetailsPage.module.css"
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import {initialState, showReducer} from "@/reducers/showReducer";
 import loading_styles from "@/app/styles/Spinner.module.css";
+
 
 export default function ShowDetailsPage({id}: {id: number}) {
   const [state, dispatch] = useReducer(showReducer, initialState);

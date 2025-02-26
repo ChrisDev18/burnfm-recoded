@@ -38,19 +38,21 @@
 .Navbar {
   display: flex;
   padding: 8px 64px;
-  @media only screen and (min-width: 1700px) {
-    padding: 8px 256px;
-  }
   justify-content: space-between;
-  @media only screen and (max-width: 600px) {
-    justify-content: center;
-  }
   align-items: center;
   align-self: stretch;
-
   background: rgba(var(--tertiary-rgb));
-  /*-webkit-backdrop-filter: blur(30px);*/
-  /*backdrop-filter: blur(30px);*/
+
+  /* Apply padding adjustments for very large screens */
+  @media (min-width: 1700px) {
+    padding: 8px 256px;
+  }
+
+  /* Adjust padding for smaller screens and center-justify the logo  */
+  @media (max-width: 600px) {
+    justify-content: center;
+    padding: 8px 32px;
+  }
 }
 
 .Root ul {

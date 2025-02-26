@@ -1,16 +1,16 @@
 "use client"
 
-import React from "react";
+import React, {Suspense} from "react";
 import ScheduleList from "@/app/schedule/ScheduleList";
 import {notFound, useSearchParams} from "next/navigation";
 import styles from "./page.module.css"
 import '@/app/styles/icons.css';
 import HScroll from "@/app/components/HScroll/HScroll";
 import Pills from "@/app/components/Pills/Pills";
-import {motion} from "framer-motion";
+import { motion } from "motion/react";
 
 
-export default function SchedulePage() {
+function SuspenseSchedulePage() {
   const searchParams = useSearchParams();
   let day = searchParams.get('day');
   const isJavaScriptEnabled = typeof window !== 'undefined'
@@ -77,5 +77,13 @@ export default function SchedulePage() {
           <ScheduleList day={dayNumber}/>
         </motion.div>
       </motion.div>
+  );
+}
+
+export default function SchedulePage() {
+  return (
+      <Suspense>
+        <SuspenseSchedulePage />
+      </Suspense>
   );
 }

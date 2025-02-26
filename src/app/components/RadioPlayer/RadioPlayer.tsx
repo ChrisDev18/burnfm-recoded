@@ -18,6 +18,7 @@ import {pickExcerpt} from "@/lib/excerpts";
 import {AudioContext} from "@/contexts/AudioContext";
 import HScroll from "@/app/components/HScroll/HScroll";
 import {initialState, nowplayingReducer} from "@/reducers/nowplayingReducer";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 
 const init_popup: PopupState = {
   visible: false,
@@ -161,7 +162,7 @@ export default function RadioPlayer() {
     <div className={styles.Player_Root}>
       {/*Popup for when a user clicks on a show*/}
       <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
-        <DialogContent>
+        <DialogContent title={popup.show.title}>
           <div className={showPopup.Popup}>
             { popup.show.img &&
                 <Image className={showPopup.Image}
@@ -173,7 +174,9 @@ export default function RadioPlayer() {
             }
 
             <div>
-              <h2 className={"notranslate"}>{popup.show.title}</h2>
+              <DialogPrimitive.Title className={"notranslate"}>
+                {popup.show.title}
+              </DialogPrimitive.Title>
 
               <p className={showPopup.timing}>
                 {popup.show.start_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {

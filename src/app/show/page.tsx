@@ -1,12 +1,12 @@
 "use client"
 
-import React from "react";
+import React, {Suspense} from "react";
 import {notFound, useSearchParams} from "next/navigation";
 import '@/app/styles/icons.css';
 import ShowDetailsPage from "@/app/show/ShowDetailsPage";
 
 
-export default function ShowPage() {
+function SuspenseShowPage() {
   const searchParams = useSearchParams();
   const idString = searchParams.get('id');
 
@@ -17,5 +17,13 @@ export default function ShowPage() {
 
   return (
       <ShowDetailsPage id={id} />
+  );
+}
+
+export default function ShowPage() {
+  return (
+      <Suspense>
+        <SuspenseShowPage />
+      </Suspense>
   );
 }

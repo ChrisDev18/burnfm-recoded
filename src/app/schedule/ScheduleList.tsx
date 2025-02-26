@@ -3,7 +3,7 @@
 import styles from "@/app/schedule/page.module.css";
 import React, {ReactElement, useEffect, useReducer} from "react";
 import {getSchedule} from "@/lib/api";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import ScheduleItem from "@/app/components/ScheduleItem/ScheduleItem";
 import {initialState, scheduleReducer} from "@/reducers/scheduleReducer";
 import loading_styles from "@/app/styles/Spinner.module.css";

@@ -45,6 +45,7 @@ export default function RootLayout({
       <html lang="en" className={sourceSans3.className}>
       <head>
         <title>Burn FM</title>
+        {/*<meta property="og:title" content="Burn FM" key="title" />*/}
         <meta name="description" content="Tune into Burn FM, the University of Birmingham's official radio station."/>
 
         <meta name="apple-mobile-web-app-capable" content="yes"/>

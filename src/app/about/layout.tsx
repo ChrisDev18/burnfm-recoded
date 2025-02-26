@@ -2,10 +2,10 @@
 
 import styles from "./layout.module.css";
 import Pills from "@/app/components/Pills/Pills";
-import { motion } from "framer-motion";
-import React from "react";
+import { motion } from "motion/react";
+import React, {Suspense} from "react";
 
-export default function AboutLayout({
+function SuspenseAboutLayout({
   children,
 }: {
   children: React.ReactNode
@@ -26,4 +26,18 @@ export default function AboutLayout({
             {children}
         </motion.div>
   )
+}
+
+export default function AboutLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+      <Suspense>
+        <SuspenseAboutLayout>
+          {children}
+        </SuspenseAboutLayout>
+      </Suspense>
+  );
 }

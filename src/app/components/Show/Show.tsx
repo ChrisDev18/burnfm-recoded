@@ -3,7 +3,7 @@ import Image from "next/image";
 import fallback from "../../../../public/Radio-Microphone.png";
 import {days, Show} from "@/lib/types";
 
-export default function Show({show}: { show: Show }) {
+export default function ComingUpShow({show}: { show: Show }) {
   return (
     <div className={styles.Root}>
       <div className={styles.ImageContainer}>

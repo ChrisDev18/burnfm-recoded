@@ -1,7 +1,6 @@
 import React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
-import 'rodal/lib/rodal.css';
 import styles from './Popup.module.css';
 
 // type security - adding children to the interface of Radix UI's Dialog.Content
@@ -11,8 +10,10 @@ interface DialogContentProps extends React.ComponentProps<typeof DialogPrimitive
 
 export const Dialog = DialogPrimitive.Root;
 export const DialogTrigger = DialogPrimitive.Trigger;
-
-export function DialogContent({ children, ...props }: DialogContentProps) {
+interface DialogContent extends DialogContentProps {
+  title: string
+}
+export function DialogContent({ title, children, ...props }: DialogContent) {
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className={styles.DialogOverlay}/>
