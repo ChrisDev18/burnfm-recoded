@@ -126,11 +126,9 @@ export default function RadioPlayer() {
   // Play audio and set playing state to true
   const playAudio = async () => {
     if (audio) {
-      console.log("loading")
       setPlaying("loading")
       await new Promise((resolve) => setTimeout(resolve, 0)); // Let the UI update first
       await audio.play();
-      console.log("done")
       setPlaying("playing");
     }
   };
@@ -162,7 +160,7 @@ export default function RadioPlayer() {
     <div className={styles.Player_Root}>
       {/*Popup for when a user clicks on a show*/}
       <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
-        <DialogContent title={popup.show.title}>
+        <DialogContent aria-describedby={undefined} title={popup.show.title}>
           <div className={showPopup.Popup}>
             { popup.show.img &&
                 <Image className={showPopup.Image}

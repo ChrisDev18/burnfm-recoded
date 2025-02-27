@@ -58,7 +58,14 @@
 }
 
 .sectionHeader {
+  text-align: center;
   font-size: 1.2rem;
+  font-weight: 500;
+  color: white;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 1rem;
+  }
 }
 
 .details {
@@ -90,6 +97,12 @@
 
 .onDemand > p {
   margin-bottom: 16px;
+}
+
+.onDemand > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .description {

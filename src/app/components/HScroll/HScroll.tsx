@@ -16,7 +16,6 @@ export default function HScroll({
   const handleScroll = useCallback(() => {
     const visibilities = [false, false];
     if (contentRefState?.scrollLeft) {
-      console.log(contentRefState.scrollWidth);
       visibilities[0] = contentRefState.scrollLeft > 1;
       visibilities[1] = contentRefState.scrollLeft < (contentRefState.scrollWidth-contentRefState.clientWidth);
     } else if (contentRefState){

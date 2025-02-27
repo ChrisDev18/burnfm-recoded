@@ -32,6 +32,22 @@ export type IShowExtended = IShow & {
     id: number,
     title: string | null,
     recording: string,
+    recorded_at: Date
+  } [],
+  timings: {
+    start_time: Date,
+    end_time: Date,
+    day: number,
+    start_date: Date | null,
+    end_date: Date | null
+  } []
+}
+
+export type API_ShowExtended = IShow & {
+  recordings: {
+    id: number,
+    title: string | null,
+    recording: string,
     recorded_at: string
   } [],
   timings: {
@@ -41,10 +57,6 @@ export type IShowExtended = IShow & {
     start_date: string | null,
     end_date: string | null
   } []
-}
-
-export type API_ShowExtended = IShow & {
-  show: IShowExtended
 }
 
 

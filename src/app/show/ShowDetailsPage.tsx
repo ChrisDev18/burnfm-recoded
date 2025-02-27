@@ -60,31 +60,27 @@ export default function ShowDetailsPage({id}: {id: number}) {
                   animate={{opacity: 1}}>
 
         <div className={styles.hero}>
-          {state.show?.photo ?
-              <>
-                <Image className={styles.image}
-                       src={"https://api.burnfm.com/uploads/schedule_img/" + state.show.photo}
-                       alt={"Cover photo for" + state.show.title}
-                       height={400}
-                       width={400}
-                       priority
-                />
-                <h1 className={`notranslate ${styles.title}`}>{state.show?.title}</h1>
-                {/*<p className={styles.times}>*/}
-                {/*  {days[state.show?.day]}s {state.show?.start_time*/}
-                {/*    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {state.show?.end_time*/}
-                {/*    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}*/}
-                {/*</p>*/}
-              </>
-              :
-              <>
-                <h1 className={`notranslate ${styles.title}`}>{state.show?.title}</h1>
-                {/*<p className={styles.times}>*/}
-                {/*  {days[state.show?.day]}s {state.show?.start_time*/}
-                {/*    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - {state.show?.end_time*/}
-                {/*    .toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}*/}
-                {/*</p>*/}
-              </>
+          {state.show?.photo &&
+              <Image className={styles.image}
+                     src={state.show.photo}
+                     alt={"Cover photo for" + state.show.title}
+                     height={400}
+                     width={400}
+                     priority
+              />
+          }
+
+          <h1 className={`notranslate ${styles.title}`}>{state.show?.title}</h1>
+          {state.show?.hosts &&
+            <h3 className={styles.sectionHeader}>
+              Presented by { state.show.hosts.length > 1 ?
+                  <>
+                    <strong>{state.show.hosts.slice(0, -1).join(", ")}</strong> and <strong>{state.show.hosts[state.show.hosts.length - 1]}</strong>
+                  </>
+                  :
+                  <strong>{state.show.hosts[0]}</strong>
+              }
+            </h3>
           }
         </div>
 
@@ -94,34 +90,29 @@ export default function ShowDetailsPage({id}: {id: number}) {
               :
               <p className={styles.placeholderText}>This show has no description</p>
           }
-
-          {state.show?.hosts &&
-              <div>
-                  <h3 className={styles.sectionHeader}>Presented by</h3>
-                  <p className={styles.hosts}>
-                    { state.show.hosts.length > 1 ?
-                        state.show.hosts.slice(0, -1).join(", ") + " and " + state.show.hosts[state.show.hosts.length - 1]
-                      :
-                        state.show.hosts[0]
-                    }
-                  </p>
-              </div>
-          }
         </div>
 
         <div className={styles.onDemand}>
           <h2>On demand</h2>
-          <p>Listen back to previous episodes</p>
+          <p>Listen back to previous episodes, recorded every hour</p>
 
           <div>
-            { state.show.recordings.map((recording, i) =>
-                  <a key={i} href={"https://api.burnfm.com/" + recording.recording}>{recording.title}</a>
-              )
+
+            { state.show.recordings.length == 0 ? (
+                <p className={styles.placeholderText}>No recordings for this show</p>
+                ) : <>
+                  { state.show.recordings
+                      .toSorted((a, b) => a.recorded_at.getTime() - b.recorded_at.getTime())
+                      .map((recording, i) =>
+                          <a key={i} href={"https://api.burnfm.com/" + recording.recording}>{recording.title}</a>
+                      )
+                  }
+                </>
             }
 
-            { state.show.recordings.length == 0 &&
-                <p className={styles.placeholderText}>No recordings for this show</p>
-            }
+
+
+
           </div>
 
         </div>
