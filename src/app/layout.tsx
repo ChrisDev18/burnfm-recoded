@@ -7,6 +7,7 @@ import "@/app/layout.css";
 import NavBar from "@/app/components/NavBar/NavBar";
 import React, {useEffect, useRef, useState} from "react";
 import {AudioContext} from "@/contexts/AudioContext";
+import NextTopLoader from "nextjs-toploader";
 
 const sourceSans3 = Source_Sans_3({subsets: ['latin'], weight: "variable"});
 
@@ -71,12 +72,22 @@ export default function RootLayout({
 
       <body>
 
-      <audio ref={audioRef} id={"media"} onError={() => console.error("Error accessing audio")}>
+          <audio ref={audioRef} id={"media"} onError={() => console.error("Error accessing audio")}>
             <source src={"https://stream.aiir.com/xz12nsvoppluv"} type={"audio/mpeg"}/>
             The broadcast has stopped, or your browser does not support the audio element.
           </audio>
 
           <NavBar/>
+
+          <NextTopLoader
+              color="#d192f0"
+              height={4}
+              shadow={"0 0 10px #d192f0,0 0 5px #d192f0"}
+              showSpinner={false}
+              crawl={true}
+              easing={"ease-in-out"}
+              speed={400}
+          />
 
           <AudioContext.Provider value={audioRefState}>
             <main>
