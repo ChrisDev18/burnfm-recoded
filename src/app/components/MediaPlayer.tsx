@@ -3,6 +3,7 @@ import {AnimatePresence, motion} from "motion/react";
 import React, {useEffect, useRef} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import fallback from "../../../public/Radio-Microphone.png";
 
 export const RADIO_SRC = "https://stream.aiir.com/xz12nsvoppluv";
 
@@ -12,52 +13,65 @@ export default function MediaPlayer() {
 
   const { state: {media, isPlaying}, dispatch } = mediaContext;
 
-  // Add listeners for media control outside of React
+  // Update MediaSession whenever the current show changes
+  useEffect(() => {
+    if (!("mediaSession" in navigator)) return; // ✅ Ensure browser support
+
+    if (media?.show) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: media.show.title,
+        artist: "Burn FM",
+        artwork: [{
+          src: media.show.photo ?? fallback.src,
+          sizes: "192x192",
+        }]
+      });
+    } else {
+      navigator.mediaSession.playbackState = "none";
+      navigator.mediaSession.metadata = null;
+    }
+  }, [media]);
+
+  // Sync MediaContext with OS's player UI
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio) return; // Ensure the audio element exists
 
-    const handlePlay = () => dispatch({type: "PLAY"});
-    const handlePause = () => dispatch({type: "PAUSE"});
-    const handleStop = () => dispatch({type: "STOP"});
+    const handlePlay = () => dispatch({ type: "PLAY" });
+    const handlePause = () => dispatch({ type: "PAUSE" });
+    const handleStop = () => dispatch({ type: "STOP" });
 
-    audio.addEventListener('play', handlePlay);
-    audio.addEventListener('pause', handlePause);
-    audio.addEventListener('ended', handleStop);
+    audio.addEventListener("play", handlePlay);
+    audio.addEventListener("pause", handlePause);
+    audio.addEventListener("ended", handleStop);
 
-    // Clean up the action handlers when the component unmounts
     return () => {
       audio.removeEventListener("play", handlePlay);
       audio.removeEventListener("pause", handlePause);
       audio.removeEventListener("ended", handleStop);
     };
-  }, [audioRef]);
+  });
 
-  // useEffect(() => {
-  //   const audio = audioRef.current;
-  //   if (!audio) return;
-  //
-  //   const syncStateWithAudio = () => {
-  //     if (audio.paused) {
-  //       console.log("PAUSE")
-  //       dispatch({ type: "PAUSE" });
-  //     } else {
-  //       console.log("PLAY")
-  //       dispatch({ type: "PLAY" });
-  //     }
-  //   };
-  //
-  //   // Sync when events fire (for normal cases)
-  //   audio.addEventListener("play", syncStateWithAudio);
-  //   audio.addEventListener("pause", syncStateWithAudio);
-  //
-  //   return () => {
-  //     audio.removeEventListener("play", syncStateWithAudio);
-  //     audio.removeEventListener("pause", syncStateWithAudio);
-  //   };
-  // }, [audioRef.current]);
+  // Sync MediaContext with MediaSession API
+  useEffect(() => {
+    if (!("mediaSession" in navigator)) return;
 
+    const handlePlay = () => dispatch({ type: "PLAY" });
+    const handlePause = () => dispatch({ type: "PAUSE" });
+    const handleStop = () => dispatch({ type: "STOP" });
 
+    navigator.mediaSession.setActionHandler("play", handlePlay);
+    navigator.mediaSession.setActionHandler("pause", handlePause);
+    navigator.mediaSession.setActionHandler("stop", handleStop);
+
+    return () => {
+      navigator.mediaSession.setActionHandler("play", null);
+      navigator.mediaSession.setActionHandler("pause", null);
+      navigator.mediaSession.setActionHandler("stop", null);
+    };
+  }, []);
+
+  // Sync audio element with MediaContext
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -87,35 +101,32 @@ export default function MediaPlayer() {
       <AnimatePresence>
         { media &&
           <motion.div
-            className="sticky z-10 bottom-0 flex items-center justify-between text-white bg-[#32103F] dark:bg-neutral-900 w-full p-4 border-t  border-purple-900 dark:border-neutral-700 gap-16"
+            className="sticky z-10 bottom-0 flex items-center justify-between text-white bg-[#32103F] dark:bg-neutral-900 w-full p-4 pr-8 border-t  border-purple-900 dark:border-neutral-700 gap-8"
             key={"id"}
             initial={{y: 100}}
             animate={{y: 0}}
             exit={{y: 100}}
-            transition={{ ease: [0.39, 0.24, 0.3, 1], duration: 0.4 }}
+            transition={{ ease: [0.785, 0.135, 0.15, 0.86], duration: 0.4 }}
           >
             { media.show &&
-              <div className={"flex items-center gap-4 overflow-clip w-1/3"}>
+              <div className={"flex items-center gap-4 overflow-clip w-1/3" + (media.show.photo ? "" : " pl-4")}>
 
                 { media.show.photo &&
                   <Image src={media.show.photo} alt={"Photo for the show: " + media.show.title} height={60} width={60} />
                 }
 
-                <div className={"text-nowrap overflow-clip"}>
-                  <Link href={"/show/?id=" + media.show.id} className={"block overflow-clip text-ellipsis hover:underline"}>
-                    <p className={"font-semibold"}>{media.show.title}</p>
-                    <p className={"text-sm"}>
-                      { media.show.hosts.length > 1 ?
-                          <>
-                            {media.show.hosts.slice(0, -1).join(", ")} and {media.show.hosts[media.show.hosts.length - 1]}
-                          </>
-                          :
-                          <>{media.show.hosts[0]}</>
-                      }
-                    </p>
-                  </Link>
-
-                </div>
+                <Link href={"/show/?id=" + media.show.id} className={"flex flex-col justify-center text-nowrap h-[60px] overflow-clip text-ellipsis hover:underline"}>
+                  <p className={"font-semibold"}>{media.show.title}</p>
+                  <p className={"text-sm"}>
+                    { media.show.hosts.length > 1 ?
+                        <>
+                          {media.show.hosts.slice(0, -1).join(", ")} and {media.show.hosts[media.show.hosts.length - 1]}
+                        </>
+                        :
+                        <>{media.show.hosts[0]}</>
+                    }
+                  </p>
+                </Link>
 
               </div>
             }

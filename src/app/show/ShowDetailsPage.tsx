@@ -54,6 +54,14 @@ export default function ShowDetailsPage({id}: {id: number}) {
         </>
     );
 
+  const togglePlay = (recording: {id: number, title: string | null, recording: string, recorded_at: Date }) => {
+    if (mediaContext.state.isPlaying && mediaContext.state.media?.src === recording.recording) {
+      mediaContext.dispatch({ type: "STOP" });
+    } else {
+      mediaContext.dispatch({ type: "SET_MEDIA", payload: { src: recording.recording, show: state.show ?? undefined } });
+    }
+  }
+
   return (
       <motion.div className={styles.root}
                   transition={{duration: 0.2, type: "tween", delay: 0.2}}
@@ -105,7 +113,12 @@ export default function ShowDetailsPage({id}: {id: number}) {
                   { state.show.recordings
                       .toSorted((a, b) => a.recorded_at.getTime() - b.recorded_at.getTime())
                       .map((recording, i) =>
-                          <button className={buttonStyles.Button} type={"button"} key={i} onClick={() => mediaContext.dispatch({ type: "SET_MEDIA", payload: { src: recording.recording, show: state.show ?? undefined } })}>{recording.title}</button>
+                          <button className={buttonStyles.Button} type={"button"} key={i} onClick={() => togglePlay(recording)}>
+                            {recording.title}
+                            <span className={'material-symbols-outlined notranslate'}>
+                              {mediaContext.state.media?.src === recording.recording && mediaContext.state.isPlaying ? "stop_circle" :  "play_circle"}
+                            </span>
+                          </button>
                       )
                   }
                 </>

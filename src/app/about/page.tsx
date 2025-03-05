@@ -19,7 +19,9 @@ export default function AboutPage() {
       dispatch({ type: 'FETCH_REQUEST' });
 
       try {
-        const committee = await fetchClient<Profile[]>(COMMITTEE_ENDPOINT + "/2024-25.json");
+        const committee = await fetchClient<Profile[]>(COMMITTEE_ENDPOINT + "/2024-25.json", {
+          next: { revalidate: 10 }, // Revalidate every 10 seconds
+        });
         dispatch({ type: 'FETCH_SUCCESS', payload: committee });
       } catch (error: any) {
         dispatch({

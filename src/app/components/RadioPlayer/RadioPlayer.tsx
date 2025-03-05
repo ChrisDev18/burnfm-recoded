@@ -80,24 +80,6 @@ export default function RadioPlayer() {
     return () => clearTimeout(timeout);
   }, []);
 
-  // Update MediaSession whenever the current show changes
-  useEffect(() => {
-    // Set up the media session metadata if there is a current song
-    if (state.schedule?.current_show) {
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: state.schedule.current_show.title,
-        artist: "Burn FM",
-        artwork: [{
-          src: state.schedule.current_show.photo ?? fallback.src,
-          sizes: '192x192',
-          type: 'image/jpeg'
-        }]});
-    } else {
-      navigator.mediaSession.playbackState = 'none';
-      navigator.mediaSession.metadata = null;
-    }
-  }, [state.schedule.current_show]);
-
   // Display the Popup with details for a given show
   const displayPopup = (show: ShowEvent) => {
     setPopup({
@@ -109,7 +91,7 @@ export default function RadioPlayer() {
   // Handle toggling between play and pause on player
   const togglePlayPause = async () => {
     if (mediaContext.state.isPlaying && mediaContext.state.media?.src === RADIO_SRC)
-      mediaContext.dispatch({ type: "PAUSE" });
+      mediaContext.dispatch({ type: "STOP" });
     else {
       mediaContext.dispatch({
         type: "SET_MEDIA",
