@@ -7,10 +7,15 @@ import Image from "next/image";
 import { motion } from "motion/react";
 import {initialState, showReducer} from "@/reducers/showReducer";
 import loading_styles from "@/app/styles/Spinner.module.css";
+import {useMedia} from "@/contexts/MediaContext";
+
+import buttonStyles from "@/app/styles/buttons.module.css"
 
 
 export default function ShowDetailsPage({id}: {id: number}) {
   const [state, dispatch] = useReducer(showReducer, initialState);
+
+  const mediaContext = useMedia();
 
   useEffect(() => {
     const fetchShow = async () => {
@@ -49,14 +54,10 @@ export default function ShowDetailsPage({id}: {id: number}) {
         </>
     );
 
-
-
-  const isJavaScriptEnabled = typeof window !== 'undefined';
-
   return (
       <motion.div className={styles.root}
                   transition={{duration: 0.2, type: "tween", delay: 0.2}}
-                  initial={isJavaScriptEnabled ? {opacity: 0} : {opacity: 1}}
+                  initial={{opacity: 0}}
                   animate={{opacity: 1}}>
 
         <div className={styles.hero}>
@@ -85,7 +86,7 @@ export default function ShowDetailsPage({id}: {id: number}) {
         </div>
 
         <div className={styles.details}>
-          {state.show?.description ?
+          {state.show.description ?
               <p className={styles.description}>{state.show?.description}</p>
               :
               <p className={styles.placeholderText}>This show has no description</p>
@@ -104,7 +105,7 @@ export default function ShowDetailsPage({id}: {id: number}) {
                   { state.show.recordings
                       .toSorted((a, b) => a.recorded_at.getTime() - b.recorded_at.getTime())
                       .map((recording, i) =>
-                          <a key={i} href={"https://api.burnfm.com/" + recording.recording}>{recording.title}</a>
+                          <button className={buttonStyles.Button} type={"button"} key={i} onClick={() => mediaContext.dispatch({ type: "SET_MEDIA", payload: { src: recording.recording, show: state.show ?? undefined } })}>{recording.title}</button>
                       )
                   }
                 </>

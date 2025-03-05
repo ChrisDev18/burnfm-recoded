@@ -6,8 +6,9 @@ import './styles/globals.css'
 import "@/app/layout.css";
 import NavBar from "@/app/components/NavBar/NavBar";
 import React, {useEffect, useRef, useState} from "react";
-import {AudioContext} from "@/contexts/AudioContext";
 import NextTopLoader from "nextjs-toploader";
+import {MediaProvider} from "@/contexts/MediaContext";
+import MediaPlayer from "@/app/components/MediaPlayer";
 
 const sourceSans3 = Source_Sans_3({subsets: ['latin'], weight: "variable"});
 
@@ -16,17 +17,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // Define audio reference (used to directly control the audio element)
-  const audioRef = useRef<HTMLAudioElement|null>(null);
-  const [audioRefState, setAudioRefState] =
-      useState<HTMLAudioElement|null>(null);
-
   const [lightMode, setLightMode] = useState<boolean>(true)
-
-  useEffect(() => {
-    if (!audioRef.current) return
-    setAudioRefState(audioRef.current)
-  }, []);
 
   // Add listeners to changing light/dark mode
   useEffect(() => {
@@ -72,10 +63,10 @@ export default function RootLayout({
 
       <body>
 
-          <audio ref={audioRef} id={"media"} onError={() => console.error("Error accessing audio")}>
-            <source src={"https://stream.aiir.com/xz12nsvoppluv"} type={"audio/mpeg"}/>
-            The broadcast has stopped, or your browser does not support the audio element.
-          </audio>
+          {/*<audio ref={audioRef} id={"media"} onError={() => console.error("Error accessing audio")}>*/}
+          {/*  <source src={"https://stream.aiir.com/xz12nsvoppluv"} type={"audio/mpeg"}/>*/}
+          {/*  The broadcast has stopped, or your browser does not support the audio element.*/}
+          {/*</audio>*/}
 
           <NavBar/>
 
@@ -84,19 +75,23 @@ export default function RootLayout({
               height={4}
               shadow={"0 0 10px #d192f0,0 0 5px #d192f0"}
               showSpinner={false}
-              crawl={true}
               easing={"ease-in-out"}
               speed={400}
           />
 
-          <AudioContext.Provider value={audioRefState}>
+          <MediaProvider>
             <main>
               {children}
             </main>
-          </AudioContext.Provider>
+
+
+
           <footer>
             <p>Copyright © 2025 Burn FM. All rights reserved.</p>
           </footer>
+
+          <MediaPlayer />
+          </MediaProvider>
 
         </body>
       </html>

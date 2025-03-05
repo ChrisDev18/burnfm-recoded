@@ -3,10 +3,10 @@
 import styles from "./RadioPlayer.module.css";
 import buttons from "@/app/styles/buttons.module.css"
 import showPopup from "@/app/styles/ShowPopup.module.css"
-import React, {useContext, useEffect, useReducer, useState} from "react";
+import React, {useEffect, useReducer, useState} from "react";
 import Image from "next/image";
 import fallback from "../../../../public/Radio-Microphone.png";
-import {Show as ShowType, PopupState} from "@/lib/types";
+import {ShowEvent, PopupState} from "@/lib/types";
 import {getNowPlaying} from "@/lib/api";
 import Show from "../Show/Show";
 import {Dialog, DialogContent} from "@/app/components/Popup/Popup";
@@ -15,10 +15,11 @@ import {Close} from "@radix-ui/react-dialog";
 
 import Link from "next/link";
 import {pickExcerpt} from "@/lib/excerpts";
-import {AudioContext} from "@/contexts/AudioContext";
 import HScroll from "@/app/components/HScroll/HScroll";
 import {initialState, nowplayingReducer} from "@/reducers/nowplayingReducer";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import {useMedia} from "@/contexts/MediaContext";
+import {RADIO_SRC} from "@/app/components/MediaPlayer";
 
 const init_popup: PopupState = {
   visible: false,
@@ -30,16 +31,15 @@ const init_popup: PopupState = {
     description: "",
     start_time: new Date(),
     end_time: new Date(),
-    img: "",
+    photo: "",
     hosts: []
   }
 }
 
 export default function RadioPlayer() {
-  const audio = useContext(AudioContext);
+  const mediaContext = useMedia();
 
   // Define states
-  const [playing, setPlaying] = useState<"playing"|"stopped"|"loading">(audio && ! audio.paused ? "playing" : "stopped");
   const [popup, setPopup] = useState(init_popup);
   const [state, dispatch] = useReducer(nowplayingReducer, initialState)
 
@@ -80,23 +80,6 @@ export default function RadioPlayer() {
     return () => clearTimeout(timeout);
   }, []);
 
-  // Add listeners for media control outside of React
-  useEffect(() => {
-    const audioElement = audio;
-
-    const handlePlay = () => setPlaying("playing");
-    const handlePause = () => setPlaying("stopped");
-
-    audioElement?.addEventListener('play', handlePlay);
-    audioElement?.addEventListener('pause', handlePause);
-
-    // Clean up the action handlers when the component unmounts
-    return () => {
-      audioElement?.removeEventListener("play", handlePlay)
-      audioElement?.removeEventListener("play", handlePause)
-    };
-  }, [audio]);
-
   // Update MediaSession whenever the current show changes
   useEffect(() => {
     // Set up the media session metadata if there is a current song
@@ -105,7 +88,7 @@ export default function RadioPlayer() {
         title: state.schedule.current_show.title,
         artist: "Burn FM",
         artwork: [{
-          src: state.schedule.current_show.img === "" ? fallback.src : state.schedule.current_show.img,
+          src: state.schedule.current_show.photo ?? fallback.src,
           sizes: '192x192',
           type: 'image/jpeg'
         }]});
@@ -116,37 +99,26 @@ export default function RadioPlayer() {
   }, [state.schedule.current_show]);
 
   // Display the Popup with details for a given show
-  const displayPopup = (show: ShowType) => {
+  const displayPopup = (show: ShowEvent) => {
     setPopup({
       visible: true,
       show: show,
     });
   }
 
-  // Play audio and set playing state to true
-  const playAudio = async () => {
-    if (audio) {
-      setPlaying("loading")
-      await new Promise((resolve) => setTimeout(resolve, 0)); // Let the UI update first
-      await audio.play();
-      setPlaying("playing");
-    }
-  };
-
-  // Pause audio and set playing state to false
-  const pauseAudio = () => {
-    if (audio) {
-      audio.pause();
-      setPlaying("stopped");
-    }
-  };
-
   // Handle toggling between play and pause on player
   const togglePlayPause = async () => {
-    if (playing != "stopped")
-      pauseAudio()
-    else
-      await playAudio()
+    if (mediaContext.state.isPlaying && mediaContext.state.media?.src === RADIO_SRC)
+      mediaContext.dispatch({ type: "PAUSE" });
+    else {
+      mediaContext.dispatch({
+        type: "SET_MEDIA",
+        payload: {
+          src: RADIO_SRC,
+          show: state.schedule.current_show ?? undefined
+        }
+      });
+    }
   }
 
   // Generate the list of shows
@@ -162,9 +134,9 @@ export default function RadioPlayer() {
       <Dialog open={popup.visible} onOpenChange={(change) => setPopup({...popup, visible: change})}>
         <DialogContent aria-describedby={undefined} title={popup.show.title}>
           <div className={showPopup.Popup}>
-            { popup.show.img &&
+            { popup.show.photo &&
                 <Image className={showPopup.Image}
-                       src={popup.show.img}
+                       src={popup.show.photo}
                        alt={"Cover image for the show: " + popup.show.title}
                        height={120}
                        width={120}
@@ -192,17 +164,13 @@ export default function RadioPlayer() {
             }
 
             <div className={showPopup.buttonRow}>
-              {/*<Link className={buttons.Button} href={"/schedule?day=" + popup.show.start_time.getDay()}>*/}
-              {/*  View in Schedule*/}
-              {/*</Link>*/}
-
               <Link className={buttons.Button} href={"/show?id=" + popup.show.id}>
                 Go to Show Page
               </Link>
             </div>
 
             <Close className={`${showPopup.Close}`}>
-              <span className={'material-symbols-rounded notranslate'}>close</span>
+              <span className={'material-symbols-sharp notranslate'}>close</span>
             </Close>
           </div>
         </DialogContent>
@@ -243,13 +211,9 @@ export default function RadioPlayer() {
 
             <div className={styles.PlayNow}>
               <button className={styles.Toggle_Button} onClick={togglePlayPause}>
-                {playing != "loading" ?
-                    <span className={"material-symbols-rounded notranslate"}>
-                      {playing == "playing" ? "stop" : "play_arrow"}
-                    </span>
-                    :
-                    <div className={`${loading_styles.Spinner} ${loading_styles.Light} ${styles.play_spinner}`}/>
-                }
+                <span className={"material-symbols-rounded notranslate"}>
+                  {mediaContext.state.isPlaying && mediaContext.state.media?.src === RADIO_SRC ? "stop" : "play_arrow"}
+                </span>
               </button>
 
                   <button className={`${styles.PlayNow_Details} ${buttons.Clickable}`}
@@ -273,7 +237,7 @@ export default function RadioPlayer() {
               <span className={styles.ImageOverlay}/>
               <Image
                 className={styles.Image}
-                src={state.schedule.current_show.img ? state.schedule.current_show.img : fallback}
+                src={state.schedule.current_show.photo ? state.schedule.current_show.photo : fallback}
                 alt={"Cover image for the show: " + state.schedule.current_show.title}
                 height={233}
                 width={233}

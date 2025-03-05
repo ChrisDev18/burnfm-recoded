@@ -52,7 +52,7 @@
 .image {
   aspect-ratio: 1;
   width: 100%;
-  max-width: 360px;
+  max-width: 320px;
   height: auto;
   box-shadow: 0 20px 32px 0 rgba(0, 0, 0, 0.3);
 }
@@ -102,7 +102,8 @@
 .onDemand > div {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
 }
 
 .description {

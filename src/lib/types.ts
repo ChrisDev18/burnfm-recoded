@@ -27,6 +27,19 @@ export type IShow = {
   photo: string | null,
 }
 
+export type ShowEvent = {
+  id: number,
+  title: string,
+  description: string,
+  photo: string | null,
+  hosts: string[],
+
+  day: number,
+  duration: Date,
+  start_time: Date,
+  end_time: Date,
+}
+
 export type IShowExtended = IShow & {
   recordings: {
     id: number,
@@ -67,26 +80,14 @@ export type Recording = {
   recorded_at: Date
 }
 
-export type Show = {
-  id: number,
-  day: number,
-  title: string,
-  description: string,
-  duration: Date,
-  start_time: Date,
-  end_time: Date,
-  img: string,
-  hosts: string[]
-}
-
 export type ShowSchedule = {
-  current_show: Show | null,
-  next_shows: Show[]
+  current_show: ShowEvent | null,
+  next_shows: ShowEvent[]
 }
 
 export type PopupState = {
   visible: boolean,
-  show: Show,
+  show: ShowEvent,
 }
 
 export type Profile = {

@@ -1,9 +1,9 @@
-import {API_ScheduleItem, API_ShowExtended, IShowExtended, Schedule_API, Show, ShowSchedule} from "@/lib/types";
+import {API_ScheduleItem, API_ShowExtended, IShowExtended, Schedule_API, ShowEvent, ShowSchedule} from "@/lib/types";
 import {GET_RADIOSHOW_ENDPOINT, NOW_PLAYING_ENDPOINT, SCHEDULE_ENDPOINT} from "@/lib/endpoints";
 
 
 // Forms show object given a ScheduleItem from the API
-function formShowInSchedule(show: API_ScheduleItem): Show {
+function formShowInSchedule(show: API_ScheduleItem): ShowEvent {
   const start = new Date();
   const end = new Date();
   const duration = new Date();
@@ -24,7 +24,7 @@ function formShowInSchedule(show: API_ScheduleItem): Show {
     day: show.day,
     title: show.title,
     description: show.description ?? "",
-    img: show.photo ? "https://api.burnfm.com/uploads/schedule_img/" + show.photo : "",
+    photo: show.photo ? "https://api.burnfm.com/uploads/schedule_img/" + show.photo : "",
     duration: duration,
     start_time: start,
     end_time: end,
@@ -57,13 +57,14 @@ function formShowObject(show: API_ShowExtended): IShowExtended {
     }),
     recordings: show.recordings.map(rec => ({
       ...rec,
+      recording: "https://api.burnfm.com/" + rec.recording,
       recorded_at: new Date(rec.recorded_at)
     }))
   }
 }
 
 // Gets a list of shows from the schedule. If a day is specified, it only gets that day's shows.
-export async function getSchedule(day?: number): Promise<Show[]> {
+export async function getSchedule(day?: number): Promise<ShowEvent[]> {
   let endpoint;
   if (day !== undefined) {
     endpoint = SCHEDULE_ENDPOINT + "?day=" + day;

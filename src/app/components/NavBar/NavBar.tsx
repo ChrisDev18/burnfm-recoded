@@ -58,7 +58,7 @@ export default function NavBar() {
           <li>
             <Link className={path == '/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
                   href={"/"}>
-              <span className={'material-symbols-rounded notranslate'}>
+              <span className={'material-symbols-sharp notranslate'}>
                 headphones
               </span>
               <p>Listen</p>
@@ -68,7 +68,7 @@ export default function NavBar() {
           <li>
             <Link className={path.startsWith('/schedule/') ? `${styles.Link} ${styles.Selected}` : styles.Link}
                   href={`/schedule/?day=${new Date().getDay()}`}>
-              <span className={'material-symbols-rounded notranslate'}>
+              <span className={'material-symbols-sharp notranslate'}>
                 overview
               </span>
               <p>Schedule</p>
@@ -78,7 +78,7 @@ export default function NavBar() {
           <li>
             <Link className={path.startsWith('/about/') ? `${styles.Link} ${styles.Selected}` : styles.Link}
                   href={"/about/"}>
-              <span className={'material-symbols-rounded notranslate'}>
+              <span className={'material-symbols-sharp notranslate'}>
                 group
               </span>
               <p>About us</p>

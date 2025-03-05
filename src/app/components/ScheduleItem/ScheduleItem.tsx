@@ -6,13 +6,13 @@ import React from "react";
 import Link from "next/link";
 
 import "@/app/styles/icons.css";
-import {Show} from "@/lib/types";
+import {ShowEvent} from "@/lib/types";
 
 // An item shown in ScheduleList.
 export default function ScheduleItem({
   show
 }: {
-  show: Show
+  show: ShowEvent
 }) {
 
   const duration = Math.round((show.end_time.getTime() - show.start_time.getTime()) / (1000 * 60 * 60));
@@ -24,7 +24,7 @@ export default function ScheduleItem({
 
         <div className={styles.ImageContainer}>
           <span className={styles.ImageOverlay}/>
-          <Image src={show.img? show.img : fallback}
+          <Image src={show.photo? show.photo : fallback}
                  className={styles.img}
                  alt={"Cover photo for the show: " + show.title}
                  height={140}
@@ -42,7 +42,7 @@ export default function ScheduleItem({
           </div>
 
 
-          <span className={`${styles.icon} material-symbols-rounded notranslate`}>
+          <span className={`${styles.icon} material-symbols-sharp notranslate`}>
             chevron_right
           </span>
         </div>

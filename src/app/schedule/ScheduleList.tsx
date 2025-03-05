@@ -31,8 +31,6 @@ export default function ScheduleList({day}: { day: number }) {
     fetchUser();
   }, [day]);
 
-  const isJavaScriptEnabled = typeof window !== 'undefined'
-
   let message: ReactElement | ReactElement[];
 
   if (state.loading) {
@@ -55,7 +53,7 @@ export default function ScheduleList({day}: { day: number }) {
     return (
         <motion.div className={styles.ScheduleList}
                     transition={{duration: 0.2, type: "tween", delay: 0.2}}
-                    initial={isJavaScriptEnabled ? {opacity: 0} : {opacity: 1}}
+                    initial={{opacity: 0}}
                     animate={{opacity: 1}}>
           {
             state.schedule.map((show, i) =>
