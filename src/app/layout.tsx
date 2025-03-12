@@ -10,7 +10,7 @@ import NextTopLoader from "nextjs-toploader";
 import {MediaProvider} from "@/contexts/MediaContext";
 import MediaPlayer from "@/app/components/MediaPlayer";
 
-const sourceSans3 = Source_Sans_3({subsets: ['latin'], weight: "variable"});
+const sourceSans3 = Source_Sans_3({subsets: ['latin'], weight: "variable", variable: "--font-source-sans"});
 
 export default function RootLayout({
   children,
@@ -34,7 +34,7 @@ export default function RootLayout({
   }, []);
 
   return (
-      <html lang="en" className={sourceSans3.className}>
+      <html lang="en" className={sourceSans3.variable}>
       <head>
         <title>Burn FM</title>
         {/*<meta property="og:title" content="Burn FM" key="title" />*/}
