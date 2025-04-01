@@ -1,11 +1,12 @@
 export type Schedule_API = {
-  data: API_ScheduleItem[]
+  data: API_ScheduleItem[],
+  time_zone: string,
 }
 
-export type Now_Playing_API = {
-  now_playing: API_ScheduleItem[],
-  up_next: API_ScheduleItem[]
-}
+// export type Now_Playing_API = {
+//   now_playing: API_ScheduleItem[],
+//   up_next: API_ScheduleItem[]
+// }
 
 export type API_ScheduleItem = {
   show_id: number,
