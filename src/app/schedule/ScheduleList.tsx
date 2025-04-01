@@ -35,20 +35,24 @@ export default function ScheduleList({day}: { day: number }) {
 
   if (state.loading) {
     message = (
-        <>
+        <div className="flex flex-col items-center justify-center gap-2 grow">
+          <div className={`${loading_styles.Spinner}`}/>
           <p className={styles.emptyMessage}>Loading</p>
-          <div className={`${loading_styles.Spinner} ${loading_styles.Light}`}/>
-        </>
-      );
+        </div>
+    );
   } else if (state.error || ! state.schedule) {
     message = (
-        <>
+        <div className="flex flex-col items-center justify-center gap-2 grow">
           <p className={styles.emptyMessage}>{state.error}</p>
           <p className={styles.emptyMessage}>An error occurred whilst trying to retrieve the schedule</p>
-        </>
+        </div>
     );
   } else if (state.schedule.length === 0) {
-    message = <p className={styles.emptyMessage}>Nothing scheduled on this day</p>
+    message = (
+        <div className="flex flex-col items-center justify-center gap-2 grow">
+          <p className={styles.emptyMessage}>Nothing scheduled on this day</p>
+        </div>
+    );
   } else {
     return (
         <motion.div className={styles.ScheduleList}

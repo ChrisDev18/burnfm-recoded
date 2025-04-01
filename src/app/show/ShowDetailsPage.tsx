@@ -37,10 +37,10 @@ export default function ShowDetailsPage({id}: {id: number}) {
 
   if (state.loading)
     return (
-      <>
+      <div className="flex flex-col items-center justify-center gap-2 grow">
+        <div className={`${loading_styles.Spinner}`}/>
         <p className={styles.emptyMessage}>Loading</p>
-        <div className={`${loading_styles.Spinner} ${loading_styles.Light}`}/>
-      </>
+      </div>
     );
 
   if (state.error == "404 - not found")
@@ -48,10 +48,10 @@ export default function ShowDetailsPage({id}: {id: number}) {
 
   if (state.error || !state.show)
     return (
-        <>
+        <div className={styles.root}>
           <p className={styles.emptyMessage}>{state.error}</p>
           <p className={styles.emptyMessage}>An error occurred whilst trying to retrieve the schedule</p>
-        </>
+        </div>
     );
 
   const togglePlay = (recording: {id: number, title: string | null, recording: string, recorded_at: Date }) => {
