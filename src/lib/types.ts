@@ -3,6 +3,15 @@ export type Schedule_API = {
   time_zone: string,
 }
 
+export type Settings_API = {
+  defaultShow: {
+    show: number
+  },
+  offAirMode: {
+    show: number
+  }
+}
+
 // export type Now_Playing_API = {
 //   now_playing: API_ScheduleItem[],
 //   up_next: API_ScheduleItem[]

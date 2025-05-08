@@ -1,5 +1,13 @@
-import {API_ScheduleItem, API_ShowExtended, IShowExtended, Schedule_API, ShowEvent, ShowSchedule} from "@/lib/types";
-import {GET_RADIOSHOW_ENDPOINT, NOW_PLAYING_ENDPOINT, SCHEDULE_ENDPOINT} from "@/lib/endpoints";
+import {
+  API_ScheduleItem,
+  API_ShowExtended,
+  IShowExtended,
+  Schedule_API,
+  Settings_API,
+  ShowEvent,
+  ShowSchedule
+} from "@/lib/types";
+import {GET_RADIOSHOW_ENDPOINT, NOW_PLAYING_ENDPOINT, SCHEDULE_ENDPOINT, SETTINGS_ENDPOINT} from "@/lib/endpoints";
 
 
 // Get the time offset in milliseconds
@@ -108,11 +116,17 @@ function formShowObject(show: API_ShowExtended, time_zone: string): IShowExtende
   }
 }
 
+export async function getOffAir(): Promise<boolean> {
+  const settings = await fetchClient<Settings_API>(SETTINGS_ENDPOINT);
+
+  return settings.offAirMode.show !== null;
+}
+
 // Gets a list of shows from the schedule. If a day is specified, it only gets that day's shows.
 export async function getSchedule(day?: number): Promise<ShowEvent[]> {
   let endpoint;
   if (day !== undefined) {
-    endpoint = SCHEDULE_ENDPOINT + "?day=" + day;
+    endpoint = SCHEDULE_ENDPOINT + "&day=" + day;
   } else {
     endpoint = SCHEDULE_ENDPOINT;
   }
