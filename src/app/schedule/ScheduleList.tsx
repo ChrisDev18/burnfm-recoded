@@ -31,31 +31,33 @@ export default function ScheduleList({day}: { day: number }) {
     fetchUser();
   }, [day]);
 
-  const isJavaScriptEnabled = typeof window !== 'undefined'
-
   let message: ReactElement | ReactElement[];
 
   if (state.loading) {
     message = (
-        <>
+        <div className="flex flex-col items-center justify-center gap-2 grow">
+          <div className={`${loading_styles.Spinner}`}/>
           <p className={styles.emptyMessage}>Loading</p>
-          <div className={`${loading_styles.Spinner} ${loading_styles.Light}`}/>
-        </>
-      );
+        </div>
+    );
   } else if (state.error || ! state.schedule) {
     message = (
-        <>
+        <div className="flex flex-col items-center justify-center gap-2 grow">
           <p className={styles.emptyMessage}>{state.error}</p>
           <p className={styles.emptyMessage}>An error occurred whilst trying to retrieve the schedule</p>
-        </>
+        </div>
     );
   } else if (state.schedule.length === 0) {
-    message = <p className={styles.emptyMessage}>Nothing scheduled on this day</p>
+    message = (
+        <div className="flex flex-col items-center justify-center gap-2 grow">
+          <p className={styles.emptyMessage}>Nothing scheduled on this day</p>
+        </div>
+    );
   } else {
     return (
         <motion.div className={styles.ScheduleList}
                     transition={{duration: 0.2, type: "tween", delay: 0.2}}
-                    initial={isJavaScriptEnabled ? {opacity: 0} : {opacity: 1}}
+                    initial={{opacity: 0}}
                     animate={{opacity: 1}}>
           {
             state.schedule.map((show, i) =>

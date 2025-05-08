@@ -1,16 +1,16 @@
 import styles from "@/app/components/Show/Show.module.css";
 import Image from "next/image";
 import fallback from "../../../../public/Radio-Microphone.png";
-import {days, Show} from "@/lib/types";
+import {days, ShowEvent} from "@/lib/types";
 
-export default function ComingUpShow({show}: { show: Show }) {
+export default function ComingUpShow({show}: { show: ShowEvent }) {
   return (
     <div className={styles.Root}>
       <div className={styles.ImageContainer}>
         <span className={styles.ImageOverlay}/>
         <Image
           className={styles.Image}
-          src={show.img ? show.img : fallback}
+          src={show.photo ? show.photo : fallback}
           alt={"Cover photo for the show: " + show.title}
           height={128}
           width={128}

@@ -26,7 +26,7 @@ export default function ProfileCard({profile, priority}: {profile: Profile, prio
         />
         :
         <div className={styles.ImgPlaceholder}>
-          <span className={'material-symbols-rounded notranslate'}>person</span>
+          <span className={'material-symbols-sharp notranslate'}>person</span>
         </div>
       }
 
@@ -46,7 +46,7 @@ export default function ProfileCard({profile, priority}: {profile: Profile, prio
         {profile.fun_fact !== "" ?
           <div className={styles.FunFact}>
             <div className={styles.IconHeader}>
-              <span className={'material-symbols-rounded notranslate'}>bolt</span>
+              <span className={'material-symbols-sharp notranslate'}>bolt</span>
               <p className={styles.Header}>Fun fact</p>
             </div>
             <p>{profile.fun_fact}</p>
@@ -57,7 +57,7 @@ export default function ProfileCard({profile, priority}: {profile: Profile, prio
         {(profile.favourite_song !== "" || spotify_id !== null) ?
           <div className={styles.FavouriteSong}>
             <div className={styles.IconHeader}>
-              <span className={'material-symbols-rounded notranslate'}>favorite</span>
+              <span className={'material-symbols-sharp notranslate'}>favorite</span>
               <p className={styles.Header}>Favourite song</p>
             </div>
             <iframe style={{borderRadius: "16px", border: "none"}}

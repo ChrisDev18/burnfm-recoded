@@ -16,12 +16,10 @@ import { motion } from 'framer-motion';
 
 export default function Home() {
 
-  const isJavaScriptEnabled = typeof window !== 'undefined'
-
   return (
     <motion.div className={styles.Root}
                 transition={{ duration: 0.2, type: "tween", delay: 0.2}}
-                initial={isJavaScriptEnabled? {opacity: 0}: {opacity: 1}}
+                initial={{opacity: 0}}
                 animate={{opacity: 1}}>
       <RadioPlayer/>
 
@@ -47,7 +45,7 @@ export default function Home() {
         {/*    </div>*/}
         {/*  </div>*/}
         {/*  <div className={styles.CardIcon}>*/}
-        {/*    <span className={"material-symbols-rounded notranslate"} style={{color: "#32103F"}}>*/}
+        {/*    <span className={"material-symbols-sharp notranslate"} style={{color: "#32103F"}}>*/}
         {/*      campaign*/}
         {/*    </span>*/}
         {/*  </div>*/}
@@ -112,7 +110,7 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.CardIcon}>
-            <span className={"material-symbols-rounded notranslate"} style={{color: "#5D1F74"}}>
+            <span className={"material-symbols-sharp notranslate"} style={{color: "#5D1F74"}}>
               podcasts
             </span>
           </div>

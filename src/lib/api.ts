@@ -1,30 +1,80 @@
-import {API_ScheduleItem, API_ShowExtended, IShowExtended, Schedule_API, Show, ShowSchedule} from "@/lib/types";
-import {GET_RADIOSHOW_ENDPOINT, NOW_PLAYING_ENDPOINT, SCHEDULE_ENDPOINT} from "@/lib/endpoints";
+import {
+  API_ScheduleItem,
+  API_ShowExtended,
+  IShowExtended,
+  Schedule_API,
+  Settings_API,
+  ShowEvent,
+  ShowSchedule
+} from "@/lib/types";
+import {GET_RADIOSHOW_ENDPOINT, NOW_PLAYING_ENDPOINT, SCHEDULE_ENDPOINT, SETTINGS_ENDPOINT} from "@/lib/endpoints";
 
+
+// Get the time offset in milliseconds
+function getTimeZoneOffset(date: Date, timeZone: string): number {
+  const localOffset = - date.getTimezoneOffset() / 60;  // Convert to hours
+
+  // Format to string given a string format of time-zone
+  const formattedDate = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    hour12: false,
+    timeZoneName: "short"
+  }).format(date);
+
+  let serverOffset = 0;
+
+  // Regular expression to match GMT offset in the form of "GMT+X" or "GMT-X"
+  const regex = /GMT([+-]?\d+)/;
+  const match = formattedDate.match(regex);
+
+  if (match && match[1]) {
+    serverOffset = parseInt(match[1], 10);
+  }
+
+  const result = localOffset - serverOffset;
+
+  // console.log(`Offset of server time (${timeZone}): ${serverOffset}`);
+  // console.log(`Offset of local time: ${localOffset}`);
+  // console.log(`Offset of local time from server: ${result} minute(s))`);
+
+  // Convert to milliseconds
+  return result * 3600000;
+}
+
+function adjustToLocalTime(serverDate: Date, serverTimeZone: string): Date {
+  // Get the server time zone offset in milliseconds
+  const localOffsetFromServer = getTimeZoneOffset(serverDate, serverTimeZone);
+
+  // Adjust the server date by applying the time delta
+  return new Date(serverDate.getTime() + localOffsetFromServer);
+}
 
 // Forms show object given a ScheduleItem from the API
-function formShowInSchedule(show: API_ScheduleItem): Show {
-  const start = new Date();
-  const end = new Date();
+function formShowInSchedule(show: API_ScheduleItem, time_zone: string): ShowEvent {
+  let start = new Date();
+  let end = new Date();
   const duration = new Date();
 
   let [h, m, s] = show.start_time.split(':').map(Number);
-  start.setUTCHours(h, m, s);
+  start.setHours(h, m, s);
 
   [h, m, s] = show.end_time.split(':').map(Number);
-  end.setUTCHours(h, m, s);
-  end.setUTCSeconds(end.getUTCSeconds() + 1);
+  end.setHours(h, m, s);
+  end.setSeconds(end.getSeconds() + 1);
 
   [h, m, s] = show.duration.split(':').map(Number);
-  duration.setUTCHours(h, m, s);
-  duration.setUTCSeconds(duration.getUTCSeconds() + 1);
+  duration.setHours(h, m, s);
+  duration.setSeconds(duration.getSeconds() + 1);
+
+  start = adjustToLocalTime(start, time_zone);
+  end = adjustToLocalTime(end, time_zone);
 
   return {
     id: show.show_id,
     day: show.day,
     title: show.title,
     description: show.description ?? "",
-    img: show.photo ? "https://api.burnfm.com/uploads/schedule_img/" + show.photo : "",
+    photo: show.photo ? "https://api.burnfm.com/uploads/schedule_img/" + show.photo : "",
     duration: duration,
     start_time: start,
     end_time: end,
@@ -32,20 +82,23 @@ function formShowInSchedule(show: API_ScheduleItem): Show {
   };
 }
 
-function formShowObject(show: API_ShowExtended): IShowExtended {
+function formShowObject(show: API_ShowExtended, time_zone: string): IShowExtended {
   return {
     ...show,
     photo: show.photo ? "https://api.burnfm.com/uploads/schedule_img/" + show.photo : null,
     timings: show.timings.map(timing => {
-      const start = new Date();
-      const end = new Date();
+      let start = new Date();
+      let end = new Date();
 
       let [h, m, s] = timing.start_time.split(':').map(Number);
-      start.setUTCHours(h, m, s);
+      start.setHours(h, m, s);
 
       [h, m, s] = timing.end_time.split(':').map(Number);
-      end.setUTCHours(h, m, s);
-      end.setUTCSeconds(end.getUTCSeconds() + 1);
+      end.setHours(h, m, s);
+      end.setSeconds(end.getSeconds() + 1);
+
+      start = adjustToLocalTime(start, time_zone);
+      end = adjustToLocalTime(end, time_zone);
 
       return {
         start_time: start,
@@ -57,16 +110,23 @@ function formShowObject(show: API_ShowExtended): IShowExtended {
     }),
     recordings: show.recordings.map(rec => ({
       ...rec,
+      recording: "https://api.burnfm.com/" + rec.recording,
       recorded_at: new Date(rec.recorded_at)
     }))
   }
 }
 
+export async function getOffAir(): Promise<boolean> {
+  const settings = await fetchClient<Settings_API>(SETTINGS_ENDPOINT);
+
+  return settings.offAirMode.show !== null;
+}
+
 // Gets a list of shows from the schedule. If a day is specified, it only gets that day's shows.
-export async function getSchedule(day?: number): Promise<Show[]> {
+export async function getSchedule(day?: number): Promise<ShowEvent[]> {
   let endpoint;
   if (day !== undefined) {
-    endpoint = SCHEDULE_ENDPOINT + "?day=" + day;
+    endpoint = SCHEDULE_ENDPOINT + "&day=" + day;
   } else {
     endpoint = SCHEDULE_ENDPOINT;
   }
@@ -74,7 +134,7 @@ export async function getSchedule(day?: number): Promise<Show[]> {
   const json = await fetchClient<Schedule_API>(endpoint);
 
   return json.data
-      .map(scheduleItem => formShowInSchedule(scheduleItem))
+      .map(scheduleItem => formShowInSchedule(scheduleItem, json.time_zone))
       .toSorted((a, b) => a.start_time.getTime() < b.start_time.getTime() ? -1 : 1);
 }
 
@@ -82,7 +142,7 @@ export async function getSchedule(day?: number): Promise<Show[]> {
 export async function getNowPlaying(): Promise<ShowSchedule> {
   let json = await fetchClient<Schedule_API>(NOW_PLAYING_ENDPOINT(4));
 
-  const shows = json.data.map(formShowInSchedule);
+  const shows = json.data.map(show => formShowInSchedule(show, json.time_zone));
 
   return {
     current_show: shows.shift() ?? null,
@@ -92,9 +152,9 @@ export async function getNowPlaying(): Promise<ShowSchedule> {
 
 // Retrieve a show from the API.
 export async function getShow(id: number): Promise<IShowExtended> {
-  const show =  await fetchClient<{ show: API_ShowExtended }>(GET_RADIOSHOW_ENDPOINT(id));
+  const res =  await fetchClient<{ time_zone: string, data: API_ShowExtended }>(GET_RADIOSHOW_ENDPOINT(id));
 
-  return formShowObject(show.show);
+  return formShowObject(res.data, res.time_zone);
 }
 
 interface FetchOptions extends RequestInit {

@@ -13,15 +13,11 @@ import { motion } from "motion/react";
 function SuspenseSchedulePage() {
   const searchParams = useSearchParams();
   let day = searchParams.get('day');
-  const isJavaScriptEnabled = typeof window !== 'undefined'
-
-  // // if no day argument is given, set the current day to today
-  // if (!day) return router.push(`/schedule?day=${new Date().getDay()}`)
 
   if (!day) return (
       <motion.div className={styles.root}
                   transition={{duration: 0.2, type: "tween", delay: 0.2}}
-                  initial={isJavaScriptEnabled ? {opacity: 0} : {opacity: 1}}
+                  initial={{opacity: 0}}
                   animate={{opacity: 1}}>
         <div className={styles.headerSection}>
           <h1 className={styles.header}>Show Schedule</h1>
@@ -51,7 +47,7 @@ function SuspenseSchedulePage() {
   return (
       <motion.div className={styles.root}
                   transition={{duration: 0.2, type: "tween", delay: 0.2}}
-                  initial={isJavaScriptEnabled ? {opacity: 0} : {opacity: 1}}
+                  initial={{opacity: 0}}
                   animate={{opacity: 1}}>
         <div className={styles.headerSection}>
           <h1 className={styles.header}>Show Schedule</h1>
@@ -72,7 +68,7 @@ function SuspenseSchedulePage() {
 
         <motion.div className={styles.content}
                     transition={{duration: 0.2, type: "tween", delay: 0.2}}
-                    initial={isJavaScriptEnabled ? {opacity: 0} : {opacity: 1}}
+                    initial={{opacity: 0}}
                     animate={{opacity: 1}}>
           <ScheduleList day={dayNumber}/>
         </motion.div>

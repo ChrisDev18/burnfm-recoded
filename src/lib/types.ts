@@ -1,11 +1,21 @@
 export type Schedule_API = {
-  data: API_ScheduleItem[]
+  data: API_ScheduleItem[],
+  time_zone: string,
 }
 
-export type Now_Playing_API = {
-  now_playing: API_ScheduleItem[],
-  up_next: API_ScheduleItem[]
+export type Settings_API = {
+  defaultShow: {
+    show: number
+  },
+  offAirMode: {
+    show: number
+  }
 }
+
+// export type Now_Playing_API = {
+//   now_playing: API_ScheduleItem[],
+//   up_next: API_ScheduleItem[]
+// }
 
 export type API_ScheduleItem = {
   show_id: number,
@@ -25,6 +35,19 @@ export type IShow = {
   description: string | null,
   hosts: string[],
   photo: string | null,
+}
+
+export type ShowEvent = {
+  id: number,
+  title: string,
+  description: string,
+  photo: string | null,
+  hosts: string[],
+
+  day: number,
+  duration: Date,
+  start_time: Date,
+  end_time: Date,
 }
 
 export type IShowExtended = IShow & {
@@ -67,26 +90,14 @@ export type Recording = {
   recorded_at: Date
 }
 
-export type Show = {
-  id: number,
-  day: number,
-  title: string,
-  description: string,
-  duration: Date,
-  start_time: Date,
-  end_time: Date,
-  img: string,
-  hosts: string[]
-}
-
 export type ShowSchedule = {
-  current_show: Show | null,
-  next_shows: Show[]
+  current_show: ShowEvent | null,
+  next_shows: ShowEvent[]
 }
 
 export type PopupState = {
   visible: boolean,
-  show: Show,
+  show: ShowEvent,
 }
 
 export type Profile = {

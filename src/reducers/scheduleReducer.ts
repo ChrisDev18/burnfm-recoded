@@ -1,8 +1,8 @@
-import {Show} from "@/lib/types";
+import {ShowEvent} from "@/lib/types";
 
 export interface ScheduleState {
   loading: boolean;
-  schedule: Show[] | null;
+  schedule: ShowEvent[] | null;
   error: string | null;
 }
 
@@ -14,7 +14,7 @@ export const initialState: ScheduleState = {
 
 export type ScheduleAction =
     | { type: 'FETCH_REQUEST' }
-    | { type: 'FETCH_SUCCESS', payload: Show[] }
+    | { type: 'FETCH_SUCCESS', payload: ShowEvent[] }
     | { type: 'FETCH_FAILURE', payload: string };
 
 export const scheduleReducer = (state: ScheduleState, action: ScheduleAction): ScheduleState => {

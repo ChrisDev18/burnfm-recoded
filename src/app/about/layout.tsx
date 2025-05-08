@@ -11,12 +11,10 @@ function SuspenseAboutLayout({
   children: React.ReactNode
 }) {
 
-  const isJavaScriptEnabled = typeof window !== 'undefined'
-
   return (
         <motion.div className={styles.Root}
                     transition={{ duration: 0.2, type: "tween", delay: 0.2}}
-                    initial={isJavaScriptEnabled ? {opacity: 0} : {opacity: 1}}
+                    initial={{opacity: 0}}
                     animate={{opacity: 1}}>
           <div className={styles.Rectangle}/>
             <h1 className={styles.Header}>About us</h1>

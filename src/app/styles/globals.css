@@ -1,3 +1,6 @@
+@import "tailwindcss";
+
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -16,6 +19,19 @@
   --focus: 255, 204, 0;
 }
 
+@theme {
+  --font-sans: var(--font-source-sans);
+  --color-foreground: rgb(var(--foreground-rgb));
+  --color-background: rgb(var(--background-rgb));
+  --color-tertiary: rgb(var(--tertiary-rgb));
+  --color-tertiary-hover: rgb(var(--tertiary-hover-rgb));
+  --color-tertiary-active: rgb(var(--tertiary-active-rgb));
+  --color-purple: rgb(var(--purple-rgb));
+  --color-dark-purple: rgb(var(--dark-purple-rgb));
+  --color-alt-purple: rgb(var(--alt-purple-rgb));
+  --color-focus-color: rgb(var(--focus));
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -31,12 +47,27 @@
   }
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+/*@theme {*/
+/*  --color-foreground: rgb(0, 0, 0);*/
+/*  --color-background: rgb(255, 255, 255);*/
+/*  --color-tertiary: rgb(255, 255, 255);*/
+/*  --tertiary-hover-rgb: 245, 245, 245;*/
+/*  --tertiary-active-rgb: 235, 235, 235;*/
+/*  --purple-rgb: 93, 31, 116;*/
+/*  --dark-purple-rgb: 50, 16, 63;*/
+/*  --alt-purple-rgb: 93, 31, 116;*/
+/*  --focus: 255, 204, 0;*/
+/*}*/
 
+/** {*/
+/*  box-sizing: border-box;*/
+/*  padding: 0;*/
+/*  margin: 0;*/
+/*}*/
+
+button {
+  cursor: pointer;
+}
 h1 {
   font-size: 2em;
   font-weight: 700;
