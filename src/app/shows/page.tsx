@@ -10,8 +10,21 @@ export const metadata: Metadata = {
   title: 'Radio Shows - Burn FM',
 }
 
-export default async function Page() {
-  const shows = await getAllShows();
+const acceptableFilters = ["committee", "current", "previous"]
+
+export default async function Page({searchParams}: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+  let { filter } = await searchParams;
+
+  let new_filter: string[] | undefined;
+
+  if (filter) {
+    if (typeof filter === 'string')
+      filter = [filter];
+
+    new_filter = filter.filter(item => acceptableFilters.includes(item));
+  }
+
+  const shows = await getAllShows(new_filter);
 
   return (
       <Motion
@@ -21,7 +34,7 @@ export default async function Page() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
           {shows.map((show, i) => (
               <Link
                   key={i}
@@ -38,13 +51,13 @@ export default async function Page() {
                   />
                     :
                   <div className={"bg-purple w-auto h-full aspect-square flex items-center justify-center max-sm:[mask-image:linear-gradient(to_right,rgba(0,0,0,0),70%,rgba(0,0,0,1))]"}>
-                    <RadioIcon size={40}/>
+                    <RadioIcon size={40} className={"text-white"}/>
                   </div>
                 }
 
                 <div className="relative flex flex-grow items-center gap-4 p-4 sm:pr-9 overflow-hidden">
                   <div className="flex flex-col flex-grow gap-1 w-4/5">
-                    <p className="text-sm text-foreground/70">Hosted by {show.hosts.join(", ")}</p>
+                    <p className="text-sm text-foreground/70">Hosted by: {show.hosts.join(", ")}</p>
                     <div className="flex flex-col justify-center gap-1 w-full">
                       <h3 className="notranslate text-xl font-bold">{show.title}</h3>
                       {/*{show.description && (*/}

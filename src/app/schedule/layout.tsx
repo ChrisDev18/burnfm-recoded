@@ -14,16 +14,17 @@ export default function Layout({children}: {children: React.ReactNode}) {
         <div className={styles.headerSection}>
           <h1 className={styles.header}>Show Schedule</h1>
           <HScroll color={"rgba(93, 31, 116)"} className={"-m-1"}>
-            <PillNavbar className={styles.Selector}
-                        data={[
-                    { link: "/schedule/1", text: "Monday" },
-                    { link: "/schedule/2", text: "Tuesday" },
-                    { link: "/schedule/3", text: "Wednesday" },
-                    { link: "/schedule/4", text: "Thursday" },
-                    { link: "/schedule/5", text: "Friday" },
-                    { link: "/schedule/6", text: "Saturday" },
-                    { link: "/schedule/0", text: "Sunday" }
-                   ]}
+            <PillNavbar
+                className={styles.Selector}
+                data={[
+                  { link: "/schedule/1", text: "Monday" },
+                  { link: "/schedule/2", text: "Tuesday" },
+                  { link: "/schedule/3", text: "Wednesday" },
+                  { link: "/schedule/4", text: "Thursday" },
+                  { link: "/schedule/5", text: "Friday" },
+                  { link: "/schedule/6", text: "Saturday" },
+                  { link: "/schedule/0", text: "Sunday" }
+                ]}
             />
           </HScroll>
         </div>
