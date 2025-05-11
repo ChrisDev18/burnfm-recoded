@@ -20,6 +20,7 @@ import {initialState, nowplayingReducer} from "@/reducers/nowplayingReducer";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import {useMedia} from "@/contexts/MediaContext";
 import {RADIO_SRC} from "@/app/components/MediaPlayer";
+import {PlayIcon, SquareIcon, XIcon} from "lucide-react";
 
 const init_popup: PopupState = {
   visible: false,
@@ -146,13 +147,13 @@ export default function RadioPlayer() {
             }
 
             <div className={showPopup.buttonRow}>
-              <Link className={buttons.Button} href={"/show?id=" + popup.show.id}>
+              <Link className={buttons.Button} href={`/show/${popup.show.id}`}>
                 Go to Show Page
               </Link>
             </div>
 
             <Close className={`${showPopup.Close}`}>
-              <span className={'material-symbols-sharp notranslate'}>close</span>
+              <XIcon />
             </Close>
           </div>
         </DialogContent>
@@ -193,9 +194,10 @@ export default function RadioPlayer() {
 
             <div className={styles.PlayNow}>
               <button className={styles.Toggle_Button} onClick={togglePlayPause}>
-                <span className={"material-symbols-rounded notranslate"}>
-                  {mediaContext.state.isPlaying && mediaContext.state.media?.src === RADIO_SRC ? "stop" : "play_arrow"}
-                </span>
+                { mediaContext.state.isPlaying && mediaContext.state.media?.src === RADIO_SRC ?
+                    <SquareIcon fill={"currentColor"} size={40} /> :
+                    <PlayIcon fill={"currentColor"} size={40} />
+                }
               </button>
 
                   <button className={`${styles.PlayNow_Details} ${buttons.Clickable}`}

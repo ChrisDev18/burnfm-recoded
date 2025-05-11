@@ -12,6 +12,7 @@ import Link from "next/link";
 import React from "react";
 import RadioPlayer from "@/app/components/RadioPlayer/RadioPlayer";
 import { motion } from 'framer-motion';
+import {CalendarIcon, UsersIcon, PodcastIcon, MicVocalIcon} from "lucide-react";
 
 
 export default function Home() {
@@ -110,9 +111,7 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.CardIcon}>
-            <span className={"material-symbols-sharp notranslate"} style={{color: "#5D1F74"}}>
-              podcasts
-            </span>
+            <PodcastIcon size={32} style={{color: "#5D1F74"}}/>
           </div>
         </div>
 
@@ -131,16 +130,14 @@ export default function Home() {
               <a href={'https://www.guildofstudents.com/studentgroups/societies/burnfm/'} className={buttons.Button}>
                 Our Guild of Students page
               </a>
-              <Link href={`/schedule?day=${new Date().getDay()}`} className={buttons.Button}>
+              <Link href={`/schedule/${new Date().getDay()}`} className={buttons.Button}>
                 Discover our new shows
               </Link>
             </div>
           </div>
 
           <div className={styles.CardIcon}>
-            <span className={"material-symbols-rounded notranslate"} style={{color: "#5D1F74"}}>
-              mic_external_on
-            </span>
+            <MicVocalIcon size={32} className={"-ml-[2px]"} style={{color: "#5D1F74"}}/>
           </div>
         </div>
 
@@ -185,15 +182,13 @@ export default function Home() {
             </div>
 
             <div className={styles.cardButtons}>
-              <Link href={`/schedule?day=${new Date().getDay()}`} className={buttons.Button}>
+              <Link href={`/schedule/${new Date().getDay()}`} className={buttons.Button}>
                 View Schedule
               </Link>
             </div>
           </div>
           <div className={styles.CardIcon}>
-            <span className={"material-symbols-rounded notranslate"} style={{color: "#32103F"}}>
-              overview
-            </span>
+            <CalendarIcon size={32} style={{color: "#32103F"}}/>
           </div>
         </div>
 
@@ -212,9 +207,7 @@ export default function Home() {
           </div>
 
           <div className={styles.CardIcon}>
-            <span className={"material-symbols-rounded notranslate"} style={{color: "#B751BB"}}>
-              group
-            </span>
+            <UsersIcon size={32} style={{color: "#B751BB"}}/>
           </div>
 
         </div>

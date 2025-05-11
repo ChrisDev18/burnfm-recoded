@@ -5,6 +5,12 @@ import Link from "next/link";
 import styles from "./NavBar.module.css"
 import {usePathname} from "next/navigation";
 import BurnLogo from "@/app/components/BurnLogo";
+import {
+  CalendarIcon,
+  HeadphonesIcon,
+  LayoutGridIcon,
+  UsersRoundIcon
+} from "lucide-react";
 
 export default function NavBar() {
   const path = usePathname();
@@ -24,7 +30,7 @@ export default function NavBar() {
           image.dataset.size = 'small';
         }
 
-        if (path !== "/schedule/") {
+        if (!path.startsWith("/schedule") && !path.startsWith("/shows")) {
           header.style.boxShadow = "0px 4px 8px 0px rgba(0, 0, 0, 0.25)";
         }
 
@@ -36,7 +42,7 @@ export default function NavBar() {
       }
     };
 
-    if (path === "/schedule/") {
+    if (path.startsWith("/schedule") || path.startsWith("/shows")) {
       header.style.boxShadow = "none";
     }
 
@@ -48,7 +54,7 @@ export default function NavBar() {
   }, [path]);
 
   return (
-    <header className={`${styles.Root} ${path === "/schedule/" ? styles.alt : ""}`}>
+    <header className={`${styles.Root} ${path.startsWith("/schedule") || path.startsWith("/shows") ? styles.alt : ""}`}>
       <nav className={styles.Navbar} id={"header"}>
         <Link className={`${styles.LogoLink} notranslate`} href="/" aria-label="Burn FM Homepage">
           <BurnLogo id={"image"} className={styles.Logo} width={100} height={100} />
@@ -58,29 +64,31 @@ export default function NavBar() {
           <li>
             <Link className={path == '/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
                   href={"/"}>
-              <span className={'material-symbols-sharp notranslate'}>
-                headphones
-              </span>
+              <HeadphonesIcon size={22} strokeWidth={2.5} />
               <p>Listen</p>
             </Link>
           </li>
 
           <li>
-            <Link className={path.startsWith('/schedule/') ? `${styles.Link} ${styles.Selected}` : styles.Link}
-                  href={`/schedule/?day=${new Date().getDay()}`}>
-              <span className={'material-symbols-sharp notranslate'}>
-                overview
-              </span>
+            <Link className={path.startsWith('/schedule') ? `${styles.Link} ${styles.Selected}` : styles.Link}
+                  href={`/schedule/${new Date().getDay()}`}>
+              <CalendarIcon size={22} strokeWidth={2.5} />
               <p>Schedule</p>
             </Link>
           </li>
 
           <li>
-            <Link className={path.startsWith('/about/') ? `${styles.Link} ${styles.Selected}` : styles.Link}
-                  href={"/about/"}>
-              <span className={'material-symbols-sharp notranslate'}>
-                group
-              </span>
+            <Link className={path.startsWith('/shows') ? `${styles.Link} ${styles.Selected}` : styles.Link}
+                  href={`/shows`}>
+              <LayoutGridIcon size={22} strokeWidth={2.5} />
+              <p>Shows</p>
+            </Link>
+          </li>
+
+          <li>
+            <Link className={path.startsWith('/about') ? `${styles.Link} ${styles.Selected}` : styles.Link}
+                  href={"/about"}>
+              <UsersRoundIcon size={22} strokeWidth={2.5} />
               <p>About us</p>
             </Link>
           </li>

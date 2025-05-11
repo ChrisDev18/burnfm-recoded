@@ -1,10 +1,12 @@
-import styles from "@/app/components/Pills/Pills.module.css";
+"use client"
+
+import styles from "@/app/components/PillNavbar/Pills.module.css";
 
 import Link from "next/link";
 import {usePathname, useSearchParams} from "next/navigation";
 import {ParsedUrlQueryInput} from "node:querystring";
 
-export default function Pills({
+export default function PillNavbar({
   data,
   className
 }: {

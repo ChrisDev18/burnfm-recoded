@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import "@/app/styles/icons.css";
 import {ShowEvent} from "@/lib/types";
+import {ChevronRightIcon} from "lucide-react";
 
 // An item shown in ScheduleList.
 export default function ScheduleItem({
@@ -19,7 +20,7 @@ export default function ScheduleItem({
   const timeString = `${show.start_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - ${show.end_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}`;
 
   return (
-      <Link href={`/show?id=${show.id}`}
+      <Link href={`/show/${show.id}`}
             className="group h-[140px] font-sans relative flex flex-row-reverse sm:flex-row items-stretch bg-tertiary border border-alt-purple/30 no-underline transition-colors duration-0 focus-visible:outline-2 outline-offset-0 focus-visible:outline-offset-4 focus-visible:outline-focus-color hover:bg-tertiary-hover active:bg-tertiary-active">
         <Image
             src={show.photo ? show.photo : fallback}
@@ -41,9 +42,7 @@ export default function ScheduleItem({
             </div>
           </div>
 
-          <span style={{fontSize: 32}} className="notranslate material-symbols-sharp opacity-0 -translate-x-1 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:text-focus-color group-active:translate-x-2 group-active:text-alt-purple">
-            chevron_right
-          </span>
+          <ChevronRightIcon className={"opacity-0 -translate-x-1 transition-all duration-200 ease-in-out group-hover:opacity-100 group-hover:translate-x-0 group-focus-visible:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:text-focus-color group-active:translate-x-2 group-active:text-alt-purple"} />
         </div>
       </Link>
   );

@@ -1,3 +1,5 @@
+"use client"
+
 import {useMedia} from "@/contexts/MediaContext";
 import {AnimatePresence, motion} from "motion/react";
 import React, {useEffect, useRef} from "react";
@@ -5,6 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import fallback from "../../../public/Radio-Microphone.png";
 import {getNowPlaying} from "@/lib/api";
+import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
+import {PauseIcon, PlayIcon, SquareIcon} from "lucide-react";
 
 export const RADIO_SRC = "https://stream.aiir.com/xz12nsvoppluv";
 
@@ -154,7 +158,7 @@ export default function MediaPlayer() {
             { media.show &&
               <div className={"flex items-center gap-4 overflow-clip text-ellipsis"}>
 
-                <Link href={"/show/?id=" + media.show.id} className={"hover:underline flex items-center gap-4 overflow-clip text-ellipsis focus:underline focus:outline"}>
+                <Link href={`/show/${media.show.id}`} className={"hover:underline flex items-center gap-4 overflow-clip text-ellipsis focus:underline focus:outline"}>
                   { media.show.photo &&
                     <Image src={media.show.photo} alt={"Photo for the show: " + media.show.title} height={60} width={60} />
                   }
@@ -189,15 +193,16 @@ export default function MediaPlayer() {
               }
 
             <button className={"leading-0 hover:scale-120 active:scale-none transition-transform ease-out focus-visible:text-yellow-400 focus-visible:scale-110"} onClick={togglePlayPause}>
-                <span className={"material-symbols-sharp notranslate"} style={{fontSize: 36}}>
-                  {isPlaying ? media.src === RADIO_SRC ? "stop" : "pause" : "play_arrow"}
-                </span>
+                  {isPlaying ?
+                      media.src === RADIO_SRC ?
+                          <SquareIcon fill={"currentColor"} /> :
+                          <PauseIcon fill={"currentColor"} /> :
+                      <PlayIcon fill={"currentColor"} />
+                  }
               </button>
 
               <button className={"leading-0 hover:scale-120 active:scale-none transition-transform ease-out focus-visible:text-yellow-400 focus-visible:scale-110 ml-6"} onClick={stopMedia}>
-                <span className={"material-symbols-sharp notranslate"}>
-                  close
-                </span>
+                <CloseIcon />
               </button>
             </div>
 

@@ -28,6 +28,8 @@
     /*background-color: rgba(var(--background-rgb), 0.5);*/
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 
+    text-wrap: nowrap;
+
     justify-items: center;
     text-transform: capitalize;
     color: white;

@@ -1,13 +1,21 @@
 import {
   API_ScheduleItem,
-  API_ShowExtended,
-  IShowExtended,
+  API_ShowExtended, IShow,
+  IShowExtended, Profile,
   Schedule_API,
   Settings_API,
   ShowEvent,
   ShowSchedule
 } from "@/lib/types";
-import {GET_RADIOSHOW_ENDPOINT, NOW_PLAYING_ENDPOINT, SCHEDULE_ENDPOINT, SETTINGS_ENDPOINT} from "@/lib/endpoints";
+import {
+  COMMITTEE_ENDPOINT,
+  COMMITTEE_FILES_ENDPOINT,
+  GET_RADIOSHOW_ENDPOINT,
+  NOW_PLAYING_ENDPOINT,
+  SCHEDULE_ENDPOINT,
+  SETTINGS_ENDPOINT
+} from "@/lib/endpoints";
+import axios from "axios";
 
 
 // Get the time offset in milliseconds
@@ -116,6 +124,30 @@ function formShowObject(show: API_ShowExtended, time_zone: string): IShowExtende
   }
 }
 
+export async function getCommittees() {
+  try {
+    const response = await axios.get<string[]>(COMMITTEE_FILES_ENDPOINT);
+    const files = response.data;
+
+    const data: { start_year: number, profiles: Profile[] }[] = []
+
+    for (const filename of files) {
+      const result = await axios.get<Profile[]>(COMMITTEE_ENDPOINT + `/${filename}`);
+
+      data.push({
+        start_year: parseInt(filename.split('-')[0], 10),
+        profiles: result.data
+      });
+    }
+
+    // Extract the starting year from each filename (e.g., "2024-25.json" -> 2024)
+    return data.sort((a, b) => b.start_year - a.start_year);
+  } catch (error) {
+    console.error('Failed to fetch list of committee filenames:', error);
+    return [];
+  }
+}
+
 export async function getOffAir(): Promise<boolean> {
   const settings = await fetchClient<Settings_API>(SETTINGS_ENDPOINT);
 
@@ -151,10 +183,30 @@ export async function getNowPlaying(): Promise<ShowSchedule> {
 }
 
 // Retrieve a show from the API.
-export async function getShow(id: number): Promise<IShowExtended> {
-  const res =  await fetchClient<{ time_zone: string, data: API_ShowExtended }>(GET_RADIOSHOW_ENDPOINT(id));
+export async function getShow(id: number): Promise<IShowExtended | null> {
+  try {
+    const res = await axios.get<{ time_zone: string, data: API_ShowExtended }>(GET_RADIOSHOW_ENDPOINT(id));
+    return formShowObject(res.data.data, res.data.time_zone);
+  } catch (error: any) {
+    if (error.response.status === 404) {
+      return null;
+    }
 
-  return formShowObject(res.data, res.time_zone);
+    throw error;
+  }
+}
+
+// Retrieve all shows from the API.
+export async function getAllShows() {
+  try {
+    const res = await axios.get<{ time_zone: string, data: IShow[] }>(GET_RADIOSHOW_ENDPOINT());
+    return res.data.data.map(show => ({
+      ...show,
+      photo: show.photo ? "https://api.burnfm.com/uploads/schedule_img/" + show.photo : null,
+    })).sort((a, b) => a.title > b.title ? 1 : -1);
+  } catch (error: any) {
+    throw error;
+  }
 }
 
 interface FetchOptions extends RequestInit {
@@ -186,6 +238,7 @@ export async function fetchClient<T>(url: string, options?: FetchOptions): Promi
     return {} as T; // Return empty object for no content
   } catch (error: any) {
     // Handle network or parsing errors
+    console.log(error)
     throw new Error(error.message || 'An unexpected error occurred');
   }
 }

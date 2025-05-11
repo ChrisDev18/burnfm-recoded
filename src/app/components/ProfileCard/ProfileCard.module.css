@@ -67,15 +67,17 @@
   color: rgb(var(--alt-purple-rgb));
 }
 
-.FunFact span {
+.FunFact svg {
   color: rgb(247, 190, 54);
+  fill: rgb(247, 190, 54);
   filter: drop-shadow(
           0 0 4px
           rgb(247, 190, 54, 0.8));
 }
 
-.FavouriteSong span {
+.FavouriteSong svg {
   color: rgb(239, 78, 78);
+  fill: rgb(239, 78, 78);
   filter: drop-shadow(
           0 0 4px
           rgb(239, 78, 78, 0.6));
@@ -108,6 +110,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   margin-top: 12px;
 }

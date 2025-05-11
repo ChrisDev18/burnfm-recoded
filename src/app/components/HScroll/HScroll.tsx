@@ -1,12 +1,15 @@
+"use client"
+
 import styles from "@/app/components/HScroll/HScroll.module.css";
 import bStyles from "@/app/styles/buttons.module.css"
 import {ReactNode, useCallback, useEffect, useRef, useState} from "react";
+import {ChevronLeftIcon, ChevronRightIcon} from "lucide-react";
 
 export default function HScroll({
-  children,
-    color
+  children, color, className, ...props
 }: {
   children?: ReactNode,
+  className?: string,
   color: string
 }) {
   const content = useRef<HTMLDivElement|null>(null);
@@ -66,14 +69,12 @@ export default function HScroll({
   }
 
   return (
-      <div className={styles.root}>
+      <div className={`${styles.root} ${className}`} {...props}>
 
         <div className={styles.left} id={"button-left"} style={{background: `linear-gradient(270deg, transparent 0%, ${color} 100%)`}}>
             <button className={`${bStyles.iconic} ${styles.button} ${styles.back}`}
                     onClick={scrollLeft}>
-              <span className={"material-symbols-sharp notranslate"}>
-                chevron_left
-              </span>
+              <ChevronLeftIcon className={"-ml-[2px]"} />
             </button>
         </div>
 
@@ -85,9 +86,7 @@ export default function HScroll({
         <div className={styles.right} id={"button-right"} style={{background: `linear-gradient(90deg, transparent 0%, ${color} 100%)`}}>
             <button className={`${bStyles.iconic} ${styles.button} ${styles.forward}`}
                     onClick={scrollRight}>
-              <span className={"material-symbols-sharp notranslate"}>
-                chevron_right
-              </span>
+              <ChevronRightIcon className={"-mr-[2px]"} />
             </button>
         </div>
 

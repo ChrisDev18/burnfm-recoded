@@ -24,7 +24,7 @@
 }
 
 .Selector {
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 }
 
 .Rectangle {
@@ -46,4 +46,34 @@
 .navbarPrompt {
   font-size: 1.2em;
   font-weight: 600;
+}
+
+.Subtitle {
+  color: white;
+  font-weight: 600;
+  max-width: 400px;
+  margin-bottom: 36px;
+}
+
+.Team_Section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.Team_Section h2 {
+  color: white;
+  margin-bottom: 0;
+}
+
+.ProfileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  justify-content: left;
+  gap: 64px;
+  align-self: stretch;
+
+  @media only screen and (max-width: 800px) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
 }
