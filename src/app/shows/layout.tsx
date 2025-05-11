@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import styles from "@/app/schedule/schedule.module.css";
 import HScroll from "@/app/components/HScroll/HScroll";
 import PillNavbar from "@/app/components/PillNavbar/PillNavbar";
@@ -14,17 +14,20 @@ export default function Layout({children}: {children: React.ReactNode}) {
         <div className={styles.headerSection}>
           <h1 className={"text-white"}>Radio Shows</h1>
           <p className={"text-white mb-4"}>Discover all that Burn FM has to offer in the present... and the past.</p>
-          <HScroll color={"rgba(93, 31, 116)"} className={"-m-1"}>
-            <PillNavbar
-                data={[
-                  { link: "/shows", text: "All shows" },
-                  { link: "/shows", text: "Committee Shows", params: {filter: "committee"}},
-                  // { link: "/shows", text: "Current Shows", params: {filter: "current"} },
-                  // { link: "/shows", text: "Past Shows", params: {filter: "previous"} }
-                ]}
-            />
-          </HScroll>
+          <Suspense>
+            <HScroll color={"rgba(93, 31, 116)"} className={"-m-1"}>
+              <PillNavbar
+                  data={[
+                    { link: "/shows", text: "All shows" },
+                    { link: "/shows", text: "Committee Shows", params: {filter: "committee"}},
+                    // { link: "/shows", text: "Current Shows", params: {filter: "current"} },
+                    // { link: "/shows", text: "Past Shows", params: {filter: "previous"} }
+                  ]}
+              />
+            </HScroll>
+          </Suspense>
         </div>
+
         { children }
       </Motion>
   );
