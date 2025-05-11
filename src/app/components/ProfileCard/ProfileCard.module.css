@@ -83,10 +83,6 @@
           rgb(239, 78, 78, 0.6));
 }
 
-.Content span {
-  font-size: 24px;
-}
-
 .Image, .ImgPlaceholder {
   aspect-ratio: 1;
   width: 100%;
@@ -101,9 +97,8 @@
   background: rgb(var(--purple-rgb));
 }
 
-.ImgPlaceholder span {
+.ImgPlaceholder svg {
   color: white;
-  font-size: 64px;
 }
 
 .IconHeader {

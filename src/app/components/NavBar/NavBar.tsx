@@ -78,7 +78,7 @@ export default function NavBar() {
           </li>
 
           <li>
-            <Link className={path.startsWith('/shows') ? `${styles.Link} ${styles.Selected}` : styles.Link}
+            <Link className={path.startsWith('/shows') || path.startsWith('/show') ? `${styles.Link} ${styles.Selected}` : styles.Link}
                   href={`/shows`}>
               <LayoutGridIcon size={22} strokeWidth={2.5} />
               <p>Shows</p>

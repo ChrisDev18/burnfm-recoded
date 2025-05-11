@@ -5,7 +5,6 @@ import fallback from "../../../../public/Radio-Microphone.png";
 import React from "react";
 import Link from "next/link";
 
-import "@/app/styles/icons.css";
 import {ShowEvent} from "@/lib/types";
 import {ChevronRightIcon} from "lucide-react";
 

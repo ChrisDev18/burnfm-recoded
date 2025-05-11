@@ -197,13 +197,29 @@ export async function getShow(id: number): Promise<IShowExtended | null> {
 }
 
 // Retrieve all shows from the API.
-export async function getAllShows() {
+export async function getAllShows(filters?: string[]) {
   try {
     const res = await axios.get<{ time_zone: string, data: IShow[] }>(GET_RADIOSHOW_ENDPOINT());
-    return res.data.data.map(show => ({
+    const shows = res.data.data.map(show => ({
       ...show,
       photo: show.photo ? "https://api.burnfm.com/uploads/schedule_img/" + show.photo : null,
     })).sort((a, b) => a.title > b.title ? 1 : -1);
+
+    // Define the predicates to apply
+    const predicates: ((show: IShow) => boolean)[] = []
+    if (filters) {
+      if (filters.includes("committee")) {
+        predicates.push((show: IShow) => show.hosts.includes("Burn FM"))
+      }
+    }
+
+    // Apply each predicate for each show in list
+    return shows.filter(show =>
+        predicates.reduce((value, predicate) => {
+          return value && predicate(show)
+        }, true)
+    );
+
   } catch (error: any) {
     throw error;
   }
