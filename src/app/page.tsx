@@ -3,7 +3,6 @@
 import styles from './page.module.css'
 import buttons from '@/app/styles/buttons.module.css'
 
-import './styles/icons.css';
 import Image from "next/image";
 import SpotifyIcon from "../../public/Spotify_icon.svg"
 import InstagramIcon from "../../public/Instagram_icon.svg"
