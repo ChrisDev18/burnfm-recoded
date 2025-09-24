@@ -12,6 +12,7 @@ import React from "react";
 import RadioPlayer from "@/app/components/RadioPlayer/RadioPlayer";
 import { motion } from 'framer-motion';
 import {CalendarIcon, UsersIcon, PodcastIcon, MicVocalIcon} from "lucide-react";
+import NewRadioPlayer from "@/app/components/RadioPlayer/NewRadioPlayer";
 
 
 export default function Home() {
@@ -21,7 +22,7 @@ export default function Home() {
                 transition={{ duration: 0.2, type: "tween", delay: 0.2}}
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}>
-      <RadioPlayer/>
+      <NewRadioPlayer/>
 
       <div className={styles.Cards}>
 
