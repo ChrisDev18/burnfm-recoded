@@ -7,8 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import fallback from "../../../public/Radio-Microphone.png";
 import {getNowPlaying} from "@/lib/api";
-import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
-import {PauseIcon, PlayIcon, SquareIcon} from "lucide-react";
+import {PauseIcon, PlayIcon, SquareIcon, X} from "lucide-react";
 
 export const RADIO_SRC = "https://stream.aiir.com/xz12nsvoppluv";
 
@@ -202,7 +201,7 @@ export default function MediaPlayer() {
               </button>
 
               <button className={"leading-0 hover:scale-120 active:scale-none transition-transform ease-out focus-visible:text-yellow-400 focus-visible:scale-110 ml-6"} onClick={stopMedia}>
-                <CloseIcon />
+                <X/>
               </button>
             </div>
 

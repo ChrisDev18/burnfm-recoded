@@ -9,7 +9,6 @@ import InstagramIcon from "../../public/Instagram_icon.svg"
 import PodcastsIcon from "../../public/Podcasts_icon.svg"
 import Link from "next/link";
 import React from "react";
-import RadioPlayer from "@/app/components/RadioPlayer/RadioPlayer";
 import { motion } from 'framer-motion';
 import {CalendarIcon, UsersIcon, PodcastIcon, MicVocalIcon} from "lucide-react";
 import NewRadioPlayer from "@/app/components/RadioPlayer/NewRadioPlayer";
