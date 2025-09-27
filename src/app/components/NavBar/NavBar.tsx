@@ -8,7 +8,7 @@ import BurnLogo from "@/app/components/BurnLogo";
 import {
   CalendarIcon,
   HeadphonesIcon,
-  LayoutGridIcon,
+  LayoutGridIcon, MessageCircleQuestion,
   UsersRoundIcon
 } from "lucide-react";
 
@@ -25,19 +25,24 @@ export default function NavBar() {
     image.dataset.size = 'big';
 
     const handleScroll = () => {
-      if (window.scrollY > 0) {
+      if (window.scrollY > 64) {
         if (image.dataset.size === 'big') {
           image.dataset.size = 'small';
         }
 
         if (!path.startsWith("/schedule") && !path.startsWith("/shows")) {
-          header.style.boxShadow = "0px 4px 8px 0px rgba(0, 0, 0, 0.25)";
+          header.style.boxShadow = "0px 4px 16px 0px rgba(0, 0, 0, 0.25)";
+          // header.style.background = "var(--tertiary-rgb)";
         }
 
       } else {
         if (image.dataset.size === 'small') {
           image.dataset.size = 'big';
+        }
+
+        if (!path.startsWith("/schedule") && !path.startsWith("/shows")) {
           header.style.boxShadow = "none";
+          // header.style.background = "transparent";
         }
       }
     };
@@ -61,13 +66,13 @@ export default function NavBar() {
         </Link>
 
         <ul className={styles.LinkList}>
-          <li>
-            <Link className={path == '/' ? `${styles.Link} ${styles.Selected}` : styles.Link}
-                  href={"/"}>
-              <HeadphonesIcon size={22} strokeWidth={2.5} />
-              <p>Listen</p>
-            </Link>
-          </li>
+          {/*<li>*/}
+          {/*  <Link className={path == '/' ? `${styles.Link} ${styles.Selected}` : styles.Link}*/}
+          {/*        href={"/"}>*/}
+          {/*    <HeadphonesIcon size={22} strokeWidth={2.5} />*/}
+          {/*    <p>Listen</p>*/}
+          {/*  </Link>*/}
+          {/*</li>*/}
 
           <li>
             <Link className={path.startsWith('/schedule') ? `${styles.Link} ${styles.Selected}` : styles.Link}
@@ -82,6 +87,14 @@ export default function NavBar() {
                   href={`/shows`}>
               <LayoutGridIcon size={22} strokeWidth={2.5} />
               <p>Shows</p>
+            </Link>
+          </li>
+
+          <li>
+            <Link className={path.startsWith('/faq') ? `${styles.Link} ${styles.Selected}` : styles.Link}
+                  href={`/faq`}>
+              <MessageCircleQuestion size={22} strokeWidth={2.5} />
+              <p>FAQ</p>
             </Link>
           </li>
 
