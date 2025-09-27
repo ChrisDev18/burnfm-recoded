@@ -7,7 +7,6 @@ import {usePathname} from "next/navigation";
 import BurnLogo from "@/app/components/BurnLogo";
 import {
   CalendarIcon,
-  HeadphonesIcon,
   LayoutGridIcon, MessageCircleQuestion,
   UsersRoundIcon
 } from "lucide-react";
