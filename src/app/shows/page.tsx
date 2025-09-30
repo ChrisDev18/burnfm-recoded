@@ -39,7 +39,7 @@ export default async function Page({searchParams}: { searchParams: Promise<{ [ke
               <Link
                   key={i}
                   href={`/show/${show.id}`}
-                  className="group relative h-[160px] flex max-sm:flex-row-reverse items-stretch bg-tertiary border border-alt-purple/30 overflow-hidden no-underline transition-colors duration-200 hover:bg-tertiary-hover active:bg-tertiary-active focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus-color"
+                  className="group relative h-[160px] flex max-sm:flex-row-reverse items-stretch bg-white  dark:bg-tertiary border border-alt-purple/30 overflow-hidden no-underline transition-colors duration-200 hover:bg-tertiary-hover active:bg-tertiary-active focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focus-color"
               >
                 { show.photo ?
                   <Image

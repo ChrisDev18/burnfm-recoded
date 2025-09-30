@@ -21,7 +21,7 @@ export default function FaqPage() {
 
         <Accordion.Root type="single" collapsible className="w-full space-y-3">
           {/* Radio Section */}
-          <Accordion.Item value="radio" className="border border-alt-purple/30 bg-tertiary">
+          <Accordion.Item value="radio" className="border border-alt-purple/30 bg-white dark:bg-tertiary">
             <Accordion.Header>
               <Accordion.Trigger className="group w-full flex items-center justify-between px-6 py-3 text-left text-xl font-semibold text-foreground/90 focus-visible:outline-none hover:bg-tertiary-hover active:bg-tertiary-active transition-colors">
                 I’m interested in Radio...
@@ -85,7 +85,7 @@ export default function FaqPage() {
           </Accordion.Item>
 
           {/* Podcasting Section */}
-          <Accordion.Item value="podcasting" className="border border-alt-purple/30 bg-tertiary">
+          <Accordion.Item value="podcasting" className="border border-alt-purple/30 bg-white dark:bg-tertiary">
             <Accordion.Header>
               <Accordion.Trigger className="group w-full flex items-center justify-between px-6 py-3 text-left text-xl font-semibold text-foreground/90 focus-visible:outline-none hover:bg-tertiary-hover active:bg-tertiary-active transition-colors">
                 I’m interested in Podcasting...
@@ -101,7 +101,7 @@ export default function FaqPage() {
                 <ol className="list-decimal pl-6 space-y-2">
                   <li className="pl-2">At the start of each semester we open up applications for each division of Burn. These applications are usually open for one or two weeks.</li>
                   <li className="pl-2">Once released, the link (and its deadlines) can usually be found on our Instagram (<strong>@burn_fm</strong>) and on emails sent out to members and those who registered interest.</li>
-                  <li className="pl-2">Once your application has been approved, you will receive an email from the Head of Podcasting. We will send out the timetable so you can see when your timeslot is.</li>
+                  <li className="pl-2">Once your application has been approved, you will receive an email from the Head of Podcasting.</li>
                 </ol>
               </div>
 
@@ -116,13 +116,15 @@ export default function FaqPage() {
                 <QuestionHeader>
                   Q: How does running a podcast work?
                 </QuestionHeader>
-                <p className="opacity-75 italic">To be completed</p>
+                <p>Running a podcast is really fun and flexible! You don’t have to record every week if you don’t want to, and, as long as it fits the Guild guidelines, you can talk about what you want.</p>
+                <p>Once your show is approved, you will be contacted by the Head of Podcasting to arrange a time for a short training session. There will also be a group chat or a spreadsheet to help coordinate recording times for different podcasts.</p>
+                <p>Once you’ve recorded your podcast in our studio, you’ll send it to the head of podcasting who will then check it over and post it on Spotify and Apple Podcasts.</p>
               </div>
             </Accordion.Content>
           </Accordion.Item>
 
           {/* Voice Recording Section */}
-          <Accordion.Item value="voice-recording" className="border border-alt-purple/30 bg-tertiary">
+          <Accordion.Item value="voice-recording" className="border border-alt-purple/30 bg-white dark:bg-tertiary">
             <Accordion.Header>
               <Accordion.Trigger className="group w-full flex items-center justify-between px-6 py-3 text-left text-xl font-semibold text-foreground/90 focus-visible:outline-none hover:bg-tertiary-hover active:bg-tertiary-active transition-colors">
                 I’m interested in Voice Recording / Audio Editing...
@@ -155,7 +157,7 @@ export default function FaqPage() {
           </Accordion.Item>
 
           {/* Socials and Events */}
-          <Accordion.Item value="socials" className="border border-alt-purple/30 bg-tertiary">
+          <Accordion.Item value="socials" className="border border-alt-purple/30 bg-white dark:bg-tertiary">
             <Accordion.Header>
               <Accordion.Trigger className="group w-full flex items-center justify-between px-6 py-3 text-left text-xl font-semibold text-foreground/90 focus-visible:outline-none hover:bg-tertiary-hover active:bg-tertiary-active transition-colors">
                 What socials and events does Burn FM do?
@@ -176,7 +178,7 @@ export default function FaqPage() {
           </Accordion.Item>
 
           {/* AGMs and EGMs */}
-          <Accordion.Item value="meetings" className="border border-alt-purple/30 bg-tertiary">
+          <Accordion.Item value="meetings" className="border border-alt-purple/30 bg-white dark:bg-tertiary">
             <Accordion.Header>
               <Accordion.Trigger className="group w-full flex items-center justify-between px-6 py-3 text-left text-xl font-semibold text-foreground/90 focus-visible:outline-none hover:bg-tertiary-hover active:bg-tertiary-active transition-colors">
                 How can I run for committee? (AGMs & EGMs)

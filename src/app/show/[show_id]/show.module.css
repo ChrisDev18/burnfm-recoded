@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: flex-end;
   padding: 32px;
-  background: linear-gradient(180deg, rgba(var(--background-rgb)) 0%, rgba(var(--purple-rgb)) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(var(--purple-rgb)) 100%);
 
   min-height: 30vh;
   @media only screen and (min-width: 600px) {
