@@ -41,7 +41,7 @@
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
-  background: rgba(var(--background-rgb), 0.6);
+  background: rgba(var(--white-rgb), 0.6);
   backdrop-filter: blur(100px) saturate(150%);
 
   /* Apply padding adjustments for very large screens */
@@ -69,7 +69,7 @@
 
 .Root li > * {
   color: rgb(var(--foreground-rgb));
-  font-size: 1.3em;
+  font-size: 1.2em;
   font-style: normal;
   font-weight: 700;
   line-height: normal;

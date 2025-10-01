@@ -3,8 +3,8 @@ import {notFound} from "next/navigation";
 import {getSchedule} from "@/lib/api";
 import {Metadata} from "next";
 import styles from "@/app/schedule/schedule.module.css";
-import ScheduleItem from "@/app/components/ScheduleItem/ScheduleItem";
-import Motion from "@/app/components/motion";
+import ScheduleItem from "@/components/ScheduleItem/ScheduleItem";
+import Motion from "@/components/motion";
 
 
 export const metadata: Metadata = {

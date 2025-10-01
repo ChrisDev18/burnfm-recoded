@@ -11,7 +11,9 @@ import Link from "next/link";
 import React from "react";
 import { motion } from 'framer-motion';
 import {CalendarIcon, UsersIcon, PodcastIcon, MicVocalIcon} from "lucide-react";
-import NewRadioPlayer from "@/app/components/RadioPlayer/NewRadioPlayer";
+import NewRadioPlayer from "@/components/RadioPlayer/NewRadioPlayer";
+import InstagramEmbedding from "@/components/InstagramEmbedding";
+import {InstagramEmbed} from "react-social-media-embed";
 
 
 export default function Home() {
@@ -24,7 +26,6 @@ export default function Home() {
       <NewRadioPlayer/>
 
       <div className={styles.Cards}>
-
         {/*<div className={styles.CardWrapper}>*/}
         {/*  <div className={styles.Card} style={{background: "#32103F"}}>*/}
         {/*    <h2>Apply to run your own show</h2>*/}
@@ -50,107 +51,56 @@ export default function Home() {
         {/*    </span>*/}
         {/*  </div>*/}
         {/*</div>*/}
+        <div className="relative space-y-8 bg-neutral-900 py-8 px-8 overflow-clip text-white">
 
-        <div className={styles.CardWrapper}>
-          <div className={styles.Card} style={{background: "#32103F"}}>
-            <h2>Burn FM on Instagram</h2>
-            <p>
-              Socials, signup sheets, and info about our new committee - it&apos;ll all be there on Instagram. Follow us
-              so that you don&apos;t miss anything!
-            </p>
+          <PodcastIcon size={200} className="absolute -bottom-[50px] -right-[50px] text-yellow-300 z-0"/>
 
-            <div className={styles.cardButtons}>
-              <a className={buttons.Button} href={"https://www.instagram.com/burn_fm/"}>
-                <Image
-                    src={InstagramIcon}
-                    alt={"Instagram icon"}
-                    height={28}
-                    width={28}
-                />
-                Visit our Instagram
-              </a>
-            </div>
-          </div>
-
-          <Image
-              className={styles.CardIcon}
-              src={InstagramIcon}
-              alt={"Instagram icon"}
-              height={64}
-              width={64}
-          />
-        </div>
-
-        <div className={styles.CardWrapper}>
-          <div className={styles.Card} style={{background: '#5D1F74'}}>
-            <h2>Burn Podcasts</h2>
+          <div className="relative max-w-md pr-24">
+            <h2 className="mb-2">Burn <span className="text-yellow-300">Podcasts</span></h2>
             <p>
               Burn FM doesn&apos;t just do radio - we also have a large and vibrant community of podcasters.
             </p>
-
-            <div className={styles.cardButtons}>
-              <a className={buttons.Button} href={"https://open.spotify.com/show/0ALexnN0yS3OX4xdiPetic"}>
-                <Image
-                    src={SpotifyIcon}
-                    alt={"Spotify icon"}
-                    height={28}
-                    width={28}
-                />
-                Listen on Spotify
-              </a>
-              <a className={buttons.Button} href={"https://podcasts.apple.com/us/podcast/burn-fm/id1521913304"}>
-                <Image
-                    src={PodcastsIcon}
-                    alt={"Apple Podcasts icon"}
-                    height={28}
-                    width={28}
-                />
-                Listen on Apple Podcasts
-              </a>
-            </div>
           </div>
-          <div className={styles.CardIcon}>
-            <PodcastIcon size={32} style={{color: "#5D1F74"}}/>
+
+          <div className={styles.cardButtons}>
+            <a className={buttons.Button} href={"https://open.spotify.com/show/0ALexnN0yS3OX4xdiPetic"}>
+              <Image
+                  src={SpotifyIcon}
+                  alt={"Spotify icon"}
+                  height={28}
+                  width={28}
+              />
+              Listen on Spotify
+            </a>
+            <a className={buttons.Button} href={"https://podcasts.apple.com/us/podcast/burn-fm/id1521913304"}>
+              <Image
+                  src={PodcastsIcon}
+                  alt={"Apple Podcasts icon"}
+                  height={28}
+                  width={28}
+              />
+              Listen on Apple Podcasts
+            </a>
           </div>
         </div>
 
-        <div className={styles.CardWrapper}>
-          <div className={styles.Card} style={{background: "#5D1F74"}}>
-            <h2>Check out our new shows!</h2>
+        <div className="relative space-y-8 bg-neutral-900 py-8 px-8 overflow-clip text-white">
+
+          <Image src={SpotifyIcon} height={180} width={180} alt="Spotify Icon"
+                 className="absolute -bottom-[50px] -right-[50px] z-0"/>
+
+          <div className="relative max-w-md pr-24">
+            <h2 className="mb-2">Burn mixes on <span className="text-[#1ED760]">Spotify</span></h2>
+
             <p>
-              Applications for this term are now closed, and the new shows are live! Check out the schedule and see
-              what catches your fancy ;)
+              Follow us on @theburnfm and discover new sub-genres of music, play back the songs from our past Media
+              Balls, and explore all the
+              other playlists from the past.
             </p>
-            <p>
-              Although the applications for this term are closed, next term we will reopen applications if you decide
-              to apply!
-            </p>
-            <div className={styles.cardButtons}>
-              <a href={'https://www.guildofstudents.com/studentgroups/societies/burnfm/'} className={buttons.Button}>
-                Our Guild of Students page
-              </a>
-              <Link href={`/schedule/${new Date().getDay()}`} className={buttons.Button}>
-                Discover our new shows
-              </Link>
-            </div>
+
           </div>
 
-          <div className={styles.CardIcon}>
-            <MicVocalIcon size={32} className={"-ml-[2px]"} style={{color: "#5D1F74"}}/>
-          </div>
-        </div>
-
-        <div className={styles.CardWrapper}>
-          <div className={styles.Card} style={{background: '#1D1D1D'}}>
-            <h2>Burn FM Mixes on Spotify</h2>
-            <p>
-              Music and Radio go hand in hand, so we made a Spotify account! Follow us on @theburnfm and:
-            </p>
-            <ul>
-              <li>discover new sub-genres of music listening to <i>Burn FM Introduces...</i></li>
-              <li>play back the songs from our past Media Balls,</li>
-              <li>and explore all the other playlists from the past, curated here at Burn FM.</li>
-            </ul>
+          <div className={styles.cardButtons}>
             <a className={buttons.Button} href={"https://open.spotify.com/user/theburnfm"}>
               <Image
                   src={SpotifyIcon}
@@ -161,14 +111,63 @@ export default function Home() {
               Discover our Spotify mixes
             </a>
           </div>
-          <Image
-              className={styles.CardIcon}
-              src={SpotifyIcon}
-              alt={"Spotify icon"}
-              height={64}
-              width={64}
-          />
         </div>
+
+      </div>
+
+      <div className="flex bg-[#32103F] p-8 justify-around">
+        <div className="flex justify-center items-start gap-8 w-full max-w-[1000px]">
+         <div className="max-[900px]:hidden flex flex-col gap-8 items-end h-full w-1/2">
+           <div>
+             <h2 className="mb-4">Our socials</h2>
+             <p>
+               <strong>Instagram</strong> is your one-stop-shop to find out about socials, signup sheets, and our current committee. If
+               you are a member or want to join, we also have a <strong>WhatsApp community</strong> which has important
+               announcements about the studio and society events, plus group chats for each of our team shows.
+             </p>
+           </div>
+
+           <p>
+             If you saw us during Freshers or were a previous member, we'll send you a link to join the new whatsapp,
+             otherwise just send us a message or email and we'll sort it out. Otherwise come see us in the studio at
+             the Guild!
+           </p>
+         </div>
+          <InstagramEmbed url="https://www.instagram.com/burn_fm/" captioned={false} className="w-1/2 min-w-sm max-w-xl" style={{marginBottom: -12}} />
+        </div>
+
+      </div>
+
+      <div className={styles.Cards}>
+        {/*<div className={styles.CardWrapper}>*/}
+        {/*  <div className={styles.Card} style={{background: "#32103F"}}>*/}
+        {/*    <h2>Burn FM on Instagram</h2>*/}
+        {/*    <p>*/}
+        {/*      Socials, signup sheets, and info about our new committee - it&apos;ll all be there on Instagram. Follow us*/}
+        {/*      so that you don&apos;t miss anything!*/}
+        {/*    </p>*/}
+
+        {/*    <div className={styles.cardButtons}>*/}
+        {/*      <a className={buttons.Button} href={"https://www.instagram.com/burn_fm/"}>*/}
+        {/*        <Image*/}
+        {/*            src={InstagramIcon}*/}
+        {/*            alt={"Instagram icon"}*/}
+        {/*            height={28}*/}
+        {/*            width={28}*/}
+        {/*        />*/}
+        {/*        Visit our Instagram*/}
+        {/*      </a>*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+
+        {/*  <Image*/}
+        {/*      className={styles.CardIcon}*/}
+        {/*      src={InstagramIcon}*/}
+        {/*      alt={"Instagram icon"}*/}
+        {/*      height={64}*/}
+        {/*      width={64}*/}
+        {/*  />*/}
+        {/*</div>*/}
 
         <div className={styles.CardWrapper}>
           <div className={styles.Card} style={{background: "#32103F"}}>

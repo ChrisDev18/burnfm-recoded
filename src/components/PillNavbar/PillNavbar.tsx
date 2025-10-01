@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "@/app/components/PillNavbar/Pills.module.css";
+import styles from "@/components/PillNavbar/Pills.module.css";
 
 import Link from "next/link";
 import {usePathname, useSearchParams} from "next/navigation";

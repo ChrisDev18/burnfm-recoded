@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "@/app/components/PillNavbar/Pills.module.css";
+import styles from "@/components/PillNavbar/Pills.module.css";
 import { useState } from "react";
 
 export default function PillTabBar({

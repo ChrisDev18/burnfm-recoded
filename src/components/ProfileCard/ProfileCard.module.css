@@ -8,7 +8,7 @@
 }
 
 .Content {
-  background-color: rgb(var(--background-rgb));
+  background-color: rgb(var(--white-rgb));
 
   display: flex;
   padding: 16px;

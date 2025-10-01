@@ -11,6 +11,7 @@
   --foreground-rgb: 0, 0, 0;
   --alt-foreground-rgb: 289, 69, 20;
   --background-rgb: 253, 243, 255;
+  --white-rgb: 255, 255, 255;
   --alt-background-rgb: 250, 224, 255;
   --tertiary-rgb: 253, 243, 255;
   --tertiary-hover-rgb: 245, 245, 245;
@@ -24,7 +25,7 @@
 @theme {
   --font-sans: var(--font-source-sans);
   --color-foreground: rgb(var(--foreground-rgb));
-  --color-background: rgb(var(--background-rgb));
+  /*--color-white: rgb(var(--white-rgb));*/
   --color-tertiary: rgb(var(--tertiary-rgb));
   --color-tertiary-hover: rgb(var(--tertiary-hover-rgb));
   --color-tertiary-active: rgb(var(--tertiary-active-rgb));
@@ -38,6 +39,7 @@
   :root {
     --foreground-rgb: 255, 255, 255;
     --alt-foreground-rgb: 250, 224, 255;
+    --white-rgb: 0, 0, 0;
     --background-rgb: 0, 0, 0;
     --alt-background-rgb: 45, 16, 52;
     --tertiary-rgb: 20, 20, 20;

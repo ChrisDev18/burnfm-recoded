@@ -5,7 +5,7 @@ import {AnimatePresence, motion} from "motion/react";
 import React, {useEffect, useRef} from "react";
 import Image from "next/image";
 import Link from "next/link";
-import fallback from "../../../public/Radio-Microphone.png";
+import fallback from "../../public/Radio-Microphone.png";
 import {getNowPlaying} from "@/lib/api";
 import {PauseIcon, PlayIcon, SquareIcon, X} from "lucide-react";
 

@@ -6,16 +6,16 @@ import React, {useEffect, useReducer, useState} from "react";
 import Image from "next/image";
 import {ShowEvent, PopupState} from "@/lib/types";
 import {getNowPlaying} from "@/lib/api";
-import {Dialog, DialogContent} from "@/app/components/Popup/Popup";
+import {Dialog, DialogContent} from "@/components/Popup/Popup";
 import {Close} from "@radix-ui/react-dialog";
 import Link from "next/link";
 import {pickExcerpt} from "@/lib/excerpts";
 import {initialState, nowplayingReducer} from "@/reducers/nowplayingReducer";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import {useMedia} from "@/contexts/MediaContext";
-import {RADIO_SRC} from "@/app/components/MediaPlayer";
+import {RADIO_SRC} from "@/components/MediaPlayer";
 import {PlayIcon, RadioIcon, SquareIcon, XIcon} from "lucide-react";
-import styles from "@/app/components/RadioPlayer/RadioPlayer.module.css";
+import styles from "@/components/RadioPlayer/RadioPlayer.module.css";
 
 const init_popup: PopupState = {
   visible: false,

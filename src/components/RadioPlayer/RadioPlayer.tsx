@@ -5,21 +5,21 @@ import buttons from "@/app/styles/buttons.module.css"
 import showPopup from "@/app/styles/ShowPopup.module.css"
 import React, {useEffect, useReducer, useState} from "react";
 import Image from "next/image";
-import fallback from "../../../../public/Radio-Microphone.png";
+import fallback from "../../../public/Radio-Microphone.png";
 import {ShowEvent, PopupState} from "@/lib/types";
 import {getNowPlaying} from "@/lib/api";
 import Show from "../Show/Show";
-import {Dialog, DialogContent} from "@/app/components/Popup/Popup";
-import loading_styles from "../../styles/Spinner.module.css";
+import {Dialog, DialogContent} from "@/components/Popup/Popup";
+import loading_styles from "../../app/styles/Spinner.module.css";
 import {Close} from "@radix-ui/react-dialog";
 
 import Link from "next/link";
 import {pickExcerpt} from "@/lib/excerpts";
-import HScroll from "@/app/components/HScroll/HScroll";
+import HScroll from "@/components/HScroll/HScroll";
 import {initialState, nowplayingReducer} from "@/reducers/nowplayingReducer";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import {useMedia} from "@/contexts/MediaContext";
-import {RADIO_SRC} from "@/app/components/MediaPlayer";
+import {RADIO_SRC} from "@/components/MediaPlayer";
 import {PlayIcon, SquareIcon, XIcon} from "lucide-react";
 
 const init_popup: PopupState = {
