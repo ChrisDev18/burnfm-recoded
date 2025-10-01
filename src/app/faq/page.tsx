@@ -3,7 +3,7 @@
 import {AccordionRoot, AccordionContent, AccordionItem} from "@/components/Accordion";
 import {ReactNode} from "react";
 
-export function QuestionHeader({ children }: { children: ReactNode }) {
+function QuestionHeader({ children }: { children: ReactNode }) {
   return (
       <h3 className="text-xl font-semibold -mx-2 px-2 mb-4 pb-2 border-b-2 border-purple text-alt-purple">
         {children}
