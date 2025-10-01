@@ -2,11 +2,11 @@ import {Source_Sans_3} from 'next/font/google'
 import './styles/globals.css'
 
 import "@/app/layout.css";
-import NavBar from "@/app/components/NavBar/NavBar";
+import NavBar from "@/components/NavBar/NavBar";
 import React from "react";
 import NextTopLoader from "nextjs-toploader";
 import {MediaProvider} from "@/contexts/MediaContext";
-import MediaPlayer from "@/app/components/MediaPlayer";
+import MediaPlayer from "@/components/MediaPlayer";
 import {Metadata} from "next";
 
 const sourceSans3 = Source_Sans_3({subsets: ['latin'], weight: "variable", variable: "--font-source-sans"});

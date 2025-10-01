@@ -1,6 +1,6 @@
 import React from 'react';
 import {getAllShows} from "@/lib/api";
-import Motion from "@/app/components/motion";
+import Motion from "@/components/motion";
 import Link from "next/link";
 import Image from "next/image";
 import {ChevronRightIcon, RadioIcon} from "lucide-react";

@@ -3,9 +3,9 @@
 import React, {useState} from 'react';
 import {Profile} from "@/lib/types";
 import styles from "@/app/about/about.module.css";
-import PillTabBar from "@/app/components/PillTabBar/PillTabBar";
-import ProfileCard from "@/app/components/ProfileCard/ProfileCard";
-import Motion from "@/app/components/motion";
+import PillTabBar from "@/components/PillTabBar/PillTabBar";
+import ProfileCard from "@/components/ProfileCard/ProfileCard";
+import Motion from "@/components/motion";
 import {AnimatePresence} from "motion/react";
 
 export default function CommitteeSection({committees}: {committees: {   start_year: number,   profiles: Profile[] }[]}) {

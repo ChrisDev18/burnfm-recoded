@@ -5,7 +5,7 @@ import {Metadata} from "next";
 import styles from "@/app/show/[show_id]/show.module.css";
 import Image from "next/image";
 import RecordingButton from "@/app/show/[show_id]/RecordingButton";
-import Motion from "@/app/components/motion";
+import Motion from "@/components/motion";
 
 
 export async function generateMetadata({ params }: { params: Promise<{ show_id: string }> }): Promise<Metadata> {

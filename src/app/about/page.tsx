@@ -1,7 +1,7 @@
 import React from "react";
 import {Metadata} from "next";
 import styles from "@/app/about/about.module.css";
-import Motion from "../components/motion";
+import Motion from "@/components/motion";
 import {getCommittees} from "@/lib/api";
 import CommitteeSection from "@/app/about/CommitteeSection";
 

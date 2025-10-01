@@ -1,8 +1,8 @@
 import React, {Suspense} from 'react';
 import styles from "@/app/schedule/schedule.module.css";
-import HScroll from "@/app/components/HScroll/HScroll";
-import PillNavbar from "@/app/components/PillNavbar/PillNavbar";
-import Motion from "@/app/components/motion";
+import HScroll from "@/components/HScroll/HScroll";
+import PillNavbar from "@/components/PillNavbar/PillNavbar";
+import Motion from "@/components/motion";
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (

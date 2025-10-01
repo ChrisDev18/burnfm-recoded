@@ -1,6 +1,6 @@
-import styles from "@/app/components/Show/Show.module.css";
+import styles from "@/components/Show/Show.module.css";
 import Image from "next/image";
-import fallback from "../../../../public/Radio-Microphone.png";
+import fallback from "../../../public/Radio-Microphone.png";
 import {days, ShowEvent} from "@/lib/types";
 
 export default function ComingUpShow({show}: { show: ShowEvent }) {

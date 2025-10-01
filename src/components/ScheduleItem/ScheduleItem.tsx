@@ -1,7 +1,7 @@
 // import styles from "./ScheduleItem.module.css";
 
 import Image from "next/image";
-import fallback from "../../../../public/Radio-Microphone.png";
+import fallback from "../../../public/Radio-Microphone.png";
 import React from "react";
 import Link from "next/link";
 

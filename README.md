@@ -27,8 +27,8 @@ _See [Next.js - App Routing](https://nextjs.org/docs/app/building-your-applicati
 
 Outside of these two special files, there are more places where code is organised:
 
-- [`app/components/`](src/app/components) contains React components which can be used elsewhere.
-  (e.g. [RadioPlayer](src/app/components/RadioPlayer))
+- [`app/components/`](src/components) contains React components which can be used elsewhere.
+  (e.g. [RadioPlayer](src/components/RadioPlayer))
 
 - [`app/styles/`](src/app/styles) contains stylesheets which can be used within components. 
   (e.g. [buttons.module.css](src/app/styles/buttons.module.css))

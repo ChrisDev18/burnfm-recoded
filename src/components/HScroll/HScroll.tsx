@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "@/app/components/HScroll/HScroll.module.css";
+import styles from "@/components/HScroll/HScroll.module.css";
 import bStyles from "@/app/styles/buttons.module.css"
 import {ReactNode, useCallback, useEffect, useRef, useState} from "react";
 import {ChevronLeftIcon, ChevronRightIcon} from "lucide-react";

@@ -2,7 +2,7 @@ import Image from "next/image";
 import {Profile} from "@/lib/types";
 import styles from "./ProfileCard.module.css"
 import {HeartIcon, PersonStandingIcon, UserIcon, ZapIcon} from "lucide-react";
-import Motion from "@/app/components/motion";
+import Motion from "@/components/motion";
 
 export default function ProfileCard({profile, priority, id}: {profile: Profile, priority: boolean, id:string}) {
   // get spotify track id
