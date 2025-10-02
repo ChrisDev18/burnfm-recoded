@@ -115,9 +115,9 @@ export default function Home() {
 
       </div>
 
-      <div className="flex bg-[#32103F] p-8 justify-around">
+      <div className="flex bg-[#32103F] text-white p-8 justify-around">
         <div className="flex justify-center items-start gap-8 w-full max-w-[1000px]">
-         <div className="max-[900px]:hidden flex flex-col gap-8 items-end h-full w-1/2">
+         <div className="max-[900px]:hidden flex flex-col gap-8 items-end justify-center h-full w-1/2">
            <div>
              <h2 className="mb-4">Our socials</h2>
              <p>
