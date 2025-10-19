@@ -1,4 +1,4 @@
-// import styles from "./ScheduleItem.module.css";
+"use client"  // Important for converting time to client's local timezone
 
 import Image from "next/image";
 import fallback from "../../../public/Radio-Microphone.png";
