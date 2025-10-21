@@ -4,12 +4,14 @@ import styles from "@/app/about/about.module.css";
 import Motion from "@/components/motion";
 import {getCommittees} from "@/lib/api";
 import CommitteeSection from "@/app/about/CommitteeSection";
+import {connection} from "next/server";
 
 export const metadata: Metadata = {
   title: 'About - Burn FM',
 }
 
 export default async function AboutLayout() {
+  await connection();
   const committees = await getCommittees();
 
   return (
