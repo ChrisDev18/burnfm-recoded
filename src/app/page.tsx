@@ -5,14 +5,12 @@ import buttons from '@/app/styles/buttons.module.css'
 
 import Image from "next/image";
 import SpotifyIcon from "../../public/Spotify_icon.svg"
-import InstagramIcon from "../../public/Instagram_icon.svg"
 import PodcastsIcon from "../../public/Podcasts_icon.svg"
 import Link from "next/link";
 import React from "react";
 import { motion } from 'framer-motion';
-import {CalendarIcon, UsersIcon, PodcastIcon, MicVocalIcon} from "lucide-react";
+import {CalendarIcon, UsersIcon, PodcastIcon} from "lucide-react";
 import NewRadioPlayer from "@/components/RadioPlayer/NewRadioPlayer";
-import InstagramEmbedding from "@/components/InstagramEmbedding";
 import {InstagramEmbed} from "react-social-media-embed";
 
 
@@ -116,8 +114,8 @@ export default function Home() {
       </div>
 
       <div className="flex bg-[#32103F] text-white p-8 justify-around">
-        <div className="flex justify-center items-start gap-8 w-full max-w-[1000px]">
-         <div className="max-[900px]:hidden flex flex-col gap-8 items-end justify-center h-full w-1/2">
+        <div className="flex justify-center items-start gap-8 w-full max-w-[1000px] max-[900px]:flex-col">
+         <div className="flex flex-col gap-8 items-end justify-center h-full max-[900px]:h-auto w-1/2 max-[900px]:w-full">
            <div>
              <h2 className="mb-4">Our socials</h2>
              <p>
@@ -128,9 +126,8 @@ export default function Home() {
            </div>
 
            <p>
-             If you saw us during Freshers or were a previous member, we'll send you a link to join the new whatsapp,
-             otherwise just send us a message or email and we'll sort it out. Otherwise come see us in the studio at
-             the Guild!
+             The QR code to join the WhatsApp is in the studio - just scan it to join! If you saw us during Freshers or
+             were a previous member, we'll also send you a link to join the new WhatsApp.
            </p>
          </div>
           <InstagramEmbed url="https://www.instagram.com/burn_fm/" captioned={false} className="w-1/2 min-w-sm max-w-xl" style={{marginBottom: -12}} />
