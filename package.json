@@ -16,7 +16,7 @@
     "hamburger-react": "^2.5.2",
     "lucide-react": "^0.509.0",
     "motion": "^12.4.7",
-    "next": "16.0.7",
+    "next": "^16.0.10",
     "nextjs-toploader": "^3.7.15",
     "postcss": "^8.5.3",
     "react": "19.2.1",
