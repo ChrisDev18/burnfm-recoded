@@ -127,7 +127,7 @@ function formShowObject(show: API_ShowExtended, time_zone: string): IShowExtende
 
 export async function getCommittees() {
   try {
-    const files = await fetchClient<string[]>(COMMITTEE_FILES_ENDPOINT);
+    const files = await fetchClient<string[]>(COMMITTEE_FILES_ENDPOINT, { next: { revalidate: 3600 } });
 
     const data: { start_year: number, profiles: Profile[] }[] = []
 
@@ -163,7 +163,7 @@ export async function getSchedule(day?: number): Promise<ShowEvent[]> {
     endpoint = SCHEDULE_ENDPOINT;
   }
 
-  const json = await fetchClient<Schedule_API>(endpoint);
+  const json = await fetchClient<Schedule_API>(endpoint, { next: { revalidate: 3600 } });
 
   return json.data
       .map(scheduleItem => formShowInSchedule(scheduleItem, json.time_zone))

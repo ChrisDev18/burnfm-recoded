@@ -18,7 +18,7 @@ export default function ScheduleItem({
   const timeString = `${show.start_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})} - ${show.end_time.toLocaleTimeString(['en'], {hour: "2-digit", minute: "2-digit"})}`;
 
   return (
-      <Link href={`/show/${show.id}`}
+      <Link href={`/show/${show.id}`} prefetch={false}
             className="group h-[140px] font-sans relative flex flex-row-reverse sm:flex-row items-stretch bg-tertiary border border-alt-purple/30 no-underline transition-colors duration-0 focus-visible:outline-2 outline-offset-0 focus-visible:outline-offset-4 focus-visible:outline-focus-color hover:bg-tertiary-hover active:bg-tertiary-active">
 
         { show.photo ?
