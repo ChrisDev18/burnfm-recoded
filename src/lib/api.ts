@@ -126,8 +126,7 @@ function formShowObject(show: API_ShowExtended, time_zone: string): IShowExtende
 
 export async function getCommittees() {
   try {
-    const response = await axios.get<string[]>(COMMITTEE_FILES_ENDPOINT);
-    const files = response.data;
+    const files = await fetchClient<string[]>(COMMITTEE_FILES_ENDPOINT);
 
     const data: { start_year: number, profiles: Profile[] }[] = []
 
@@ -185,8 +184,8 @@ export async function getNowPlaying(): Promise<ShowSchedule> {
 // Retrieve a show from the API.
 export async function getShow(id: number): Promise<IShowExtended | null> {
   try {
-    const res = await axios.get<{ time_zone: string, data: API_ShowExtended }>(GET_RADIOSHOW_ENDPOINT(id));
-    return formShowObject(res.data.data, res.data.time_zone);
+    const res = await fetchClient<{ time_zone: string; data: API_ShowExtended }>(GET_RADIOSHOW_ENDPOINT(id));
+    return formShowObject(res.data, res.time_zone);
   } catch (error: any) {
     if (error.response.status === 404) {
       return null;
@@ -199,8 +198,8 @@ export async function getShow(id: number): Promise<IShowExtended | null> {
 // Retrieve all shows from the API.
 export async function getAllShows(filters?: string[]) {
   try {
-    const res = await axios.get<{ time_zone: string, data: IShow[] }>(GET_RADIOSHOW_ENDPOINT());
-    const shows = res.data.data.map(show => ({
+    const res = await fetchClient<{ time_zone: string; data: IShow[] }>(GET_RADIOSHOW_ENDPOINT());
+    const shows = res.data.map(show => ({
       ...show,
       photo: show.photo ? "https://api.burnfm.com/uploads/schedule_img/" + show.photo : null,
     })).sort((a, b) => a.title > b.title ? 1 : -1);
@@ -215,9 +214,7 @@ export async function getAllShows(filters?: string[]) {
 
     // Apply each predicate for each show in list
     return shows.filter(show =>
-        predicates.reduce((value, predicate) => {
-          return value && predicate(show)
-        }, true)
+        predicates.every(predicate => predicate(show))
     );
 
   } catch (error: any) {
