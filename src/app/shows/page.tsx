@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 
 const acceptableFilters = ["committee", "current", "previous"]
 
+export const revalidate = 120
+
 export default async function Page({searchParams}: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   let { filter } = await searchParams;
 

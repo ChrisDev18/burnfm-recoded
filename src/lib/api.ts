@@ -16,6 +16,7 @@ import {
   SETTINGS_ENDPOINT
 } from "@/lib/endpoints";
 import axios from "axios";
+import {cache} from "react";
 
 
 // Get the time offset in milliseconds
@@ -182,9 +183,9 @@ export async function getNowPlaying(): Promise<ShowSchedule> {
 }
 
 // Retrieve a show from the API.
-export async function getShow(id: number): Promise<IShowExtended | null> {
+export const getShow = cache(async (id: number): Promise<IShowExtended | null> => {
   try {
-    const res = await fetchClient<{ time_zone: string; data: API_ShowExtended }>(GET_RADIOSHOW_ENDPOINT(id));
+    const res = await fetchClient<{ time_zone: string; data: API_ShowExtended }>(GET_RADIOSHOW_ENDPOINT(id), { next: { revalidate: 3600 } });
     return formShowObject(res.data, res.time_zone);
   } catch (error: any) {
     if (error.response.status === 404) {
@@ -193,12 +194,12 @@ export async function getShow(id: number): Promise<IShowExtended | null> {
 
     throw error;
   }
-}
+})
 
 // Retrieve all shows from the API.
 export async function getAllShows(filters?: string[]) {
   try {
-    const res = await fetchClient<{ time_zone: string; data: IShow[] }>(GET_RADIOSHOW_ENDPOINT());
+    const res = await fetchClient<{ time_zone: string; data: IShow[] }>(GET_RADIOSHOW_ENDPOINT(), { next: { revalidate: 3600 } });
     const shows = res.data.map(show => ({
       ...show,
       photo: show.photo ? "https://api.burnfm.com/uploads/schedule_img/" + show.photo : null,
