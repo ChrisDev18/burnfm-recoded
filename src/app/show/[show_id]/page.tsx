@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ show_id: 
   }
 }
 
-export const revalidate = 120
+export const revalidate = 7200
 
 export default async function Page({ params }: { params: Promise<{ show_id: string }> }) {
   const { show_id } = await params;

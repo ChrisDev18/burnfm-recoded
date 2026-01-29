@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: 'Schedule - Burn FM',
 }
 
-export const revalidate = 120;
+export const revalidate = 7200;
 
 export default async function Page({ params }: { params: Promise<{ day: string }> }) {
   const { day } = await params;
