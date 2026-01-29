@@ -64,8 +64,10 @@ export default function RootLayout({
               {children}
             </main>
 
-            <footer>
-              <p>Copyright © 2025 Burn FM. All rights reserved.</p>
+            <footer className="bg-tertiary text-center py-4 px-4 flex flex-wrap justify-center gap-1">
+              <p>Copyright © {new Date().getFullYear()} Burn FM. All rights reserved.</p>
+              <p>Website created by <a href={"https://chrisdev18.github.io/"}
+                                       className={`font-semibold text-white transition-colors focus-visible:text-[#7ffce8] hover:underline focus-visible:underline focus-visible:underline-offset-2 hover:text-[#7ffce8] hover:underline-offset-2`}>Chris Wilson</a>.</p>
             </footer>
 
             <MediaPlayer />
