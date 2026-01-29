@@ -46,6 +46,7 @@ export default function PillNavbar({
                   pathname: x.link,
                   query: x.params,
                 }}
+                prefetch={false}
                 className={`${styles.pill} ${path === x.link && checkParams(x.params) ? styles.selected : ""}`}>
             {x.text}
           </Link>
