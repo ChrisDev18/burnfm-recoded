@@ -12,7 +12,7 @@
     "@radix-ui/react-dialog": "^1.1.6",
     "@tailwindcss/postcss": "^4.0.9",
     "motion": "^12.4.7",
-    "next": "^15.1.7",
+    "next": "^16.1.5",
     "nextjs-toploader": "^3.7.15",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
