@@ -44,6 +44,7 @@
   font-size: 1.6em;
   font-weight: 500;
   color: rgb(255, 255, 255, 0.7);
+  text-align: center;
 }
 
 .Message {
@@ -52,4 +53,9 @@
   margin: 16px 0;
   width: 80%;
   text-align: center;
+}
+
+.Buttons {
+  display: flex;
+  gap: 16px;
 }

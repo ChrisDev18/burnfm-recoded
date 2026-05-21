@@ -1,0 +1,79 @@
+.Root {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  padding: 64px;
+  flex-grow: 1;
+  overflow-x: hidden;
+
+  flex-direction: column;
+  align-items: stretch;
+
+  @media only screen and (max-width: 600px) {
+    padding: 64px 32px 64px;
+  }
+
+  @media only screen and (min-width: 1700px) {
+    padding: 32px 256px 64px;
+  }
+}
+
+.Header {
+  color: white;
+  margin-bottom: 16px;
+}
+
+.Selector {
+  margin-bottom: 8px;
+}
+
+.Rectangle {
+  position: absolute;
+  left: -250px;
+  top: 0;
+  height: 400px;
+  width: 800px;
+  transform: rotate(-15deg);
+  background-color: rgb(var(--purple-rgb));
+  z-index: -1;
+
+  @media only screen and (min-width: 1700px) {
+    left: -50px;
+    transform: rotate(-5deg);
+  }
+}
+
+.navbarPrompt {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.Subtitle {
+  color: white;
+  font-weight: 600;
+  max-width: 400px;
+  margin-bottom: 36px;
+}
+
+.Team_Section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.Team_Section h2 {
+  color: white;
+  margin-bottom: 0;
+}
+
+.ProfileGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  justify-content: left;
+  gap: 64px;
+  align-self: stretch;
+
+  @media only screen and (max-width: 800px) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}

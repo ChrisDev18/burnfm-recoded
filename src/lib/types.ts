@@ -50,13 +50,15 @@ export type ShowEvent = {
   end_time: Date,
 }
 
+export type IRecording = {
+  id: number,
+  title: string | null,
+  recording: string,
+  recorded_at: Date
+}
+
 export type IShowExtended = IShow & {
-  recordings: {
-    id: number,
-    title: string | null,
-    recording: string,
-    recorded_at: Date
-  } [],
+  recordings: IRecording[],
   timings: {
     start_time: Date,
     end_time: Date,

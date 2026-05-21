@@ -9,3 +9,4 @@ export const GET_RADIOSHOW_ENDPOINT = (id?: number) => {
     return "https://api.burnfm.com/new/radio_show/get";
 }
 export const SETTINGS_ENDPOINT = "https://api.burnfm.com/new/settings/get"
+export const COMMITTEE_FILES_ENDPOINT = "https://api.burnfm.com/committee/get-committee-history"

@@ -1,0 +1,149 @@
+.Root {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.LogoLink {
+  line-height: 80%;
+}
+
+.LogoLink:focus-visible {
+  outline: 2px solid rgb(var(--focus));
+  outline-offset: 2px;
+}
+
+@supports not selector(:focus-visible) {
+  .LogoLink:focus {
+    outline: 2px solid rgb(var(--focus));
+    outline-offset: 2px;
+  }
+}
+
+.Logo {
+  color: rgb(var(--purple-rgb));
+  height: 100px;
+  width: 100px;
+  transition: height 300ms, width 300ms;
+  @media (prefers-color-scheme: dark) {
+    color: white;
+  }
+}
+
+.Logo[data-size='small'] {
+  height: 64px;
+  width: 64px;
+}
+
+.Navbar {
+  display: flex;
+  padding: 8px 64px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  background: rgba(var(--white-rgb), 0.6);
+  backdrop-filter: blur(100px) saturate(150%);
+
+  /* Apply padding adjustments for very large screens */
+  @media (min-width: 1700px) {
+    padding: 8px 256px;
+  }
+
+  /* Adjust padding for smaller screens and center-justify the logo  */
+  @media (max-width: 600px) {
+    justify-content: center;
+    padding: 8px 32px;
+  }
+}
+
+.Root ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  list-style-type: none;
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
+.Root li > * {
+  color: rgb(var(--foreground-rgb));
+  font-size: 1.2em;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration: none;
+}
+
+.Link {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-bottom-width 100ms ease;
+}
+
+.LinkList li > * * {
+  transition: color 100ms ease;
+}
+
+.Link:hover * {
+  color: rgb(var(--alt-purple-rgb));
+}
+
+.Link:hover {
+  border-bottom: solid 5px rgb(var(--alt-purple-rgb));
+}
+
+.Link:active {
+  border-bottom: solid 0 rgb(var(--alt-purple-rgb));
+}
+
+.Selected {
+  border-bottom: solid 3px rgb(var(--alt-purple-rgb));
+}
+
+
+.alt .Logo {
+  color: white;
+}
+
+.alt .Navbar {
+  background: rgb(var(--purple-rgb));
+}
+
+.alt li > * {
+  color: white;
+}
+
+
+.alt .Link:hover * {
+  color: white;
+}
+
+.alt .Link:hover {
+  border-bottom: solid 5px white;
+}
+
+.alt .Link:active {
+  border-bottom: solid 0 white;
+}
+
+.alt .Selected {
+  border-bottom: solid 3px white;
+}
+
+.Link:focus-visible {
+  border-bottom: solid 5px rgb(var(--focus));
+  outline: solid 2px rgb(var(--focus));
+  outline-offset: 4px;
+}
+
+@supports not selector(:focus-visible) {
+  .Link:focus {
+    border-bottom: solid 5px rgb(var(--focus));
+    outline: solid 2px rgb(var(--focus));
+    outline-offset: 4px;
+  }
+}
