@@ -1,5 +1,47 @@
-# BurnFM - _recoded_
-<img width="1184" alt="Screenshot 2024-01-22 at 06 11 24" src="https://github.com/ChrisDev18/burnfm-recoded/assets/95181085/8c24c2b7-5f00-4682-8528-1871792acbbc">
+# Burn FM - _recoded_
+
+#### Burn FM's website: [burnfm.com](https://burnfm.com), recoded with Next.js since 2024
+
+<br>
+
+<img width="1348" height="904" alt="Burn FM Screenshot" src="https://github.com/user-attachments/assets/4b7b1ec9-4195-48d2-b716-8efc0ba2881d" />
+
+## Getting started
+
+### Prerequisites
+
+You'll need [node.js](https://nodejs.org/en/download) installed on your computer for this to run.
+
+
+### 1. Install required node modules
+
+All node.js projects have a package.json file which indicates what node libraries are required in the project.
+First, you will need to download these via:
+
+```bash 
+npm install
+```
+
+
+### 3. Run development server
+
+Then, run the development server with:
+
+```bash 
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+### 4. Editing and see changes in real-time with Fast Refresh
+
+You can start editing any page by modifying its respective page.tsx file.
+The page will auto-update as you edit the file.
+
+> [!NOTE]
+> The website's styling is being transitioned to TailwindCSS; prefer this over plain CSS.
+
 
 ## Project structure
 
@@ -30,7 +72,7 @@ Outside of these two special files, there are more places where code is organise
 - [`app/components/`](src/components) contains React components which can be used elsewhere.
   (e.g. [RadioPlayer](src/components/RadioPlayer))
 
-- [`app/styles/`](src/app/styles) contains stylesheets which can be used within components. 
+- [`app/styles/`](src/app/styles) contains stylesheets which can be used within components.
   (e.g. [buttons.module.css](src/app/styles/buttons.module.css))
 
 - [`app/lib/`](src/lib) contains functions which can be called within code elsewhere.
@@ -38,34 +80,22 @@ Outside of these two special files, there are more places where code is organise
 
 - [`app/contexts/`](src/lib) contains React contexts which can be used to share data with children components easily.
   (e.g. [AudioContext.tsx](src/contexts/AudioContext.tsx))
+  
 
+## Deployment on Vercel
 
+This repository is linked to Vercel which will automatically build a deployment each time someone pushes to a branch.
 
-## Editing the project and viewing changes
+> [!IMPORTANT]
+> Pushes to the main branch trigger a production build.
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Then open [http://localhost:3000](http://localhost:3000) with your browser to see the website running locally.
-
-## Deploying to static HTML/CSS/JS
-
-Once you are happy with your changes, you can run the following command in the terminal (open within the project) to compile everything to static files:
+You can test on your computer whether your code will build before pushing to GitHub by running the following:
 
 ```bash
 next build
 ```
 
-This will create a `out` file within the project root. This can be put onto a web server in order to serve the website.
+This will create a `out` file within the project root.
 
 _See [Next.js - Deploying](https://nextjs.org/docs/app/building-your-application/deploying) for more information._
 
