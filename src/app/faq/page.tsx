@@ -34,7 +34,11 @@ export default function FaqPage() {
                   </li>
                   <li className="pl-2">
                     Once released, the link (and its deadlines) can usually be found on our Instagram
-                    (<strong>@burn_fm</strong>) and on emails sent out to members and those who registered interest.
+                    (<a href={"http://www.instagram.com/burn_fm"}
+                        className={`text-alt-purple transition-colors border-b-2 focus-visible:outline-2 
+                        focus-visible:outline-alt-purple focus-visible:outline-offset-4
+                        hover:text-alt-purple hover:border-alt-purple hover:border-b-4`}>
+                    @burn_fm</a>) and on emails sent out to members and those who registered interest.
                   </li>
                   <li className="pl-2">
                     Once your application has been approved, you will receive an email from the Head of Programming.
@@ -307,7 +311,11 @@ export default function FaqPage() {
           </QuestionHeader>
           <p>
             We announce AGMs (Annual General Meetings) and EGMs (Extraordinary General Meetings) on our
-            Instagram (<span className="font-semibold">@burn_fm</span>) and on the WhatsApp.
+            Instagram (<a href={"http://www.instagram.com/burn_fm"}
+                          className={`text-alt-purple transition-colors border-b-2 focus-visible:outline-2 
+                        focus-visible:outline-alt-purple focus-visible:outline-offset-4
+                        hover:text-alt-purple hover:border-alt-purple hover:border-b-4`}>
+            @burn_fm</a>) and on the WhatsApp.
           </p>
 
           <p>

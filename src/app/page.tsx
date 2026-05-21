@@ -7,7 +7,7 @@ import Image from "next/image";
 import SpotifyIcon from "../../public/Spotify_icon.svg"
 import PodcastsIcon from "../../public/Podcasts_icon.svg"
 import Link from "next/link";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { motion } from 'framer-motion';
 import {CalendarIcon, UsersIcon, PodcastIcon} from "lucide-react";
 import NewRadioPlayer from "@/components/RadioPlayer/NewRadioPlayer";
@@ -15,6 +15,11 @@ import {InstagramEmbed} from "react-social-media-embed";
 
 
 export default function Home() {
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   return (
     <motion.div className={styles.Root}
@@ -115,7 +120,7 @@ export default function Home() {
 
       <div className="flex bg-[#32103F] text-white p-8 justify-around">
         <div className="flex justify-center items-start gap-8 w-full max-w-[1000px] max-[900px]:flex-col">
-         <div className="flex flex-col gap-8 items-end justify-center h-full max-[900px]:h-auto w-1/2 max-[900px]:w-full">
+          <div className="flex flex-col gap-8 items-end justify-center h-full max-[900px]:h-auto w-1/2 max-[900px]:w-full">
            <div>
              <h2 className="mb-4">Our socials</h2>
              <p>
@@ -129,43 +134,19 @@ export default function Home() {
              The QR code to join the WhatsApp is in the studio - just scan it to join! If you saw us during Freshers or
              were a previous member, we'll also send you a link to join the new WhatsApp.
            </p>
-         </div>
-          <InstagramEmbed url="https://www.instagram.com/burn_fm/" captioned={false} className="w-1/2 min-w-sm max-w-xl" style={{marginBottom: -12}} />
+          </div>
+
+          { isClient &&
+            <InstagramEmbed url="https://www.instagram.com/burn_fm/"
+                            captioned={false}
+                            className="w-1/2 min-w-sm max-w-xl" style={{marginBottom: -12}}
+            />
+          }
         </div>
 
       </div>
 
       <div className={styles.Cards}>
-        {/*<div className={styles.CardWrapper}>*/}
-        {/*  <div className={styles.Card} style={{background: "#32103F"}}>*/}
-        {/*    <h2>Burn FM on Instagram</h2>*/}
-        {/*    <p>*/}
-        {/*      Socials, signup sheets, and info about our new committee - it&apos;ll all be there on Instagram. Follow us*/}
-        {/*      so that you don&apos;t miss anything!*/}
-        {/*    </p>*/}
-
-        {/*    <div className={styles.cardButtons}>*/}
-        {/*      <a className={buttons.Button} href={"https://www.instagram.com/burn_fm/"}>*/}
-        {/*        <Image*/}
-        {/*            src={InstagramIcon}*/}
-        {/*            alt={"Instagram icon"}*/}
-        {/*            height={28}*/}
-        {/*            width={28}*/}
-        {/*        />*/}
-        {/*        Visit our Instagram*/}
-        {/*      </a>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-
-        {/*  <Image*/}
-        {/*      className={styles.CardIcon}*/}
-        {/*      src={InstagramIcon}*/}
-        {/*      alt={"Instagram icon"}*/}
-        {/*      height={64}*/}
-        {/*      width={64}*/}
-        {/*  />*/}
-        {/*</div>*/}
-
         <div className={styles.CardWrapper}>
           <div className={styles.Card} style={{background: "#32103F"}}>
             <h2>See what’s on</h2>

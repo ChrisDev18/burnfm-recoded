@@ -350,7 +350,7 @@ export default function NewRadioPlayer() {
                           <RadioIcon size={40} className="text-white" />
                         </div>
                     )}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col w-full gap-1">
                       <span className="flex w-full justify-between">
                         <p className="font-semibold line-clamp-1">
                           {show.start_time.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false})}

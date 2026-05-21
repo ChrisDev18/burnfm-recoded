@@ -7,6 +7,7 @@ import PillTabBar from "@/components/PillTabBar/PillTabBar";
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
 import Motion from "@/components/motion";
 import {AnimatePresence} from "motion/react";
+import {Variants} from "motion";
 
 export default function CommitteeSection({committees}: {committees: {   start_year: number,   profiles: Profile[] }[]}) {
   const pillsData = committees.map(({start_year}, i) => {
@@ -24,7 +25,7 @@ export default function CommitteeSection({committees}: {committees: {   start_ye
     setCommitteeId(id);
   };
 
-  const variants = {
+  const variants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.4, type: 'tween' } },
   };
