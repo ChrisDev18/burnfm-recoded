@@ -4,7 +4,7 @@
 
 <br>
 
-<img width="1348" height="904" alt="Burn FM Screenshot" src="https://github.com/user-attachments/assets/4b7b1ec9-4195-48d2-b716-8efc0ba2881d" />
+<img width="1348" alt="Burn FM Screenshot" src="https://github.com/user-attachments/assets/4b7b1ec9-4195-48d2-b716-8efc0ba2881d" />
 
 ## Getting started
 
@@ -23,7 +23,7 @@ npm install
 ```
 
 
-### 3. Run development server
+### 2. Run development server
 
 Then, run the development server with:
 
@@ -34,13 +34,31 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
-### 4. Editing and see changes in real-time with Fast Refresh
+### 3. Editing and see changes in real-time with Fast Refresh
 
 You can start editing any page by modifying its respective page.tsx file.
 The page will auto-update as you edit the file.
 
 > [!NOTE]
 > The website's styling is being transitioned to TailwindCSS; prefer this over plain CSS.
+
+
+## Deployment on Vercel
+
+This repository is linked to Vercel which will automatically build a deployment each time someone pushes to a branch.
+
+> [!IMPORTANT]
+> Pushes to the main branch trigger a production build.
+
+You can test on your computer whether your code will build before pushing to GitHub by running the following:
+
+```bash
+next build
+```
+
+This will create a `out` file within the project root.
+
+_See [Next.js - Deploying](https://nextjs.org/docs/app/building-your-application/deploying) for more information._
 
 
 ## Project structure
@@ -80,24 +98,7 @@ Outside of these two special files, there are more places where code is organise
 
 - [`app/contexts/`](src/lib) contains React contexts which can be used to share data with children components easily.
   (e.g. [AudioContext.tsx](src/contexts/AudioContext.tsx))
-  
 
-## Deployment on Vercel
-
-This repository is linked to Vercel which will automatically build a deployment each time someone pushes to a branch.
-
-> [!IMPORTANT]
-> Pushes to the main branch trigger a production build.
-
-You can test on your computer whether your code will build before pushing to GitHub by running the following:
-
-```bash
-next build
-```
-
-This will create a `out` file within the project root.
-
-_See [Next.js - Deploying](https://nextjs.org/docs/app/building-your-application/deploying) for more information._
 
 ## Learn More
 
